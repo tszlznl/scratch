@@ -1,1 +1,701 @@
-{}
+{
+  "editor": {
+    "placeholder": "开始写作...",
+    "saveInFolder": "保存到文件夹",
+    "refresh": "刷新",
+    "externalChanges": "检测到外部更改 ({{mod}}R 刷新)",
+    "saving": "保存中...",
+    "saved": "所有更改已保存",
+    "unpinNote": "取消固定笔记",
+    "pinNote": "固定笔记",
+    "noteUnpinned": "笔记已取消固定",
+    "notePinned": "笔记已固定",
+    "findInNote": "在笔记中查找 ({{mod}}F)",
+    "hideSidebar": "隐藏侧边栏 ({{mod}}\\)",
+    "showSidebar": "显示侧边栏 ({{mod}}\\)",
+    "viewFormatted": "查看格式化视图 ({{mod}}{{shift}}M)",
+    "viewMarkdownSource": "查看 Markdown 源代码 ({{mod}}{{shift}}M)",
+    "export": "导出 ({{mod}}{{shift}}C)",
+    "tablePicker": {
+      "size": "{{rows}} × {{cols}} 表格"
+    },
+    "toolbar": {
+      "bold": "加粗 ({{mod}}B)",
+      "italic": "斜体 ({{mod}}I)",
+      "strikethrough": "删除线 ({{mod}}{{shift}}S)",
+      "heading1": "标题 1 ({{mod}}{{alt}}1)",
+      "heading2": "标题 2 ({{mod}}{{alt}}2)",
+      "heading3": "标题 3 ({{mod}}{{alt}}3)",
+      "heading4": "标题 4 ({{mod}}{{alt}}4)",
+      "bulletList": "项目符号列表 ({{mod}}{{shift}}8)",
+      "numberedList": "编号列表 ({{mod}}{{shift}}7)",
+      "taskList": "任务列表",
+      "blockquote": "块引用 ({{mod}}{{shift}}B)",
+      "inlineCode": "行内代码 ({{mod}}E)",
+      "codeBlock": "代码块 ({{mod}}{{alt}}C)",
+      "blockMath": "块数学公式",
+      "horizontalRule": "水平分割线",
+      "addLink": "添加链接 ({{mod}}K)",
+      "insertWikilink": "插入 Wikilink",
+      "addImage": "添加图片",
+      "insertTable": "插入表格"
+    },
+    "menu": {
+      "copyMarkdown": "复制 Markdown",
+      "copyPlainText": "复制纯文本",
+      "copyHtml": "复制 HTML",
+      "printPdf": "打印为 PDF",
+      "exportMarkdown": "导出 Markdown"
+    },
+    "emptyState": {
+      "title": "你在想什么？",
+      "subtitle": "从上次离开的地方继续，或者开始新的内容",
+      "newNote": "新建笔记",
+      "ariaLabel": "笔记"
+    },
+    "table": {
+      "addColumnBefore": "在前面添加列",
+      "addColumnAfter": "在后面添加列",
+      "deleteColumn": "删除列",
+      "addRowAbove": "在上方添加行",
+      "addRowBelow": "在下方添加行",
+      "deleteRow": "删除行",
+      "toggleHeaderRow": "切换标题行",
+      "toggleHeaderColumn": "切换标题列",
+      "deleteTable": "删除表格"
+    },
+    "linkEditor": {
+      "linkText": "链接文本...",
+      "enterUrl": "输入 URL...",
+      "apply": "应用",
+      "removeLink": "移除链接",
+      "cancel": "取消"
+    },
+    "blockMath": {
+      "placeholder": "输入 KaTeX 表达式...",
+      "apply": "应用 (Cmd/Ctrl+Enter)",
+      "cancel": "取消"
+    },
+    "codeBlock": {
+      "preview": "预览",
+      "edit": "编辑"
+    },
+    "wikilink": {
+      "noMatchingNotes": "没有匹配的笔记"
+    },
+    "toast": {
+      "copiedMarkdown": "已复制为 Markdown",
+      "copiedPlainText": "已复制为纯文本",
+      "copiedHtml": "已复制为 HTML",
+      "failedToCopy": "复制失败",
+      "failedToOpenPrint": "打开打印对话框失败",
+      "markdownSaved": "Markdown 保存成功",
+      "failedToSaveMarkdown": "保存 Markdown 失败",
+      "failedToSaveNote": "保存笔记失败",
+      "enterFormula": "请输入公式。",
+      "failedToPasteImage": "粘贴图片失败",
+      "failedToReadClipboard": "读取剪贴板图片失败",
+      "invalidUrlScheme": "无法打开此 URL 方案的链接",
+      "noteDoesNotExist": "笔记 \"{{title}}\" 尚不存在"
+    }
+  },
+  "sidebar": {
+    "title": "笔记",
+    "searchNotes": "搜索笔记 ({{mod}}{{shift}}F)",
+    "newNoteOrFolder": "新建笔记或文件夹",
+    "newNote": "新建笔记",
+    "newFolder": "新建文件夹",
+    "newNoteShortcut": "新建笔记 ({{mod}}N)",
+    "searchPlaceholder": "搜索笔记...",
+    "createFolder": {
+      "title": "创建新文件夹",
+      "description": "输入新文件夹的名称",
+      "confirm": "创建"
+    },
+    "toast": {
+      "failedToMoveNotes": "移动 {{count}} 个笔记失败",
+      "failedToMoveItem": "移动项目失败",
+      "failedToCreateFolder": "创建文件夹失败"
+    }
+  },
+  "footer": {
+    "commitMessage": "Scratch 快速提交",
+    "initGit": "初始化 Git 仓库",
+    "enableGit": "启用 Git",
+    "branch": "分支: {{branch}}",
+    "noBranch": "无分支（请在设置中配置 Git）",
+    "uncommittedChanges": "您有未提交的更改",
+    "filesChanged": "文件已更改",
+    "errorOccurred": "发生错误",
+    "syncing": "同步中...",
+    "syncPullPush": "需要拉取 {{behindCount}} 个，推送 {{aheadCount}} 个",
+    "syncToPull": "需要拉取 {{count}} 个提交",
+    "syncToPush": "需要推送 {{count}} 个提交",
+    "syncedWithRemote": "已与远程同步",
+    "settings": "设置 ({{mod}}, 切换)",
+    "quickCommit": "快速提交",
+    "sync": "同步",
+    "toast": {
+      "changesCommitted": "更改已提交",
+      "failedToCommit": "提交失败",
+      "gitInitialized": "Git 仓库已初始化",
+      "failedToInitGit": "初始化 Git 失败"
+    }
+  },
+  "settings": {
+    "general": {
+      "folderLocation": "文件夹位置",
+      "folderDescription": "您的笔记以 Markdown 文件形式存储在此文件夹中",
+      "notSet": "未设置",
+      "changeFolder": "更改文件夹",
+      "openFolder": "打开文件夹",
+      "enableFolders": "启用文件夹",
+      "foldersDescription": "创建和查看嵌套文件夹以组织您的笔记。关闭时，笔记以平铺列表形式按日期排序显示。",
+      "versionControl": "版本控制",
+      "gitDescription": "使用 Git 跟踪更改并存储笔记备份",
+      "off": "关闭",
+      "on": "开启",
+      "gitNotAvailable": "此系统未安装 Git。",
+      "installGit": "安装 Git",
+      "toEnableVC": "以启用版本控制。",
+      "enableGitDescription": "启用 Git 以通过版本控制跟踪笔记更改。您的更改将被自动跟踪，您可以从侧边栏提交和推送。",
+      "initGitRepo": "初始化 Git 仓库",
+      "status": "状态",
+      "onBranch": "在分支 {{branch}} 上",
+      "gitEnabled": "Git 已启用",
+      "remote": "远程仓库",
+      "remotePlaceholder": "https://github.com/user/repo.git",
+      "saving": "保存中...",
+      "save": "保存",
+      "cancel": "取消",
+      "remove": "移除",
+      "change": "更改",
+      "tracking": "跟踪中",
+      "notSetUp": "未设置",
+      "pushTrackingDescription": "推送您的提交并为 '{{branch}}' 分支设置跟踪。",
+      "pushing": "推送中...",
+      "pushAndTrack": "推送并跟踪 '{{branch}}'",
+      "notConnected": "未连接",
+      "connecting": "连接中...",
+      "connect": "连接",
+      "addRemote": "添加远程仓库",
+      "errorOccurred": "发生错误",
+      "changesToCommit": "待提交的更改",
+      "filesChanged": "{{count}} 个文件已更改",
+      "commitsToPush": "待推送的提交",
+      "commitCount": "{{count}} 个提交",
+      "commitsToPull": "待拉取的提交",
+      "learnSSH": "了解更多关于 SSH 认证的信息",
+      "dismiss": "忽略",
+      "defaultNoteName": "默认笔记名称",
+      "defaultNameDescription": "自定义创建新笔记时的默认名称",
+      "untitled": "无标题",
+      "preview": "预览: {{name}}",
+      "templateTags": "为您的名称添加模板标签",
+      "templateExamples": "示例: Note-{{year}}-{{month}}-{{day}}",
+      "invalidTemplate": "无效模板",
+      "connected": "已连接",
+      "ignoredFolders": "忽略的文件夹",
+      "ignoredFoldersDescription": "匹配这些名称的文件夹将被排除在笔记发现和搜索索引之外",
+      "loading": "加载中...",
+      "noFoldersIgnored": "未忽略任何文件夹 - 所有 Markdown 文件都将被索引",
+      "addFolderPlaceholder": "添加文件夹名称...",
+      "add": "添加",
+      "resetToDefaults": "恢复默认设置",
+      "removePattern": "移除 {{pattern}}",
+      "remoteInstructions": "获取远程 URL 的步骤：",
+      "remoteStep1": "在 GitHub、GitLab 等平台创建仓库",
+      "remoteStep2": "复制仓库 URL（HTTPS 或 SSH）",
+      "remoteStep3": "点击\"添加远程仓库\"并粘贴 URL",
+      "remoteExample": "示例: https://github.com/username/my-notes.git",
+      "toast": {
+        "defaultNameSaved": "默认名称已保存",
+        "failedToSaveDefaultName": "保存默认名称失败",
+        "failedToSelectFolder": "选择文件夹失败",
+        "failedToOpenFolder": "打开文件夹失败",
+        "failedToOpenUrl": "打开 URL 失败",
+        "failedToToggleGit": "更新版本控制设置失败",
+        "failedToToggleFolders": "更新文件夹设置失败",
+        "searchIndexFailed": "搜索索引重建失败 - 搜索结果可能已过期",
+        "failedToSaveIgnoredFolders": "保存忽略文件夹失败",
+        "invalidIgnorePattern": "忽略模式必须是单个目录名（不能包含路径）",
+        "alreadyInList": "已在列表中"
+      }
+    },
+    "appearance": {
+      "theme": "主题",
+      "light": "浅色",
+      "dark": "深色",
+      "system": "系统",
+      "systemModeDescription": "当前根据系统偏好使用 {{mode}} 模式",
+      "customizeLightColors": "自定义浅色颜色",
+      "customizeDarkColors": "自定义深色颜色",
+      "customizeColors": "自定义颜色",
+      "resetAll": "全部重置",
+      "typography": "排版",
+      "resetDefaults": "恢复默认设置",
+      "font": "字体",
+      "fontSans": "无衬线",
+      "fontSerif": "衬线",
+      "fontMono": "等宽",
+      "size": "大小",
+      "boldWeight": "粗细",
+      "weightMedium": "中等",
+      "weightSemibold": "半粗体",
+      "weightBold": "粗体",
+      "weightExtraBold": "特粗体",
+      "lineHeight": "行高",
+      "textDirection": "文本方向",
+      "dirAuto": "自动",
+      "dirLtr": "从左到右",
+      "dirRtl": "从右到左",
+      "pageWidth": "页面宽度",
+      "widthNarrow": "窄",
+      "widthNormal": "正常",
+      "widthWide": "宽",
+      "widthFull": "全宽",
+      "widthCustom": "自定义",
+      "customWidth": "自定义宽度",
+      "px": "像素",
+      "interfaceZoom": "界面缩放",
+      "zoomOut": "缩小",
+      "zoomIn": "放大",
+      "preview": "预览",
+      "colorBackground": "背景",
+      "colorSidebar": "侧边栏",
+      "colorHoverFill": "悬停和细微填充",
+      "colorStrongFill": "强填充",
+      "colorText": "文本",
+      "colorSecondaryText": "次要文本",
+      "colorAccent": "主要和按钮",
+      "colorBorder": "边框",
+      "colorSelection": "选择高亮",
+      "groupSurfaces": "表面",
+      "groupTextUI": "文本和界面"
+    },
+    "about": {
+      "version": "版本",
+      "versionDescription": "您当前使用的是 Scratch v{{version}}",
+      "checking": "检查中...",
+      "checkForUpdates": "检查更新",
+      "aboutScratch": "关于 Scratch",
+      "description": "Scratch 是一款极简主义的 Markdown 记事本，用于快速记录想法、待办事项和灵感。我们坚持离线优先、键盘优化、AI 兼容，并且开源，无需云端、账户或订阅。了解更多请访问",
+      "ourWebsite": "我们的网站",
+      "createdBy": "由",
+      "author": "Eric Li",
+      "contributors": "创建和维护，他的猫 Mochi 提供了精神支持，以及 GitHub 上许多贡献者的实际支持。",
+      "viewOnGitHub": "在 GitHub 上查看",
+      "submitFeedback": "提交反馈",
+      "toast": {
+        "latestVersion": "您已是最新版本！",
+        "checkFailed": "无法检查更新，请稍后再试。",
+        "failedToOpenUrl": "打开 URL 失败"
+      }
+    },
+    "tools": {
+      "aiProviders": "AI 提供商",
+      "aiDescription": "通过命令面板使用 AI 编辑笔记（编辑笔记时按 {{mod}}P）",
+      "detectingProviders": "正在检测已安装的提供商...",
+      "providerClaude": "Claude Code",
+      "providerCodex": "OpenAI Codex",
+      "providerOpenCode": "OpenCode",
+      "providerOllama": "Ollama",
+      "installed": "已安装",
+      "install": "安装",
+      "cliTool": "CLI 工具",
+      "cliDescription": "通过 scratch 命令从终端打开笔记",
+      "cliStatusFailed": "检查 CLI 状态失败。请重启应用。",
+      "status": "状态",
+      "path": "路径",
+      "clickToCopy": "点击复制路径",
+      "usageHint": "scratch file.md # 打开笔记",
+      "usageHintFolder": "scratch . # 打开文件夹",
+      "usageHintApp": "scratch # 启动应用",
+      "uninstalling": "卸载中...",
+      "uninstallCli": "卸载 CLI 工具",
+      "installing": "安装中...",
+      "installCli": "安装 CLI 工具",
+      "toast": {
+        "pathCopied": "路径已复制到剪贴板",
+        "failedToCopyPath": "复制路径失败",
+        "cliInstalled": "CLI 工具已安装。打开新终端以使用 `scratch` 命令。",
+        "failedToInstallCli": "安装 CLI 工具失败",
+        "cliUninstalled": "CLI 工具已卸载。",
+        "failedToUninstallCli": "卸载 CLI 工具失败"
+      }
+    }
+  },
+  "commandPalette": {
+    "placeholder": "搜索笔记或输入命令...",
+    "noResults": "未找到结果",
+    "commands": "命令",
+    "notes": "笔记",
+    "newNote": "新建笔记",
+    "newFolder": "新建文件夹",
+    "pinNote": "固定当前笔记",
+    "unpinNote": "取消固定当前笔记",
+    "aiEditClaude": "使用 Claude Code 编辑",
+    "aiEditCodex": "使用 OpenAI Codex 编辑",
+    "aiEditOpenCode": "使用 OpenCode 编辑",
+    "aiEditOllama": "使用 Ollama 编辑",
+    "duplicateNote": "复制当前笔记",
+    "deleteNote": "删除当前笔记",
+    "copyMarkdown": "复制 Markdown",
+    "copyPlainText": "复制纯文本",
+    "copyHtml": "复制 HTML",
+    "printPdf": "打印为 PDF",
+    "exportMarkdown": "导出 Markdown",
+    "gitCommit": "Git: 快速提交",
+    "gitSync": "Git: 同步（拉取和推送）",
+    "exitFocusMode": "退出专注模式",
+    "enterFocusMode": "进入专注模式",
+    "toggleSource": "切换 Markdown 源代码",
+    "openFolder": "打开笔记文件夹",
+    "keyboardShortcuts": "键盘快捷键",
+    "settings": "设置",
+    "themeLight": "切换主题为浅色模式",
+    "themeDark": "切换主题为深色模式",
+    "themeSystem": "切换主题为系统模式",
+    "deleteDialog": {
+      "title": "删除笔记？",
+      "description": "这将永久删除该笔记及其所有内容。此操作无法撤销。",
+      "cancel": "取消",
+      "delete": "删除"
+    },
+    "toast": {
+      "copiedMarkdown": "已复制为 Markdown",
+      "copiedPlainText": "已复制为纯文本",
+      "copiedHtml": "已复制为 HTML",
+      "editorUnavailable": "编辑器不可用",
+      "failedToCopy": "复制失败",
+      "failedToOpenPrint": "打开打印对话框失败",
+      "noNoteSelected": "未选择笔记",
+      "markdownSaved": "Markdown 保存成功",
+      "failedToSaveMarkdown": "保存 Markdown 失败",
+      "changesCommitted": "更改已提交",
+      "failedToCommit": "提交失败",
+      "failedToOpenFolder": "打开文件夹失败",
+      "failedToPin": "固定/取消固定笔记失败",
+      "failedToDelete": "删除笔记失败"
+    }
+  },
+  "notes": {
+    "date": {
+      "yesterday": "昨天",
+      "daysAgo": "{{count}} 天前"
+    },
+    "loading": "加载中...",
+    "noResults": "未找到结果",
+    "noNotes": "暂无笔记",
+    "contextMenu": {
+      "pin": "固定",
+      "unpin": "取消固定",
+      "duplicate": "复制",
+      "copyFilepath": "复制文件路径",
+      "delete": "删除"
+    },
+    "deleteDialog": {
+      "title": "删除笔记？",
+      "description": "这将永久删除该笔记及其所有内容。此操作无法撤销。",
+      "cancel": "取消",
+      "delete": "删除"
+    },
+    "tree": {
+      "contextMenu": {
+        "pin": "固定",
+        "unpin": "取消固定",
+        "duplicate": "复制",
+        "copyFilepath": "复制文件路径",
+        "moveToParent": "移动到父文件夹",
+        "deleteNote": "删除",
+        "newNote": "新建笔记",
+        "newSubfolder": "新建子文件夹",
+        "rename": "重命名",
+        "deleteFolder": "删除文件夹"
+      },
+      "empty": "空",
+      "deleteFolderDialog": {
+        "title": "删除文件夹？",
+        "description": "这将永久删除该文件夹及其中的所有笔记。此操作无法撤销。",
+        "cancel": "取消",
+        "deleting": "删除中...",
+        "delete": "删除"
+      },
+      "renameDialog": {
+        "title": "重命名文件夹",
+        "description": "输入文件夹的新名称",
+        "confirm": "重命名"
+      },
+      "subfolderDialog": {
+        "title": "创建新子文件夹",
+        "description": "输入新子文件夹的名称",
+        "confirm": "创建"
+      },
+      "deleteNoteDialog": {
+        "title": "删除笔记？",
+        "description": "这将永久删除该笔记及其所有内容。此操作无法撤销。",
+        "cancel": "取消",
+        "deleting": "删除中...",
+        "delete": "删除"
+      },
+      "toast": {
+        "failedToDuplicate": "复制失败: {{error}}",
+        "failedToMove": "移动失败: {{error}}",
+        "failedToDeleteFolder": "删除文件夹失败",
+        "failedToDeleteNote": "删除笔记失败",
+        "failedToRenameFolder": "重命名文件夹失败",
+        "failedToCreateSubfolder": "创建子文件夹失败"
+      }
+    }
+  },
+  "dialog": {
+    "folderName": {
+      "defaultTitle": "创建新文件夹",
+      "defaultDescription": "输入新文件夹的名称",
+      "defaultConfirm": "创建",
+      "placeholder": "文件夹名称",
+      "cancel": "取消"
+    }
+  },
+  "ai": {
+    "providerNameClaude": "Claude",
+    "providerNameCodex": "Codex",
+    "providerNameOpenCode": "OpenCode",
+    "providerNameOllama": "Ollama",
+    "cliNameClaude": "Claude Code CLI",
+    "cliNameCodex": "OpenAI Codex CLI",
+    "cliNameOpenCode": "OpenCode CLI",
+    "cliNameOllama": "Ollama CLI",
+    "editModal": {
+      "placeholder": "描述如何编辑当前笔记...",
+      "notInstalled": "{{cliName}} 未安装",
+      "editing": "{{providerName}} 正在编辑您的笔记...",
+      "notFound": "未找到 {{cliName}}",
+      "needToInstall": "您需要 {{cliName}} 才能使用此功能。请访问 {{providerName}} 安装它，然后重启 Scratch。",
+      "goBack": "返回",
+      "toSubmit": "提交",
+      "checking": "正在检查 {{cliName}}...",
+      "ollamaModel": "Ollama 模型:",
+      "defaultModel": "qwen3:8b",
+      "howItWorks": "如何工作？",
+      "howItWorksDescription": "{{providerName}} 将使用您的本地 {{cliName}} 直接编辑当前笔记。您将能够撤销更改。"
+    },
+    "toast": {
+      "editComplete": "AI 编辑完成",
+      "undoHint": "使用 {{mod}}+Z 撤销更改"
+    }
+  },
+  "search": {
+    "placeholder": "在笔记中查找...",
+    "notFound": "未找到",
+    "previousMatch": "上一个匹配 ({{shift}}↵)",
+    "nextMatch": "下一个匹配 (↵)",
+    "close": "关闭 (Esc)"
+  },
+  "slashCommand": {
+    "text": {
+      "title": "文本",
+      "description": "普通正文文本"
+    },
+    "h1": {
+      "title": "标题 1",
+      "description": "大节标题"
+    },
+    "h2": {
+      "title": "标题 2",
+      "description": "中节标题"
+    },
+    "h3": {
+      "title": "标题 3",
+      "description": "小节标题"
+    },
+    "h4": {
+      "title": "标题 4",
+      "description": "最小节标题"
+    },
+    "bulletList": {
+      "title": "项目符号列表",
+      "description": "无序列表"
+    },
+    "numberedList": {
+      "title": "编号列表",
+      "description": "有序列表"
+    },
+    "taskList": {
+      "title": "任务列表",
+      "description": "带复选框的列表"
+    },
+    "blockquote": {
+      "title": "块引用",
+      "description": "块引用"
+    },
+    "codeBlock": {
+      "title": "代码块",
+      "description": "围栏代码块"
+    },
+    "mermaid": {
+      "title": "Mermaid 图表",
+      "description": "Mermaid 图表块"
+    },
+    "blockMath": {
+      "title": "块数学公式",
+      "description": "显示数学块"
+    },
+    "horizontalRule": {
+      "title": "水平分割线",
+      "description": "视觉分隔符"
+    },
+    "image": {
+      "title": "图片",
+      "description": "从文件插入"
+    },
+    "table": {
+      "title": "表格",
+      "description": "插入 3×3 表格"
+    },
+    "wikilink": {
+      "title": "Wikilink",
+      "description": "链接到另一笔记"
+    }
+  },
+  "shortcuts": {
+    "title": "快捷键",
+    "close": "关闭",
+    "category": {
+      "navigation": "导航",
+      "notes": "笔记",
+      "editor": "编辑器",
+      "markdownSyntax": "Markdown 语法"
+    },
+    "cmd": {
+      "commandPalette": "命令面板",
+      "searchNotes": "搜索笔记",
+      "toggleSidebar": "切换侧边栏",
+      "settings": "设置",
+      "keyboardShortcuts": "键盘快捷键",
+      "closeWindow": "关闭窗口",
+      "zoomIn": "放大",
+      "zoomOut": "缩小",
+      "resetZoom": "重置缩放",
+      "newNote": "新建笔记",
+      "duplicateNote": "复制笔记",
+      "reloadNote": "重新加载笔记",
+      "deleteNote": "删除笔记",
+      "navigateNotes": "导航笔记",
+      "focusEditor": "聚焦编辑器",
+      "backToList": "返回笔记列表",
+      "bold": "加粗",
+      "italic": "斜体",
+      "addEditLink": "添加/编辑链接",
+      "findInNote": "在笔记中查找",
+      "copyExport": "复制和导出",
+      "printPdf": "打印/导出为 PDF",
+      "markdownSource": "Markdown 源代码",
+      "focusMode": "专注模式",
+      "slashCommands": "斜杠命令"
+    },
+    "md": {
+      "h1": "标题 1",
+      "h2": "标题 2",
+      "h3": "标题 3",
+      "boldText": "加粗文本",
+      "italicText": "斜体文本",
+      "strikethrough": "删除线",
+      "bulletList": "项目符号列表",
+      "numberedList": "编号列表",
+      "taskList": "任务列表",
+      "blockquote": "块引用",
+      "inlineCode": "行内代码",
+      "codeBlock": "代码块",
+      "horizontalRule": "水平分割线",
+      "link": "链接",
+      "wikilink": "Wikilink",
+      "image": "图片",
+      "table": "表格",
+      "blockMath": "块数学公式",
+      "mermaidDiagram": "Mermaid 图表"
+    }
+  },
+  "app": {
+    "initializing": "正在初始化 Scratch...",
+    "unknownError": "未知错误",
+    "toast": {
+      "noNoteSelected": "未选择笔记",
+      "aiEditFailed": "AI 编辑失败",
+      "zoom": "缩放 {{percent}}%"
+    },
+    "aiOverlay": {
+      "codex": "Codex 正在编辑您的笔记...",
+      "openCode": "OpenCode 正在编辑您的笔记...",
+      "ollama": "Ollama 正在编辑您的笔记...",
+      "claude": "Claude 正在编辑您的笔记..."
+    },
+    "update": {
+      "title": "有可用更新: v{{version}}",
+      "updateNow": "立即更新",
+      "installing": "安装中...",
+      "installed": "更新已安装！重启 Scratch 以应用。",
+      "failed": "更新失败。请稍后再试。"
+    }
+  },
+  "git": {
+    "error": {
+      "getStatus": "获取 Git 状态失败",
+      "updateSetting": "更新 Git 设置失败",
+      "init": "初始化 Git 失败",
+      "commit": "提交失败",
+      "push": "推送失败",
+      "pull": "拉取失败",
+      "sync": "同步失败",
+      "addRemote": "添加远程仓库失败",
+      "updateRemote": "更新远程仓库失败",
+      "removeRemote": "移除远程仓库失败"
+    },
+    "message": {
+      "pulled": "已拉取最新更改",
+      "upToDate": "已是最新",
+      "pulledButPushFailed": "已拉取更改，但推送失败: {{error}}",
+      "syncedBoth": "已同步 - 拉取并推送",
+      "pushed": "已推送到远程"
+    }
+  },
+  "folderPicker": {
+    "dialogTitle": "选择笔记文件夹",
+    "ariaLabel": "文件夹",
+    "welcome": "欢迎使用 Scratch",
+    "description": "Scratch 是一款离线优先的笔记应用。您的笔记仅以 Markdown 文件形式存储在您的计算机上。",
+    "chooseFolder": "选择您的笔记文件夹",
+    "canChangeLater": "您可以稍后更改此设置"
+  },
+  "preview": {
+    "toast": {
+      "failedToLoad": "加载文件失败: {{error}}",
+      "failedToSave": "保存失败: {{error}}",
+      "failedToReload": "重新加载失败: {{error}}",
+      "failedToSaveToFolder": "保存到文件夹失败: {{error}}"
+    }
+  },
+  "context": {
+    "error": {
+      "loadNotes": "加载笔记失败",
+      "loadNote": "加载笔记失败",
+      "reloadNote": "重新加载笔记失败",
+      "createNote": "创建笔记失败",
+      "saveNote": "保存笔记失败",
+      "deleteNote": "删除笔记失败",
+      "duplicateNote": "复制笔记失败",
+      "pinNote": "固定笔记失败",
+      "unpinNote": "取消固定笔记失败",
+      "createFolder": "创建文件夹失败",
+      "deleteFolder": "删除文件夹失败",
+      "renameFolder": "重命名文件夹失败",
+      "moveNote": "移动笔记失败",
+      "moveFolder": "移动文件夹失败",
+      "setNotesFolder": "设置笔记文件夹失败",
+      "syncNotesFolder": "同步笔记文件夹失败",
+      "initialize": "初始化失败",
+      "readRenamedNote": "读取重命名后的笔记失败",
+      "readMovedNote": "读取移动后的笔记失败"
+    }
+  }
+}
