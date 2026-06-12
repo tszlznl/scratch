@@ -1,9 +1,11 @@
 import { open } from "@tauri-apps/plugin-dialog";
 import { useNotes } from "../../context/NotesContext";
 import { useTheme } from "../../context/ThemeContext";
+import { useTranslation } from "../../i18n/useTranslation";
 import { Button } from "../ui";
 
 export function FolderPicker() {
+  const { t } = useTranslation();
   const { setNotesFolder } = useNotes();
   const { reloadSettings } = useTheme();
 
@@ -12,7 +14,7 @@ export function FolderPicker() {
       const selected = await open({
         directory: true,
         multiple: false,
-        title: "Choose Notes Folder",
+        title: t("folderPicker.dialogTitle"),
       });
 
       if (selected && typeof selected === "string") {
@@ -54,21 +56,20 @@ export function FolderPicker() {
             className="text-3xl text-text font-serif mb-2 tracking-[-0.01em] animate-fade-in-up"
             style={{ animationDelay: "100ms" }}
           >
-            Welcome to Scratch
+            {t("folderPicker.welcome")}
           </h1>
           <p
             className="text-text-muted mb-6 animate-fade-in-up"
             style={{ animationDelay: "100ms" }}
           >
-            Scratch is an offline-first notes app. Your notes are simply stored
-            on your computer as markdown files.
+            {t("folderPicker.description")}
           </p>
           <div
             className="animate-fade-in-up"
             style={{ animationDelay: "200ms" }}
           >
             <Button onClick={handleSelectFolder} size="xl">
-              Choose your notes folder
+              {t("folderPicker.chooseFolder")}
             </Button>
           </div>
 
@@ -76,7 +77,7 @@ export function FolderPicker() {
             className="mt-2 text-xs text-text-muted/60 animate-fade-in-up"
             style={{ animationDelay: "300ms" }}
           >
-            You can change this later
+            {t("folderPicker.canChangeLater")}
           </p>
         </div>
       </div>

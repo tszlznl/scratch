@@ -11,6 +11,7 @@ import {
   type DragEndEvent,
 } from "@dnd-kit/core";
 import { useNotes } from "../../context/NotesContext";
+import { useTranslation } from "../../i18n/useTranslation";
 import { NoteList } from "../notes/NoteList";
 import { Footer } from "./Footer";
 import { IconButton, Input } from "../ui";
@@ -32,6 +33,7 @@ interface SidebarProps {
 }
 
 export function Sidebar({ onOpenSettings }: SidebarProps) {
+  const { t } = useTranslation();
   const {
     createNote,
     createFolder,
@@ -126,7 +128,7 @@ export function Sidebar({ onOpenSettings }: SidebarProps) {
               }
             }
             if (failures > 0) {
-              toast.error(`Failed to move ${failures} note(s)`);
+              toast.error(t("sidebar.toast.failedToMoveNotes", { count: failures }));
             }
             setMultiSelectedNoteIds(new Set());
           } else {
@@ -159,7 +161,7 @@ export function Sidebar({ onOpenSettings }: SidebarProps) {
         }
       } catch (error) {
         console.error("Failed to move item:", error);
-        toast.error("Failed to move item");
+        toast.error(t("sidebar.toast.failedToMoveItem"));
       }
     },
     [moveNote, moveFolder],
@@ -281,7 +283,7 @@ export function Sidebar({ onOpenSettings }: SidebarProps) {
         setFolderDialogOpen(false);
       } catch (error) {
         console.error("Failed to create folder:", error);
-        toast.error("Failed to create folder");
+        toast.error(t("sidebar.toast.failedToCreateFolder"));
       }
     },
     [createFolder, folderDialogParent],
@@ -315,7 +317,7 @@ export function Sidebar({ onOpenSettings }: SidebarProps) {
       <div className="h-11 shrink-0" data-tauri-drag-region></div>
       <div className="flex items-center justify-between pl-4 pr-3 pb-2 border-b border-border shrink-0">
         <div className="flex items-center gap-1">
-          <div className="font-medium text-base">Notes</div>
+          <div className="font-medium text-base">{t("sidebar.title")}</div>
           <div className="text-text-muted font-medium text-2xs min-w-4.75 h-4.75 flex items-center justify-center px-1 bg-bg-muted rounded-sm mt-0.5 pt-px">
             {notes.length}
           </div>
@@ -323,7 +325,7 @@ export function Sidebar({ onOpenSettings }: SidebarProps) {
         <div className="flex items-center gap-px">
           <IconButton
             onClick={toggleSearch}
-            title={`Search Notes (${mod}${isMac ? "" : "+"}${shift}${isMac ? "" : "+"}F)`}
+            title={t("sidebar.searchNotes", { mod, shift })}
           >
             {searchOpen ? (
               <SearchOffIcon className="w-4.25 h-4.25 stroke-[1.5]" />
@@ -339,7 +341,7 @@ export function Sidebar({ onOpenSettings }: SidebarProps) {
               <DropdownMenu.Trigger asChild>
                 <IconButton
                   variant="ghost"
-                  title="New Note or Folder"
+                  title={t("sidebar.newNoteOrFolder")}
                 >
                   <PlusIcon className="w-5.25 h-5.25 stroke-[1.4]" />
                 </IconButton>
@@ -356,7 +358,7 @@ export function Sidebar({ onOpenSettings }: SidebarProps) {
                     onSelect={() => createNote()}
                   >
                     <AddNoteIcon className="w-4 h-4 stroke-[1.6]" />
-                    <span className="flex-1">New Note</span>
+                    <span className="flex-1">{t("sidebar.newNote")}</span>
                     <kbd className="text-xs text-text-muted ml-2">
                       {mod}
                       {isMac ? "" : "+"}N
@@ -367,7 +369,7 @@ export function Sidebar({ onOpenSettings }: SidebarProps) {
                     onSelect={handleNewFolder}
                   >
                     <FolderPlusIcon className="w-4 h-4 stroke-[1.6]" />
-                    New Folder
+                    {t("sidebar.newFolder")}
                   </DropdownMenu.Item>
                 </DropdownMenu.Content>
               </DropdownMenu.Portal>
@@ -376,7 +378,7 @@ export function Sidebar({ onOpenSettings }: SidebarProps) {
             <IconButton
               variant="ghost"
               onClick={() => createNote()}
-              title={`New Note (${mod}${isMac ? "" : "+"}N)`}
+              title={t("sidebar.newNoteShortcut", { mod })}
             >
               <PlusIcon className="w-5.25 h-5.25 stroke-[1.4]" />
             </IconButton>
@@ -395,7 +397,7 @@ export function Sidebar({ onOpenSettings }: SidebarProps) {
                 value={inputValue}
                 onChange={handleSearchChange}
                 onKeyDown={handleSearchKeyDown}
-                placeholder="Search notes..."
+                placeholder={t("sidebar.searchPlaceholder")}
                 className="h-9 pr-8 text-sm"
               />
               {inputValue && (
@@ -428,9 +430,9 @@ export function Sidebar({ onOpenSettings }: SidebarProps) {
         open={folderDialogOpen}
         onOpenChange={setFolderDialogOpen}
         onConfirm={handleFolderDialogConfirm}
-        title="Create new folder"
-        description="Enter a name for your new folder"
-        confirmLabel="Create"
+        title={t("sidebar.createFolder.title")}
+        description={t("sidebar.createFolder.description")}
+        confirmLabel={t("sidebar.createFolder.confirm")}
       />
     </div>
 

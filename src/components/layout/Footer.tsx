@@ -1,6 +1,7 @@
 import { useCallback, memo } from "react";
 import { toast } from "sonner";
 import { useGit } from "../../context/GitContext";
+import { useTranslation } from "../../i18n/useTranslation";
 import { Button, IconButton, Tooltip } from "../ui";
 import {
   GitBranchIcon,
@@ -11,13 +12,14 @@ import {
   SettingsIcon,
 } from "../icons";
 import { cn } from "../../lib/utils";
-import { mod, isMac } from "../../lib/platform";
+import { mod } from "../../lib/platform";
 
 interface FooterProps {
   onOpenSettings?: () => void;
 }
 
 export const Footer = memo(function Footer({ onOpenSettings }: FooterProps) {
+  const { t } = useTranslation();
   const {
     status,
     isLoading,
@@ -35,14 +37,14 @@ export const Footer = memo(function Footer({ onOpenSettings }: FooterProps) {
   const handleCommit = useCallback(async () => {
     if (isCommitting) return;
     try {
-      const success = await commit("Quick commit from Scratch");
+      const success = await commit(t("footer.commitMessage"));
       if (success) {
-        toast.success("Changes committed");
+        toast.success(t("footer.toast.changesCommitted"));
       } else {
-        toast.error("Failed to commit");
+        toast.error(t("footer.toast.failedToCommit"));
       }
     } catch {
-      toast.error("Failed to commit");
+      toast.error(t("footer.toast.failedToCommit"));
     }
   }, [commit, isCommitting]);
 
@@ -59,9 +61,9 @@ export const Footer = memo(function Footer({ onOpenSettings }: FooterProps) {
   const handleEnableGit = useCallback(async () => {
     const success = await initRepo();
     if (success) {
-      toast.success("Git repository initialized");
+      toast.success(t("footer.toast.gitInitialized"));
     } else {
-      toast.error("Failed to initialize Git");
+      toast.error(t("footer.toast.failedToInitGit"));
     }
   }, [initRepo]);
 
@@ -74,13 +76,13 @@ export const Footer = memo(function Footer({ onOpenSettings }: FooterProps) {
     // Not a git repo - show init option
     if (status && !status.isRepo) {
       return (
-        <Tooltip content="Initialize Git repository">
+        <Tooltip content={t("footer.initGit")}>
           <Button
             onClick={handleEnableGit}
             variant="ghost"
             className="text-xs h-auto p-0 hover:bg-transparent"
           >
-            Enable Git
+            {t("footer.enableGit")}
           </Button>
         </Tooltip>
       );
@@ -97,13 +99,13 @@ export const Footer = memo(function Footer({ onOpenSettings }: FooterProps) {
       <div className="flex items-center gap-1.5">
         {/* Branch icon with name on hover */}
         {status?.currentBranch ? (
-          <Tooltip content={"Branch: " + status.currentBranch}>
+          <Tooltip content={t("footer.branch", { branch: status.currentBranch })}>
             <span className="text-text-muted flex items-center">
               <GitBranchIcon className="w-4.5 h-4.5 stroke-[1.5]" />
             </span>
           </Tooltip>
         ) : status ? (
-          <Tooltip content="No branch (set up git in settings)">
+          <Tooltip content={t("footer.noBranch")}>
             <span className="text-text-muted flex items-center">
               <GitBranchDeletedIcon className="w-4.5 h-4.5 stroke-[1.5] opacity-50" />
             </span>
@@ -112,8 +114,8 @@ export const Footer = memo(function Footer({ onOpenSettings }: FooterProps) {
 
         {/* Changes indicator — hidden when there's an error so we don't show a stale count alongside it */}
         {hasChanges && !lastError && (
-          <Tooltip content="You have uncommitted changes">
-            <span className="text-xs text-text-muted/70">Files changed</span>
+          <Tooltip content={t("footer.uncommittedChanges")}>
+            <span className="text-xs text-text-muted/70">{t("footer.filesChanged")}</span>
           </Tooltip>
         )}
 
@@ -125,7 +127,7 @@ export const Footer = memo(function Footer({ onOpenSettings }: FooterProps) {
               variant="link"
               className="text-xs h-auto p-0 text-red-500 hover:text-red-600 hover:no-underline"
             >
-              An error occurred
+              {t("footer.errorOccurred")}
             </Button>
           </Tooltip>
         )}
@@ -144,14 +146,14 @@ export const Footer = memo(function Footer({ onOpenSettings }: FooterProps) {
     gitEnabled && gitAvailable && status?.hasRemote && status?.hasUpstream;
 
   const syncTooltip = isSyncing
-    ? "Syncing..."
+    ? t("footer.syncing")
     : behindCount > 0 && aheadCount > 0
-      ? `${behindCount} to pull, ${aheadCount} to push`
+      ? t("footer.syncPullPush", { behindCount, aheadCount })
       : behindCount > 0
-        ? `${behindCount} commit${behindCount === 1 ? "" : "s"} to pull`
+        ? t("footer.syncToPull", { count: behindCount })
         : aheadCount > 0
-          ? `${aheadCount} commit${aheadCount === 1 ? "" : "s"} to push`
-          : "Synced with remote";
+          ? t("footer.syncToPush", { count: aheadCount })
+          : t("footer.syncedWithRemote");
 
   const hasGitFooterContent =
     showCommitButton || showSyncButton || renderGitStatus() !== null;
@@ -162,7 +164,7 @@ export const Footer = memo(function Footer({ onOpenSettings }: FooterProps) {
       <div className="absolute bottom-3 right-3">
         <IconButton
           onClick={onOpenSettings}
-          title={`Settings (${mod}${isMac ? "" : "+"}, to toggle)`}
+          title={t("footer.settings", { mod })}
           className="rounded-lg bg-bg-secondary border border-border hover:bg-bg-muted backdrop-blur-sm w-8 h-8"
         >
           <SettingsIcon className="w-4.5 h-4.5 stroke-[1.5]" />
@@ -183,7 +185,7 @@ export const Footer = memo(function Footer({ onOpenSettings }: FooterProps) {
               <IconButton
                 onClick={handleSync}
                 disabled={isSyncing}
-                aria-label="Sync"
+                aria-label={t("footer.sync")}
               >
                 {isSyncing ? (
                   <SpinnerIcon className="w-4.5 h-4.5 stroke-[1.5] animate-spin" />
@@ -209,7 +211,7 @@ export const Footer = memo(function Footer({ onOpenSettings }: FooterProps) {
             <IconButton
               onClick={handleCommit}
               disabled={isCommitting}
-              title="Quick commit"
+              title={t("footer.quickCommit")}
             >
               {isCommitting ? (
                 <SpinnerIcon className="w-4.5 h-4.5 stroke-[1.5] animate-spin" />
@@ -220,7 +222,7 @@ export const Footer = memo(function Footer({ onOpenSettings }: FooterProps) {
           )}
           <IconButton
             onClick={onOpenSettings}
-            title={`Settings (${mod}${isMac ? "" : "+"}, to toggle)`}
+            title={t("footer.settings", { mod })}
           >
             <SettingsIcon className="w-4.5 h-4.5 stroke-[1.5]" />
           </IconButton>
