@@ -96,7 +96,8 @@
       "failedToPasteImage": "Failed to paste image",
       "failedToReadClipboard": "Failed to read clipboard image",
       "invalidUrlScheme": "Cannot open links with this URL scheme",
-      "noteDoesNotExist": "Note \"{{title}}\" does not exist yet"
+      "noteDoesNotExist": "Note \"{{title}}\" does not exist yet",
+      "failedToPin": "Failed to pin/unpin note"
     }
   },
   "sidebar": {

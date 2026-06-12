@@ -96,7 +96,8 @@
       "failedToPasteImage": "粘贴图片失败",
       "failedToReadClipboard": "读取剪贴板图片失败",
       "invalidUrlScheme": "无法打开此 URL 方案的链接",
-      "noteDoesNotExist": "笔记 \"{{title}}\" 尚不存在"
+      "noteDoesNotExist": "笔记 \"{{title}}\" 尚不存在",
+      "failedToPin": "固定/取消固定笔记失败"
     }
   },
   "sidebar": {

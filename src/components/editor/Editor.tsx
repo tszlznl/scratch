@@ -71,6 +71,7 @@ import { EditorWidthHandles } from "./EditorWidthHandle";
 import { ScratchBlockMath, normalizeBlockMath } from "./MathExtensions";
 import { cn } from "../../lib/utils";
 import { plainTextFromMarkdown } from "../../lib/plainText";
+import { useTranslation } from "../../i18n/useTranslation";
 import { Button, IconButton, ToolbarButton, Tooltip } from "../ui";
 import * as notesService from "../../services/notes";
 import { downloadPdf, downloadMarkdown } from "../../services/pdf";
@@ -209,6 +210,7 @@ interface GridPickerProps {
 }
 
 function GridPicker({ onSelect }: GridPickerProps) {
+  const { t } = useTranslation();
   const [hovered, setHovered] = useState({ row: 3, col: 3 });
 
   return (
@@ -235,7 +237,7 @@ function GridPicker({ onSelect }: GridPickerProps) {
         })}
       </div>
       <p className="text-xs text-center mt-2 text-text-muted">
-        {hovered.row} × {hovered.col} table
+        {t('editor.tablePicker.size', { rows: hovered.row, cols: hovered.col })}
       </p>
     </>
   );
@@ -256,6 +258,7 @@ function FormatBar({
   onAddBlockMath,
   onAddImage,
 }: FormatBarProps) {
+  const { t } = useTranslation();
   const [tableMenuOpen, setTableMenuOpen] = useState(false);
 
   if (!editor) return null;
@@ -265,21 +268,21 @@ function FormatBar({
       <ToolbarButton
         onClick={() => editor.chain().focus().toggleBold().run()}
         isActive={editor.isActive("bold")}
-        title={`Bold (${mod}${isMac ? "" : "+"}B)`}
+        title={t('editor.toolbar.bold', { mod })}
       >
         <BoldIcon className="w-4.5 h-4.5 stroke-[1.5]" />
       </ToolbarButton>
       <ToolbarButton
         onClick={() => editor.chain().focus().toggleItalic().run()}
         isActive={editor.isActive("italic")}
-        title={`Italic (${mod}${isMac ? "" : "+"}I)`}
+        title={t('editor.toolbar.italic', { mod })}
       >
         <ItalicIcon className="w-4.5 h-4.5 stroke-[1.5]" />
       </ToolbarButton>
       <ToolbarButton
         onClick={() => editor.chain().focus().toggleStrike().run()}
         isActive={editor.isActive("strike")}
-        title={`Strikethrough (${mod}${isMac ? "" : "+"}${shift}${isMac ? "" : "+"}S)`}
+        title={t('editor.toolbar.strikethrough', { mod, shift })}
       >
         <StrikethroughIcon className="w-4.5 h-4.5 stroke-[1.5]" />
       </ToolbarButton>
@@ -289,28 +292,28 @@ function FormatBar({
       <ToolbarButton
         onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
         isActive={editor.isActive("heading", { level: 1 })}
-        title={`Heading 1 (${mod}${isMac ? "" : "+"}${alt}${isMac ? "" : "+"}1)`}
+        title={t('editor.toolbar.heading1', { mod, alt })}
       >
         <Heading1Icon className="w-4.5 h-4.5 stroke-[1.5]" />
       </ToolbarButton>
       <ToolbarButton
         onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
         isActive={editor.isActive("heading", { level: 2 })}
-        title={`Heading 2 (${mod}${isMac ? "" : "+"}${alt}${isMac ? "" : "+"}2)`}
+        title={t('editor.toolbar.heading2', { mod, alt })}
       >
         <Heading2Icon className="w-4.5 h-4.5 stroke-[1.5]" />
       </ToolbarButton>
       <ToolbarButton
         onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
         isActive={editor.isActive("heading", { level: 3 })}
-        title={`Heading 3 (${mod}${isMac ? "" : "+"}${alt}${isMac ? "" : "+"}3)`}
+        title={t('editor.toolbar.heading3', { mod, alt })}
       >
         <Heading3Icon className="w-4.5 h-4.5 stroke-[1.5]" />
       </ToolbarButton>
       <ToolbarButton
         onClick={() => editor.chain().focus().toggleHeading({ level: 4 }).run()}
         isActive={editor.isActive("heading", { level: 4 })}
-        title={`Heading 4 (${mod}${isMac ? "" : "+"}${alt}${isMac ? "" : "+"}4)`}
+        title={t('editor.toolbar.heading4', { mod, alt })}
       >
         <Heading4Icon className="w-4.5 h-4.5 stroke-[1.5]" />
       </ToolbarButton>
@@ -320,56 +323,56 @@ function FormatBar({
       <ToolbarButton
         onClick={() => editor.chain().focus().toggleBulletList().run()}
         isActive={editor.isActive("bulletList")}
-        title={`Bullet List (${mod}${isMac ? "" : "+"}${shift}${isMac ? "" : "+"}8)`}
+        title={t('editor.toolbar.bulletList', { mod, shift })}
       >
         <ListIcon className="w-4.5 h-4.5 stroke-[1.5]" />
       </ToolbarButton>
       <ToolbarButton
         onClick={() => editor.chain().focus().toggleOrderedList().run()}
         isActive={editor.isActive("orderedList")}
-        title={`Numbered List (${mod}${isMac ? "" : "+"}${shift}${isMac ? "" : "+"}7)`}
+        title={t('editor.toolbar.numberedList', { mod, shift })}
       >
         <ListOrderedIcon className="w-4.5 h-4.5 stroke-[1.5]" />
       </ToolbarButton>
       <ToolbarButton
         onClick={() => editor.chain().focus().toggleTaskList().run()}
         isActive={editor.isActive("taskList")}
-        title="Task List"
+        title={t('editor.toolbar.taskList')}
       >
         <CheckSquareIcon className="w-4.5 h-4.5 stroke-[1.5]" />
       </ToolbarButton>
       <ToolbarButton
         onClick={() => editor.chain().focus().toggleBlockquote().run()}
         isActive={editor.isActive("blockquote")}
-        title={`Blockquote (${mod}${isMac ? "" : "+"}${shift}${isMac ? "" : "+"}B)`}
+        title={t('editor.toolbar.blockquote', { mod, shift })}
       >
         <QuoteIcon className="w-4.5 h-4.5 stroke-[1.5]" />
       </ToolbarButton>
       <ToolbarButton
         onClick={() => editor.chain().focus().toggleCode().run()}
         isActive={editor.isActive("code")}
-        title={`Inline Code (${mod}${isMac ? "" : "+"}E)`}
+        title={t('editor.toolbar.inlineCode', { mod })}
       >
         <InlineCodeIcon className="w-4.5 h-4.5 stroke-[1.5]" />
       </ToolbarButton>
       <ToolbarButton
         onClick={() => editor.chain().focus().toggleCodeBlock().run()}
         isActive={editor.isActive("codeBlock")}
-        title={`Code Block (${mod}${isMac ? "" : "+"}${alt}${isMac ? "" : "+"}C)`}
+        title={t('editor.toolbar.codeBlock', { mod, alt })}
       >
         <CodeIcon className="w-4.5 h-4.5 stroke-[1.5]" />
       </ToolbarButton>
       <ToolbarButton
         onClick={onAddBlockMath}
         isActive={editor.isActive("blockMath")}
-        title="Block Math"
+        title={t('editor.toolbar.blockMath')}
       >
         <BlockMathIcon className="w-4.5 h-4.5 stroke-[1.5]" />
       </ToolbarButton>
       <ToolbarButton
         onClick={() => editor.chain().focus().setHorizontalRule().run()}
         isActive={false}
-        title="Horizontal Rule"
+        title={t('editor.toolbar.horizontalRule')}
       >
         <SeparatorIcon />
       </ToolbarButton>
@@ -379,22 +382,22 @@ function FormatBar({
       <ToolbarButton
         onClick={onAddLink}
         isActive={editor.isActive("link")}
-        title={`Add Link (${mod}${isMac ? "" : "+"}K)`}
+        title={t('editor.toolbar.addLink', { mod })}
       >
         <LinkIcon className="w-4.5 h-4.5 stroke-[1.5]" />
       </ToolbarButton>
       <ToolbarButton
         onClick={() => editor.chain().focus().insertContent("[[").run()}
         isActive={false}
-        title="Insert Wikilink"
+        title={t('editor.toolbar.insertWikilink')}
       >
         <BracketsIcon className="w-4.5 h-4.5 stroke-[1.5]" />
       </ToolbarButton>
-      <ToolbarButton onClick={onAddImage} isActive={false} title="Add Image">
+      <ToolbarButton onClick={onAddImage} isActive={false} title={t('editor.toolbar.addImage')}>
         <ImageIcon className="w-4.5 h-4.5 stroke-[1.5]" />
       </ToolbarButton>
       <DropdownMenu.Root open={tableMenuOpen} onOpenChange={setTableMenuOpen}>
-        <Tooltip content="Insert Table">
+        <Tooltip content={t('editor.toolbar.insertTable')}>
           <DropdownMenu.Trigger asChild>
             <ToolbarButton isActive={editor.isActive("table")}>
               <TableIcon className="w-4.5 h-4.5 stroke-[1.5]" />
@@ -513,6 +516,7 @@ export function Editor({
 }: EditorProps) {
   // Always call the hook (rules of hooks), but it returns null outside NotesProvider
   const notesCtx = useOptionalNotes();
+  const { t } = useTranslation();
 
   const currentNote = previewMode
     ? previewMode.content !== null
@@ -836,7 +840,7 @@ export function Editor({
           onSubmit: (latex: string) => {
             const trimmed = latex.trim();
             if (!trimmed) {
-              toast.error("Please enter a formula.");
+              toast.error(t('editor.toast.enterFormula'));
               return;
             }
             currentEditor
@@ -967,7 +971,7 @@ export function Editor({
         onSubmit: (latex: string) => {
           const normalizedLatex = latex.trim();
           if (!normalizedLatex) {
-            toast.error("Please enter a formula.");
+            toast.error(t('editor.toast.enterFormula'));
             return;
           }
 
@@ -1061,7 +1065,7 @@ export function Editor({
         defaultLanguage: null,
       }),
       Placeholder.configure({
-        placeholder: "Start writing...",
+        placeholder: t('editor.placeholder'),
       }),
       Link.configure({
         openOnClick: false,
@@ -1201,12 +1205,12 @@ export function Editor({
                   .run();
               } catch (error) {
                 console.error("Failed to paste image:", error);
-                toast.error("Failed to paste image");
+                toast.error(t('editor.toast.failedToPasteImage'));
               }
             };
             reader.onerror = () => {
               console.error("Failed to read clipboard image:", reader.error);
-              toast.error("Failed to read clipboard image");
+              toast.error(t('editor.toast.failedToReadClipboard'));
             };
             reader.readAsDataURL(blob);
             return true; // Handled
@@ -1349,7 +1353,7 @@ export function Editor({
           if (note) {
             notesCtxRef.current?.selectNote(note.id);
           } else {
-            toast.info(`Note "${noteTitle}" does not exist yet`);
+            toast.info(t('editor.toast.noteDoesNotExist', { title: noteTitle }));
           }
         }
         return;
@@ -1368,7 +1372,7 @@ export function Editor({
               console.error("Failed to open link:", error),
             );
           } else {
-            toast.error("Cannot open links with this URL scheme");
+            toast.error(t('editor.toast.invalidUrlScheme'));
           }
         }
       }
@@ -1819,10 +1823,10 @@ export function Editor({
     try {
       const markdown = getMarkdown(editor);
       await invoke("copy_to_clipboard", { text: markdown });
-      toast.success("Copied as Markdown");
+      toast.success(t('editor.toast.copiedMarkdown'));
     } catch (error) {
       console.error("Failed to copy markdown:", error);
-      toast.error("Failed to copy");
+      toast.error(t('editor.toast.failedToCopy'));
     }
   }, [editor, getMarkdown]);
 
@@ -1832,10 +1836,10 @@ export function Editor({
       const markdown = getMarkdown(editor);
       const plainText = plainTextFromMarkdown(markdown);
       await invoke("copy_to_clipboard", { text: plainText });
-      toast.success("Copied as plain text");
+      toast.success(t('editor.toast.copiedPlainText'));
     } catch (error) {
       console.error("Failed to copy plain text:", error);
-      toast.error("Failed to copy");
+      toast.error(t('editor.toast.failedToCopy'));
     }
   }, [editor, getMarkdown]);
 
@@ -1844,10 +1848,10 @@ export function Editor({
     try {
       const html = editor.getHTML();
       await invoke("copy_to_clipboard", { text: html });
-      toast.success("Copied as HTML");
+      toast.success(t('editor.toast.copiedHtml'));
     } catch (error) {
       console.error("Failed to copy HTML:", error);
-      toast.error("Failed to copy");
+      toast.error(t('editor.toast.failedToCopy'));
     }
   }, [editor]);
 
@@ -1858,7 +1862,7 @@ export function Editor({
       await downloadPdf(editor, currentNote.title);
     } catch (error) {
       console.error("Failed to open print dialog:", error);
-      toast.error("Failed to open print dialog");
+      toast.error(t('editor.toast.failedToOpenPrint'));
     }
   }, [editor, currentNote]);
 
@@ -1875,11 +1879,11 @@ export function Editor({
       const markdown = getMarkdown(editor);
       const saved = await downloadMarkdown(markdown, currentNote.title);
       if (saved) {
-        toast.success("Markdown saved successfully");
+        toast.success(t('editor.toast.markdownSaved'));
       }
     } catch (error) {
       console.error("Failed to download markdown:", error);
-      toast.error("Failed to save markdown");
+      toast.error(t('editor.toast.failedToSaveMarkdown'));
     }
   }, [editor, currentNote, getMarkdown]);
 
@@ -2064,7 +2068,7 @@ export function Editor({
             await saveNote(value, currentNote.id);
           } catch (error) {
             console.error("Failed to save note:", error);
-            toast.error("Failed to save note");
+            toast.error(t('editor.toast.failedToSaveNote'));
           } finally {
             setIsSaving(false);
           }
@@ -2117,7 +2121,7 @@ export function Editor({
           <div className="text-center text-text-muted select-none">
             <div
               role="img"
-              aria-label="Note"
+              aria-label={t('editor.emptyState.ariaLabel')}
               className="w-42 aspect-square mx-auto mb-1"
               style={{
                 backgroundColor: "var(--color-text)",
@@ -2132,10 +2136,10 @@ export function Editor({
               }}
             />
             <h1 className="text-2xl text-text font-serif mb-1 tracking-[-0.01em] ">
-              What's on your mind?
+              {t('editor.emptyState.title')}
             </h1>
             <p className="text-sm">
-              Pick up where you left off, or start something new
+              {t('editor.emptyState.subtitle')}
             </p>
             {createNote && (
               <Button
@@ -2144,7 +2148,7 @@ export function Editor({
                 size="md"
                 className="mt-4"
               >
-                New Note{" "}
+                {t('editor.emptyState.newNote')}{" "}
                 <span className="text-text-muted ml-1">
                   {mod}
                   {isMac ? "" : "+"}N
@@ -2175,8 +2179,8 @@ export function Editor({
               onClick={onToggleSidebar}
               title={
                 isSidebarActive
-                  ? `Hide sidebar (${mod}${isMac ? "" : "+"}\\)`
-                  : `Show sidebar (${mod}${isMac ? "" : "+"}\\)`
+                  ? t('editor.hideSidebar', { mod })
+                  : t('editor.showSidebar', { mod })
               }
               className="shrink-0"
             >
@@ -2192,41 +2196,41 @@ export function Editor({
         >
           {hasExternalChanges ? (
             <Tooltip
-              content={`External changes detected (${mod}${isMac ? "" : "+"}R to refresh)`}
+              content={t('editor.externalChanges', { mod })}
             >
               <button
                 onClick={reloadCurrentNote}
                 className="h-7 px-2 flex items-center gap-1 text-xs text-text-muted hover:bg-bg-emphasis rounded transition-colors font-medium"
               >
                 <RefreshCwIcon className="w-4 h-4 stroke-[1.6]" />
-                <span>Refresh</span>
+                <span>{t('editor.refresh')}</span>
               </button>
             </Tooltip>
           ) : isSaving ? (
-            <Tooltip content="Saving...">
+            <Tooltip content={t('editor.saving')}>
               <div className="h-7 w-7 flex items-center justify-center">
                 <SpinnerIcon className="w-4.5 h-4.5 text-text-muted/40 stroke-[1.5] animate-spin" />
               </div>
             </Tooltip>
           ) : (
-            <Tooltip content="All changes saved">
+            <Tooltip content={t('editor.saved')}>
               <div className="h-7 w-7 flex items-center justify-center rounded-full">
                 <CircleCheckIcon className="w-4.5 h-4.5 mt-px stroke-[1.5] text-text-muted/40" />
               </div>
             </Tooltip>
           )}
           {currentNote && pinNote && unpinNote && (
-            <Tooltip content={isPinned ? "Unpin note" : "Pin note"}>
+            <Tooltip content={isPinned ? t('editor.unpinNote') : t('editor.pinNote')}>
               <IconButton
                 onClick={async () => {
                   if (!currentNote) return;
                   try {
                     if (isPinned) {
                       await unpinNote(currentNote.id);
-                      toast.success("Note unpinned");
+                      toast.success(t('editor.noteUnpinned'));
                     } else {
                       await pinNote(currentNote.id);
-                      toast.success("Note pinned");
+                      toast.success(t('editor.notePinned'));
                     }
                     // Reload settings to update isPinned state
                     const updatedSettings = await notesService.getSettings();
@@ -2234,9 +2238,7 @@ export function Editor({
                   } catch (error) {
                     console.error("Failed to pin/unpin note:", error);
                     toast.error(
-                      `Failed to ${isPinned ? "unpin" : "pin"} note: ${
-                        error instanceof Error ? error.message : "Unknown error"
-                      }`,
+                      t('editor.toast.failedToPin'),
                     );
                   }
                 }}
@@ -2251,7 +2253,7 @@ export function Editor({
             </Tooltip>
           )}
           {currentNote && (
-            <Tooltip content={`Find in note (${mod}${isMac ? "" : "+"}F)`}>
+            <Tooltip content={t('editor.findInNote', { mod })}>
               <IconButton onClick={openEditorSearch}>
                 <SearchIcon className="w-4.25 h-4.25 stroke-[1.6]" />
               </IconButton>
@@ -2261,8 +2263,8 @@ export function Editor({
             <Tooltip
               content={
                 sourceMode
-                  ? `View Formatted (${mod}${isMac ? "" : "+"}${shift}${isMac ? "" : "+"}M)`
-                  : `View Markdown Source (${mod}${isMac ? "" : "+"}${shift}${isMac ? "" : "+"}M)`
+                  ? t('editor.viewFormatted', { mod, shift })
+                  : t('editor.viewMarkdownSource', { mod, shift })
               }
             >
               <IconButton onClick={toggleSourceMode}>
@@ -2276,7 +2278,7 @@ export function Editor({
           )}
           <DropdownMenu.Root open={copyMenuOpen} onOpenChange={setCopyMenuOpen}>
             <Tooltip
-              content={`Export (${mod}${isMac ? "" : "+"}${shift}${isMac ? "" : "+"}C)`}
+              content={t('editor.export', { mod, shift })}
             >
               <DropdownMenu.Trigger asChild>
                 <IconButton>
@@ -2305,21 +2307,21 @@ export function Editor({
                   onSelect={handleCopyMarkdown}
                 >
                   <CopyIcon className="w-4 h-4 stroke-[1.6]" />
-                  Copy Markdown
+                  {t('editor.menu.copyMarkdown')}
                 </DropdownMenu.Item>
                 <DropdownMenu.Item
                   className="px-3 py-1.5 text-sm text-text cursor-pointer outline-none hover:bg-bg-muted focus:bg-bg-muted flex items-center gap-2"
                   onSelect={handleCopyPlainText}
                 >
                   <CopyIcon className="w-4 h-4 stroke-[1.6]" />
-                  Copy Plain Text
+                  {t('editor.menu.copyPlainText')}
                 </DropdownMenu.Item>
                 <DropdownMenu.Item
                   className="px-3 py-1.5 text-sm text-text cursor-pointer outline-none hover:bg-bg-muted focus:bg-bg-muted flex items-center gap-2"
                   onSelect={handleCopyHtml}
                 >
                   <CopyIcon className="w-4 h-4 stroke-[1.6]" />
-                  Copy HTML
+                  {t('editor.menu.copyHtml')}
                 </DropdownMenu.Item>
                 <DropdownMenu.Separator className="h-px bg-border my-1" />
                 <DropdownMenu.Item
@@ -2327,23 +2329,23 @@ export function Editor({
                   onSelect={handleDownloadPdf}
                 >
                   <DownloadIcon className="w-4 h-4 stroke-[1.6]" />
-                  Print as PDF
+                  {t('editor.menu.printPdf')}
                 </DropdownMenu.Item>
                 <DropdownMenu.Item
                   className="px-3 py-1.5 text-sm text-text cursor-pointer outline-none hover:bg-bg-muted focus:bg-bg-muted flex items-center gap-2"
                   onSelect={handleDownloadMarkdown}
                 >
                   <DownloadIcon className="w-4 h-4 stroke-[1.6]" />
-                  Export Markdown
+                  {t('editor.menu.exportMarkdown')}
                 </DropdownMenu.Item>
               </DropdownMenu.Content>
             </DropdownMenu.Portal>
           </DropdownMenu.Root>
           {onSaveToFolder && (
-            <Tooltip content="Save in Folder">
+            <Tooltip content={t('editor.saveInFolder')}>
               <IconButton
                 onClick={onSaveToFolder}
-                aria-label="Save in Folder"
+                aria-label={t('editor.saveInFolder')}
                 disabled={saveToFolderDisabled}
               >
                 {saveToFolderDisabled ? (
@@ -2524,7 +2526,7 @@ export function Editor({
                     if (!isFirstColumn) {
                       menuItems.push(
                         await MenuItem.new({
-                          text: "Add Column Before",
+                          text: t('editor.table.addColumnBefore'),
                           action: () =>
                             editor.chain().focus().addColumnBefore().run(),
                         }),
@@ -2532,14 +2534,14 @@ export function Editor({
                     }
                     menuItems.push(
                       await MenuItem.new({
-                        text: "Add Column After",
+                        text: t('editor.table.addColumnAfter'),
                         action: () =>
                           editor.chain().focus().addColumnAfter().run(),
                       }),
                     );
                     menuItems.push(
                       await MenuItem.new({
-                        text: "Delete Column",
+                        text: t('editor.table.deleteColumn'),
                         action: () =>
                           editor.chain().focus().deleteColumn().run(),
                       }),
@@ -2552,7 +2554,7 @@ export function Editor({
                     if (!isFirstRow) {
                       menuItems.push(
                         await MenuItem.new({
-                          text: "Add Row Above",
+                          text: t('editor.table.addRowAbove'),
                           action: () =>
                             editor.chain().focus().addRowBefore().run(),
                         }),
@@ -2560,14 +2562,14 @@ export function Editor({
                     }
                     menuItems.push(
                       await MenuItem.new({
-                        text: "Add Row Below",
+                        text: t('editor.table.addRowBelow'),
                         action: () =>
                           editor.chain().focus().addRowAfter().run(),
                       }),
                     );
                     menuItems.push(
                       await MenuItem.new({
-                        text: "Delete Row",
+                        text: t('editor.table.deleteRow'),
                         action: () => editor.chain().focus().deleteRow().run(),
                       }),
                     );
@@ -2576,14 +2578,14 @@ export function Editor({
                     );
                     menuItems.push(
                       await MenuItem.new({
-                        text: "Toggle Header Row",
+                        text: t('editor.table.toggleHeaderRow'),
                         action: () =>
                           editor.chain().focus().toggleHeaderRow().run(),
                       }),
                     );
                     menuItems.push(
                       await MenuItem.new({
-                        text: "Toggle Header Column",
+                        text: t('editor.table.toggleHeaderColumn'),
                         action: () =>
                           editor.chain().focus().toggleHeaderColumn().run(),
                       }),
@@ -2593,7 +2595,7 @@ export function Editor({
                     );
                     menuItems.push(
                       await MenuItem.new({
-                        text: "Delete Table",
+                        text: t('editor.table.deleteTable'),
                         action: () =>
                           editor.chain().focus().deleteTable().run(),
                       }),
