@@ -1,1 +1,701 @@
-{}
+{
+  "editor": {
+    "placeholder": "Start writing...",
+    "saveInFolder": "Save in Folder",
+    "refresh": "Refresh",
+    "externalChanges": "External changes detected ({{mod}}R to refresh)",
+    "saving": "Saving...",
+    "saved": "All changes saved",
+    "unpinNote": "Unpin note",
+    "pinNote": "Pin note",
+    "noteUnpinned": "Note unpinned",
+    "notePinned": "Note pinned",
+    "findInNote": "Find in note ({{mod}}F)",
+    "hideSidebar": "Hide sidebar ({{mod}}\\)",
+    "showSidebar": "Show sidebar ({{mod}}\\)",
+    "viewFormatted": "View Formatted ({{mod}}{{shift}}M)",
+    "viewMarkdownSource": "View Markdown Source ({{mod}}{{shift}}M)",
+    "export": "Export ({{mod}}{{shift}}C)",
+    "tablePicker": {
+      "size": "{{rows}} × {{cols}} table"
+    },
+    "toolbar": {
+      "bold": "Bold ({{mod}}B)",
+      "italic": "Italic ({{mod}}I)",
+      "strikethrough": "Strikethrough ({{mod}}{{shift}}S)",
+      "heading1": "Heading 1 ({{mod}}{{alt}}1)",
+      "heading2": "Heading 2 ({{mod}}{{alt}}2)",
+      "heading3": "Heading 3 ({{mod}}{{alt}}3)",
+      "heading4": "Heading 4 ({{mod}}{{alt}}4)",
+      "bulletList": "Bullet List ({{mod}}{{shift}}8)",
+      "numberedList": "Numbered List ({{mod}}{{shift}}7)",
+      "taskList": "Task List",
+      "blockquote": "Blockquote ({{mod}}{{shift}}B)",
+      "inlineCode": "Inline Code ({{mod}}E)",
+      "codeBlock": "Code Block ({{mod}}{{alt}}C)",
+      "blockMath": "Block Math",
+      "horizontalRule": "Horizontal Rule",
+      "addLink": "Add Link ({{mod}}K)",
+      "insertWikilink": "Insert Wikilink",
+      "addImage": "Add Image",
+      "insertTable": "Insert Table"
+    },
+    "menu": {
+      "copyMarkdown": "Copy Markdown",
+      "copyPlainText": "Copy Plain Text",
+      "copyHtml": "Copy HTML",
+      "printPdf": "Print as PDF",
+      "exportMarkdown": "Export Markdown"
+    },
+    "emptyState": {
+      "title": "What's on your mind?",
+      "subtitle": "Pick up where you left off, or start something new",
+      "newNote": "New Note",
+      "ariaLabel": "Note"
+    },
+    "table": {
+      "addColumnBefore": "Add Column Before",
+      "addColumnAfter": "Add Column After",
+      "deleteColumn": "Delete Column",
+      "addRowAbove": "Add Row Above",
+      "addRowBelow": "Add Row Below",
+      "deleteRow": "Delete Row",
+      "toggleHeaderRow": "Toggle Header Row",
+      "toggleHeaderColumn": "Toggle Header Column",
+      "deleteTable": "Delete Table"
+    },
+    "linkEditor": {
+      "linkText": "Link text...",
+      "enterUrl": "Enter URL...",
+      "apply": "Apply",
+      "removeLink": "Remove link",
+      "cancel": "Cancel"
+    },
+    "blockMath": {
+      "placeholder": "Enter KaTeX expression...",
+      "apply": "Apply (Cmd/Ctrl+Enter)",
+      "cancel": "Cancel"
+    },
+    "codeBlock": {
+      "preview": "Preview",
+      "edit": "Edit"
+    },
+    "wikilink": {
+      "noMatchingNotes": "No matching notes"
+    },
+    "toast": {
+      "copiedMarkdown": "Copied as Markdown",
+      "copiedPlainText": "Copied as plain text",
+      "copiedHtml": "Copied as HTML",
+      "failedToCopy": "Failed to copy",
+      "failedToOpenPrint": "Failed to open print dialog",
+      "markdownSaved": "Markdown saved successfully",
+      "failedToSaveMarkdown": "Failed to save markdown",
+      "failedToSaveNote": "Failed to save note",
+      "enterFormula": "Please enter a formula.",
+      "failedToPasteImage": "Failed to paste image",
+      "failedToReadClipboard": "Failed to read clipboard image",
+      "invalidUrlScheme": "Cannot open links with this URL scheme",
+      "noteDoesNotExist": "Note \"{{title}}\" does not exist yet"
+    }
+  },
+  "sidebar": {
+    "title": "Notes",
+    "searchNotes": "Search Notes ({{mod}}{{shift}}F)",
+    "newNoteOrFolder": "New Note or Folder",
+    "newNote": "New Note",
+    "newFolder": "New Folder",
+    "newNoteShortcut": "New Note ({{mod}}N)",
+    "searchPlaceholder": "Search notes...",
+    "createFolder": {
+      "title": "Create new folder",
+      "description": "Enter a name for your new folder",
+      "confirm": "Create"
+    },
+    "toast": {
+      "failedToMoveNotes": "Failed to move {{count}} note(s)",
+      "failedToMoveItem": "Failed to move item",
+      "failedToCreateFolder": "Failed to create folder"
+    }
+  },
+  "footer": {
+    "commitMessage": "Quick commit from Scratch",
+    "initGit": "Initialize Git repository",
+    "enableGit": "Enable Git",
+    "branch": "Branch: {{branch}}",
+    "noBranch": "No branch (set up git in settings)",
+    "uncommittedChanges": "You have uncommitted changes",
+    "filesChanged": "Files changed",
+    "errorOccurred": "An error occurred",
+    "syncing": "Syncing...",
+    "syncPullPush": "{{behindCount}} to pull, {{aheadCount}} to push",
+    "syncToPull": "{{count}} commit(s) to pull",
+    "syncToPush": "{{count}} commit(s) to push",
+    "syncedWithRemote": "Synced with remote",
+    "settings": "Settings ({{mod}}, to toggle)",
+    "quickCommit": "Quick commit",
+    "sync": "Sync",
+    "toast": {
+      "changesCommitted": "Changes committed",
+      "failedToCommit": "Failed to commit",
+      "gitInitialized": "Git repository initialized",
+      "failedToInitGit": "Failed to initialize Git"
+    }
+  },
+  "settings": {
+    "general": {
+      "folderLocation": "Folder Location",
+      "folderDescription": "Your notes are stored as markdown files in this folder",
+      "notSet": "Not set",
+      "changeFolder": "Change Folder",
+      "openFolder": "Open Folder",
+      "enableFolders": "Enable Folders",
+      "foldersDescription": "Create and view nested folders to organize your notes. When off, notes are shown in a flat list sorted by date.",
+      "versionControl": "Version Control",
+      "gitDescription": "Track changes and store backups of your notes using Git",
+      "off": "Off",
+      "on": "On",
+      "gitNotAvailable": "Git is not available on this system.",
+      "installGit": "Install Git",
+      "toEnableVC": "to enable version control.",
+      "enableGitDescription": "Enable Git to track changes to your notes with version control. Your changes will be tracked automatically and you can commit and push from the sidebar.",
+      "initGitRepo": "Initialize Git Repository",
+      "status": "Status",
+      "onBranch": "On branch {{branch}}",
+      "gitEnabled": "Git enabled",
+      "remote": "Remote",
+      "remotePlaceholder": "https://github.com/user/repo.git",
+      "saving": "Saving...",
+      "save": "Save",
+      "cancel": "Cancel",
+      "remove": "Remove",
+      "change": "Change",
+      "tracking": "Tracking",
+      "notSetUp": "Not set up",
+      "pushTrackingDescription": "Push your commits and set up tracking for the '{{branch}}' branch.",
+      "pushing": "Pushing...",
+      "pushAndTrack": "Push & track '{{branch}}'",
+      "notConnected": "Not connected",
+      "connecting": "Connecting...",
+      "connect": "Connect",
+      "addRemote": "Add Remote",
+      "errorOccurred": "An error occurred",
+      "changesToCommit": "Changes to commit",
+      "filesChanged": "{{count}} file(s) changed",
+      "commitsToPush": "Commits to push",
+      "commitCount": "{{count}} commit(s)",
+      "commitsToPull": "Commits to pull",
+      "learnSSH": "Learn more about SSH authentication",
+      "dismiss": "Dismiss",
+      "defaultNoteName": "Default Note Name",
+      "defaultNameDescription": "Customize the default name when creating a new note",
+      "untitled": "Untitled",
+      "preview": "Preview: {{name}}",
+      "templateTags": "Add template tags to your name",
+      "templateExamples": "Examples: Note-{{year}}-{{month}}-{{day}}",
+      "invalidTemplate": "Invalid template",
+      "connected": "Connected",
+      "ignoredFolders": "Ignored Folders",
+      "ignoredFoldersDescription": "Folders matching these names are excluded from note discovery and search indexing",
+      "loading": "Loading...",
+      "noFoldersIgnored": "No folders ignored — all markdown files will be indexed",
+      "addFolderPlaceholder": "Add folder name...",
+      "add": "Add",
+      "resetToDefaults": "Reset to defaults",
+      "removePattern": "Remove {{pattern}}",
+      "remoteInstructions": "To get your remote URL:",
+      "remoteStep1": "Create a repository on GitHub, GitLab, etc.",
+      "remoteStep2": "Copy the repository URL (HTTPS or SSH)",
+      "remoteStep3": "Click \"Add Remote\" and paste the URL",
+      "remoteExample": "Example: https://github.com/username/my-notes.git",
+      "toast": {
+        "defaultNameSaved": "Default name saved",
+        "failedToSaveDefaultName": "Failed to save default name",
+        "failedToSelectFolder": "Failed to select folder",
+        "failedToOpenFolder": "Failed to open folder",
+        "failedToOpenUrl": "Failed to open URL",
+        "failedToToggleGit": "Failed to update version control setting",
+        "failedToToggleFolders": "Failed to update folder setting",
+        "searchIndexFailed": "Search index rebuild failed — search results may be stale",
+        "failedToSaveIgnoredFolders": "Failed to save ignored folders",
+        "invalidIgnorePattern": "Ignore patterns must be single directory names (no paths)",
+        "alreadyInList": "Already in the list"
+      }
+    },
+    "appearance": {
+      "theme": "Theme",
+      "light": "Light",
+      "dark": "Dark",
+      "system": "System",
+      "systemModeDescription": "Currently using {{mode}} mode based on system preference",
+      "customizeLightColors": "Customize light colors",
+      "customizeDarkColors": "Customize dark colors",
+      "customizeColors": "Customize colors",
+      "resetAll": "Reset all",
+      "typography": "Typography",
+      "resetDefaults": "Reset to defaults",
+      "font": "Font",
+      "fontSans": "Sans",
+      "fontSerif": "Serif",
+      "fontMono": "Mono",
+      "size": "Size",
+      "boldWeight": "Bold Weight",
+      "weightMedium": "Medium",
+      "weightSemibold": "Semibold",
+      "weightBold": "Bold",
+      "weightExtraBold": "Extra Bold",
+      "lineHeight": "Line Height",
+      "textDirection": "Text Direction",
+      "dirAuto": "Auto",
+      "dirLtr": "LTR",
+      "dirRtl": "RTL",
+      "pageWidth": "Page Width",
+      "widthNarrow": "Narrow",
+      "widthNormal": "Normal",
+      "widthWide": "Wide",
+      "widthFull": "Full",
+      "widthCustom": "Custom",
+      "customWidth": "Custom Width",
+      "px": "px",
+      "interfaceZoom": "Interface Zoom",
+      "zoomOut": "Zoom out",
+      "zoomIn": "Zoom in",
+      "preview": "Preview",
+      "colorBackground": "Background",
+      "colorSidebar": "Sidebar",
+      "colorHoverFill": "Hover & Subtle Fill",
+      "colorStrongFill": "Strong Fill",
+      "colorText": "Text",
+      "colorSecondaryText": "Secondary Text",
+      "colorAccent": "Primary & Buttons",
+      "colorBorder": "Borders",
+      "colorSelection": "Selection Highlight",
+      "groupSurfaces": "Surfaces",
+      "groupTextUI": "Text & UI"
+    },
+    "about": {
+      "version": "Version",
+      "versionDescription": "You are currently using Scratch v{{version}}",
+      "checking": "Checking...",
+      "checkForUpdates": "Check for Updates",
+      "aboutScratch": "About Scratch",
+      "description": "Scratch is a minimalist markdown scratchpad for capturing quick thoughts, todos, and ideas. We're offline-first, keyboard-optimized, AI-compatible, and open source with no cloud, no accounts, and no subscriptions. Learn more on",
+      "ourWebsite": "our website",
+      "createdBy": "Created and maintained by",
+      "author": "Eric Li",
+      "contributors": "with moral support from his cat, Mochi, and actual support from many contributors on GitHub.",
+      "viewOnGitHub": "View on GitHub",
+      "submitFeedback": "Submit Feedback",
+      "toast": {
+        "latestVersion": "You're on the latest version!",
+        "checkFailed": "Could not check for updates. Try again later.",
+        "failedToOpenUrl": "Failed to open URL"
+      }
+    },
+    "tools": {
+      "aiProviders": "AI Providers",
+      "aiDescription": "Edit notes with AI from the command palette ({{mod}}P while editing a note)",
+      "detectingProviders": "Detecting installed providers...",
+      "providerClaude": "Claude Code",
+      "providerCodex": "OpenAI Codex",
+      "providerOpenCode": "OpenCode",
+      "providerOllama": "Ollama",
+      "installed": "Installed",
+      "install": "Install",
+      "cliTool": "CLI Tool",
+      "cliDescription": "Open notes from the terminal with the scratch command",
+      "cliStatusFailed": "Failed to check CLI status. Please restart the app.",
+      "status": "Status",
+      "path": "Path",
+      "clickToCopy": "Click to copy path",
+      "usageHint": "scratch file.md # open note",
+      "usageHintFolder": "scratch . # open folder",
+      "usageHintApp": "scratch # launch app",
+      "uninstalling": "Uninstalling...",
+      "uninstallCli": "Uninstall CLI Tool",
+      "installing": "Installing...",
+      "installCli": "Install CLI Tool",
+      "toast": {
+        "pathCopied": "Path copied to clipboard",
+        "failedToCopyPath": "Failed to copy path",
+        "cliInstalled": "CLI tool installed. Open a new terminal to use `scratch`.",
+        "failedToInstallCli": "Failed to install CLI tool",
+        "cliUninstalled": "CLI tool uninstalled.",
+        "failedToUninstallCli": "Failed to uninstall CLI tool"
+      }
+    }
+  },
+  "commandPalette": {
+    "placeholder": "Search notes or type a command...",
+    "noResults": "No results found",
+    "commands": "Commands",
+    "notes": "Notes",
+    "newNote": "New Note",
+    "newFolder": "New Folder",
+    "pinNote": "Pin Current Note",
+    "unpinNote": "Unpin Current Note",
+    "aiEditClaude": "Edit with Claude Code",
+    "aiEditCodex": "Edit with OpenAI Codex",
+    "aiEditOpenCode": "Edit with OpenCode",
+    "aiEditOllama": "Edit with Ollama",
+    "duplicateNote": "Duplicate Current Note",
+    "deleteNote": "Delete Current Note",
+    "copyMarkdown": "Copy Markdown",
+    "copyPlainText": "Copy Plain Text",
+    "copyHtml": "Copy HTML",
+    "printPdf": "Print as PDF",
+    "exportMarkdown": "Export Markdown",
+    "gitCommit": "Git: Quick Commit",
+    "gitSync": "Git: Sync (Pull and Push)",
+    "exitFocusMode": "Exit Focus Mode",
+    "enterFocusMode": "Enter Focus Mode",
+    "toggleSource": "Toggle Markdown Source",
+    "openFolder": "Open Notes Folder",
+    "keyboardShortcuts": "Keyboard Shortcuts",
+    "settings": "Settings",
+    "themeLight": "Switch Theme to Light Mode",
+    "themeDark": "Switch Theme to Dark Mode",
+    "themeSystem": "Switch Theme to System Mode",
+    "deleteDialog": {
+      "title": "Delete note?",
+      "description": "This will permanently delete the note and all its content. This action cannot be undone.",
+      "cancel": "Cancel",
+      "delete": "Delete"
+    },
+    "toast": {
+      "copiedMarkdown": "Copied as Markdown",
+      "copiedPlainText": "Copied as plain text",
+      "copiedHtml": "Copied as HTML",
+      "editorUnavailable": "Editor not available",
+      "failedToCopy": "Failed to copy",
+      "failedToOpenPrint": "Failed to open print dialog",
+      "noNoteSelected": "No note selected",
+      "markdownSaved": "Markdown saved successfully",
+      "failedToSaveMarkdown": "Failed to save markdown",
+      "changesCommitted": "Changes committed",
+      "failedToCommit": "Failed to commit",
+      "failedToOpenFolder": "Failed to open folder",
+      "failedToPin": "Failed to pin/unpin note",
+      "failedToDelete": "Failed to delete note"
+    }
+  },
+  "notes": {
+    "date": {
+      "yesterday": "Yesterday",
+      "daysAgo": "{{count}} days ago"
+    },
+    "loading": "Loading...",
+    "noResults": "No results found",
+    "noNotes": "No notes yet",
+    "contextMenu": {
+      "pin": "Pin",
+      "unpin": "Unpin",
+      "duplicate": "Duplicate",
+      "copyFilepath": "Copy Filepath",
+      "delete": "Delete"
+    },
+    "deleteDialog": {
+      "title": "Delete note?",
+      "description": "This will permanently delete the note and all its content. This action cannot be undone.",
+      "cancel": "Cancel",
+      "delete": "Delete"
+    },
+    "tree": {
+      "contextMenu": {
+        "pin": "Pin",
+        "unpin": "Unpin",
+        "duplicate": "Duplicate",
+        "copyFilepath": "Copy Filepath",
+        "moveToParent": "Move to Parent Folder",
+        "deleteNote": "Delete",
+        "newNote": "New Note",
+        "newSubfolder": "New Subfolder",
+        "rename": "Rename",
+        "deleteFolder": "Delete Folder"
+      },
+      "empty": "Empty",
+      "deleteFolderDialog": {
+        "title": "Delete folder?",
+        "description": "This will permanently delete the folder and all notes inside it. This action cannot be undone.",
+        "cancel": "Cancel",
+        "deleting": "Deleting…",
+        "delete": "Delete"
+      },
+      "renameDialog": {
+        "title": "Rename Folder",
+        "description": "Enter a new name for the folder",
+        "confirm": "Rename"
+      },
+      "subfolderDialog": {
+        "title": "Create new subfolder",
+        "description": "Enter a name for your new subfolder",
+        "confirm": "Create"
+      },
+      "deleteNoteDialog": {
+        "title": "Delete note?",
+        "description": "This will permanently delete the note and all its content. This action cannot be undone.",
+        "cancel": "Cancel",
+        "deleting": "Deleting…",
+        "delete": "Delete"
+      },
+      "toast": {
+        "failedToDuplicate": "Failed to duplicate: {{error}}",
+        "failedToMove": "Failed to move: {{error}}",
+        "failedToDeleteFolder": "Failed to delete folder",
+        "failedToDeleteNote": "Failed to delete note",
+        "failedToRenameFolder": "Failed to rename folder",
+        "failedToCreateSubfolder": "Failed to create subfolder"
+      }
+    }
+  },
+  "dialog": {
+    "folderName": {
+      "defaultTitle": "Create New Folder",
+      "defaultDescription": "Enter a name for your new folder",
+      "defaultConfirm": "Create",
+      "placeholder": "Folder name",
+      "cancel": "Cancel"
+    }
+  },
+  "ai": {
+    "providerNameClaude": "Claude",
+    "providerNameCodex": "Codex",
+    "providerNameOpenCode": "OpenCode",
+    "providerNameOllama": "Ollama",
+    "cliNameClaude": "Claude Code CLI",
+    "cliNameCodex": "OpenAI Codex CLI",
+    "cliNameOpenCode": "OpenCode CLI",
+    "cliNameOllama": "Ollama CLI",
+    "editModal": {
+      "placeholder": "Describe how to edit the current note...",
+      "notInstalled": "{{cliName}} not installed",
+      "editing": "{{providerName}} is editing your note...",
+      "notFound": "{{cliName}} Not Found",
+      "needToInstall": "You'll need {{cliName}} to use this feature. Visit {{providerName}} to install it, then restart Scratch.",
+      "goBack": "to go back",
+      "toSubmit": "to submit",
+      "checking": "Checking for {{cliName}}...",
+      "ollamaModel": "Ollama model:",
+      "defaultModel": "qwen3:8b",
+      "howItWorks": "How does it work?",
+      "howItWorksDescription": "{{providerName}} will edit the current note directly using your local {{cliName}}. You'll be able to undo changes."
+    },
+    "toast": {
+      "editComplete": "AI Edit Complete",
+      "undoHint": "Use {{mod}}+Z to undo changes"
+    }
+  },
+  "search": {
+    "placeholder": "Find in note...",
+    "notFound": "Not found",
+    "previousMatch": "Previous match ({{shift}}↵)",
+    "nextMatch": "Next match (↵)",
+    "close": "Close (Esc)"
+  },
+  "slashCommand": {
+    "text": {
+      "title": "Text",
+      "description": "Plain body text"
+    },
+    "h1": {
+      "title": "Heading 1",
+      "description": "Large section heading"
+    },
+    "h2": {
+      "title": "Heading 2",
+      "description": "Medium section heading"
+    },
+    "h3": {
+      "title": "Heading 3",
+      "description": "Small section heading"
+    },
+    "h4": {
+      "title": "Heading 4",
+      "description": "Smallest section heading"
+    },
+    "bulletList": {
+      "title": "Bullet List",
+      "description": "Unordered list"
+    },
+    "numberedList": {
+      "title": "Numbered List",
+      "description": "Ordered list"
+    },
+    "taskList": {
+      "title": "Task List",
+      "description": "List with checkboxes"
+    },
+    "blockquote": {
+      "title": "Blockquote",
+      "description": "Block quotation"
+    },
+    "codeBlock": {
+      "title": "Code Block",
+      "description": "Fenced code block"
+    },
+    "mermaid": {
+      "title": "Mermaid Diagram",
+      "description": "Mermaid diagram block"
+    },
+    "blockMath": {
+      "title": "Block Math",
+      "description": "Display math block"
+    },
+    "horizontalRule": {
+      "title": "Horizontal Rule",
+      "description": "Visual divider"
+    },
+    "image": {
+      "title": "Image",
+      "description": "Insert from file"
+    },
+    "table": {
+      "title": "Table",
+      "description": "Insert a 3×3 table"
+    },
+    "wikilink": {
+      "title": "Wikilink",
+      "description": "Link to another note"
+    }
+  },
+  "shortcuts": {
+    "title": "Shortcuts",
+    "close": "Close",
+    "category": {
+      "navigation": "Navigation",
+      "notes": "Notes",
+      "editor": "Editor",
+      "markdownSyntax": "Markdown Syntax"
+    },
+    "cmd": {
+      "commandPalette": "Command palette",
+      "searchNotes": "Search notes",
+      "toggleSidebar": "Toggle sidebar",
+      "settings": "Settings",
+      "keyboardShortcuts": "Keyboard shortcuts",
+      "closeWindow": "Close window",
+      "zoomIn": "Zoom in",
+      "zoomOut": "Zoom out",
+      "resetZoom": "Reset zoom",
+      "newNote": "New note",
+      "duplicateNote": "Duplicate note",
+      "reloadNote": "Reload note",
+      "deleteNote": "Delete note",
+      "navigateNotes": "Navigate notes",
+      "focusEditor": "Focus editor",
+      "backToList": "Back to note list",
+      "bold": "Bold",
+      "italic": "Italic",
+      "addEditLink": "Add / edit link",
+      "findInNote": "Find in note",
+      "copyExport": "Copy & Export",
+      "printPdf": "Print / Export as PDF",
+      "markdownSource": "Markdown source",
+      "focusMode": "Focus mode",
+      "slashCommands": "Slash commands"
+    },
+    "md": {
+      "h1": "Heading 1",
+      "h2": "Heading 2",
+      "h3": "Heading 3",
+      "boldText": "Bold text",
+      "italicText": "Italic text",
+      "strikethrough": "Strikethrough",
+      "bulletList": "Bullet list",
+      "numberedList": "Numbered list",
+      "taskList": "Task list",
+      "blockquote": "Blockquote",
+      "inlineCode": "Inline code",
+      "codeBlock": "Code block",
+      "horizontalRule": "Horizontal rule",
+      "link": "Link",
+      "wikilink": "Wikilink",
+      "image": "Image",
+      "table": "Table",
+      "blockMath": "Block math",
+      "mermaidDiagram": "Mermaid diagram"
+    }
+  },
+  "app": {
+    "initializing": "Initializing Scratch...",
+    "unknownError": "Unknown error",
+    "toast": {
+      "noNoteSelected": "No note selected",
+      "aiEditFailed": "AI Edit Failed",
+      "zoom": "Zoom {{percent}}%"
+    },
+    "aiOverlay": {
+      "codex": "Codex is editing your note...",
+      "openCode": "OpenCode is editing your note...",
+      "ollama": "Ollama is editing your note...",
+      "claude": "Claude is editing your note..."
+    },
+    "update": {
+      "title": "Update Available: v{{version}}",
+      "updateNow": "Update Now",
+      "installing": "Installing...",
+      "installed": "Update installed! Restart Scratch to apply.",
+      "failed": "Update failed. Please try again later."
+    }
+  },
+  "git": {
+    "error": {
+      "getStatus": "Failed to get git status",
+      "updateSetting": "Failed to update git setting",
+      "init": "Failed to initialize git",
+      "commit": "Failed to commit",
+      "push": "Failed to push",
+      "pull": "Failed to pull",
+      "sync": "Failed to sync",
+      "addRemote": "Failed to add remote",
+      "updateRemote": "Failed to update remote",
+      "removeRemote": "Failed to remove remote"
+    },
+    "message": {
+      "pulled": "Pulled latest changes",
+      "upToDate": "Already up to date",
+      "pulledButPushFailed": "Pulled changes, but push failed: {{error}}",
+      "syncedBoth": "Synced — pulled and pushed",
+      "pushed": "Pushed to remote"
+    }
+  },
+  "folderPicker": {
+    "dialogTitle": "Choose Notes Folder",
+    "ariaLabel": "Folders",
+    "welcome": "Welcome to Scratch",
+    "description": "Scratch is an offline-first notes app. Your notes are simply stored on your computer as markdown files.",
+    "chooseFolder": "Choose your notes folder",
+    "canChangeLater": "You can change this later"
+  },
+  "preview": {
+    "toast": {
+      "failedToLoad": "Failed to load file: {{error}}",
+      "failedToSave": "Failed to save: {{error}}",
+      "failedToReload": "Failed to reload: {{error}}",
+      "failedToSaveToFolder": "Failed to save to folder: {{error}}"
+    }
+  },
+  "context": {
+    "error": {
+      "loadNotes": "Failed to load notes",
+      "loadNote": "Failed to load note",
+      "reloadNote": "Failed to reload note",
+      "createNote": "Failed to create note",
+      "saveNote": "Failed to save note",
+      "deleteNote": "Failed to delete note",
+      "duplicateNote": "Failed to duplicate note",
+      "pinNote": "Failed to pin note",
+      "unpinNote": "Failed to unpin note",
+      "createFolder": "Failed to create folder",
+      "deleteFolder": "Failed to delete folder",
+      "renameFolder": "Failed to rename folder",
+      "moveNote": "Failed to move note",
+      "moveFolder": "Failed to move folder",
+      "setNotesFolder": "Failed to set notes folder",
+      "syncNotesFolder": "Failed to sync notes folder",
+      "initialize": "Failed to initialize",
+      "readRenamedNote": "Failed to read renamed note",
+      "readMovedNote": "Failed to read moved note"
+    }
+  }
+}
