@@ -16,10 +16,11 @@ import {
   XIcon,
 } from "../icons";
 import type { Settings } from "../../types/note";
+import { useTranslation } from "../../i18n/useTranslation";
 
 // Format remote URL for display - extract user/repo from full URL
-function formatRemoteUrl(url: string | null): string {
-  if (!url) return "Connected";
+function formatRemoteUrl(url: string | null, t: (key: string) => string): string {
+  if (!url) return t("settings.general.connected");
   // Extract repo path from URL
   // SSH: git@github.com:user/repo.git
   // HTTPS: https://github.com/user/repo.git
@@ -45,6 +46,7 @@ function getRemoteWebUrl(url: string | null): string | null {
 }
 
 export function GeneralSettingsSection() {
+  const { t } = useTranslation();
   const { notesFolder, setNotesFolder } = useNotes();
   const { reloadSettings } = useTheme();
   const {
@@ -114,10 +116,10 @@ export function GeneralSettingsSection() {
           defaultNoteName: noteTemplate || undefined,
         },
       });
-      toast.success("Default name saved");
+      toast.success(t("settings.general.toast.defaultNameSaved"));
     } catch (error) {
       console.error("Failed to save default name:", error);
-      toast.error("Failed to save default name");
+      toast.error(t("settings.general.toast.failedToSaveDefaultName"));
     }
   };
 
@@ -134,7 +136,7 @@ export function GeneralSettingsSection() {
       }
     } catch (err) {
       console.error("Failed to select folder:", err);
-      toast.error("Failed to select folder");
+      toast.error(t("settings.general.toast.failedToSelectFolder"));
     }
   };
 
@@ -144,7 +146,7 @@ export function GeneralSettingsSection() {
       await invoke("open_in_file_manager", { path: notesFolder });
     } catch (err) {
       console.error("Failed to open folder:", err);
-      toast.error("Failed to open folder");
+      toast.error(t("settings.general.toast.failedToOpenFolder"));
     }
   };
 
@@ -153,13 +155,13 @@ export function GeneralSettingsSection() {
       await invoke("open_url_safe", { url });
     } catch (err) {
       console.error("Failed to open URL:", err);
-      toast.error(err instanceof Error ? err.message : "Failed to open URL");
+      toast.error(err instanceof Error ? err.message : t("settings.general.toast.failedToOpenUrl"));
     }
   };
 
   // Format path for display - truncate middle if too long
   const formatPath = (path: string | null): string => {
-    if (!path) return "Not set";
+    if (!path) return t("settings.general.notSet");
     const maxLength = 50;
     if (path.length <= maxLength) return path;
 
@@ -231,7 +233,7 @@ export function GeneralSettingsSection() {
 
     const success = await setGitEnabled(enabled);
     if (!success) {
-      toast.error("Failed to update version control setting");
+      toast.error(t("settings.general.toast.failedToToggleGit"));
       return;
     }
 
@@ -246,9 +248,9 @@ export function GeneralSettingsSection() {
     <div className="space-y-8 py-8">
       {/* Folder Location */}
       <section className="pb-2">
-        <h2 className="text-xl font-medium mb-0.5">Folder Location</h2>
+        <h2 className="text-xl font-medium mb-0.5">{t("settings.general.folderLocation")}</h2>
         <p className="text-sm text-text-muted mb-4">
-          Your notes are stored as markdown files in this folder
+          {t("settings.general.folderDescription")}
         </p>
         <div className="flex items-center gap-2.5 p-2.5 rounded-[10px] border border-border mb-2.5">
           <div className="p-2 rounded-md bg-bg-muted">
@@ -269,7 +271,7 @@ export function GeneralSettingsSection() {
             className="gap-1.25"
           >
             <FoldersIcon className="w-4.5 h-4.5 stroke-[1.5]" />
-            Change Folder
+            {t("settings.general.changeFolder")}
           </Button>
           {notesFolder && (
             <Button
@@ -278,7 +280,7 @@ export function GeneralSettingsSection() {
               size="md"
               className="gap-1.25 text-text"
             >
-              Open Folder
+              {t("settings.general.openFolder")}
             </Button>
           )}
         </div>
@@ -292,11 +294,10 @@ export function GeneralSettingsSection() {
         <div className="flex items-center justify-between gap-6">
           <div className="flex flex-col gap-0.75">
             <div className="flex items-center gap-2">
-              <h2 className="text-xl font-medium">Enable Folders</h2>
+              <h2 className="text-xl font-medium">{t("settings.general.enableFolders")}</h2>
             </div>
             <p className="text-sm text-text-muted max-w-lg">
-              Create and view nested folders to organize your notes. When off,
-              notes are shown in a flat list sorted by date.
+              {t("settings.general.foldersDescription")}
             </p>
           </div>
           <FoldersToggle />
@@ -310,9 +311,9 @@ export function GeneralSettingsSection() {
       <section className="pb-2 flex flex-col gap-4">
         <div className="flex items-center justify-between gap-6">
           <div className="flex flex-col gap-0.75">
-            <h2 className="text-xl font-medium">Version Control</h2>
+            <h2 className="text-xl font-medium">{t("settings.general.versionControl")}</h2>
             <p className="text-sm text-text-muted max-w-lg">
-              Track changes and store backups of your notes using Git
+              {t("settings.general.gitDescription")}
             </p>
           </div>
           <div className="flex gap-1 p-1 rounded-[10px] border border-border">
@@ -322,7 +323,7 @@ export function GeneralSettingsSection() {
               size="xs"
               disabled={isUpdatingGitEnabled}
             >
-              Off
+              {t("settings.general.off")}
             </Button>
             <Button
               onClick={() => handleToggleGitEnabled(true)}
@@ -330,23 +331,23 @@ export function GeneralSettingsSection() {
               size="xs"
               disabled={isUpdatingGitEnabled}
             >
-              On
+              {t("settings.general.on")}
             </Button>
           </div>
         </div>
         {!gitEnabled ? null : !gitAvailable ? (
           <div className="bg-bg-secondary rounded-[10px] border border-border p-4">
             <p className="text-sm text-text-muted">
-              Git is not available on this system.{" "}
+              {t("settings.general.gitNotAvailable")}{" "}
               <a
                 href="https://git-scm.com/downloads"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-text-muted border-b border-text-muted/50 hover:text-text hover:border-text cursor-pointer transition-colors"
               >
-                Install Git
+                {t("settings.general.installGit")}
               </a>{" "}
-              to enable version control.
+              {t("settings.general.toEnableVC")}
             </p>
           </div>
         ) : isLoading ? (
@@ -356,9 +357,7 @@ export function GeneralSettingsSection() {
         ) : !status?.isRepo ? (
           <div className="bg-bg-secondary rounded-[10px] border border-border p-4">
             <p className="text-sm text-text-muted mb-2">
-              Enable Git to track changes to your notes with version control.
-              Your changes will be tracked automatically and you can commit and
-              push from the sidebar.
+              {t("settings.general.enableGitDescription")}
             </p>
             <Button
               onClick={initRepo}
@@ -366,7 +365,7 @@ export function GeneralSettingsSection() {
               variant="outline"
               size="md"
             >
-              Initialize Git Repository
+              {t("settings.general.initGitRepo")}
             </Button>
           </div>
         ) : (
@@ -374,11 +373,11 @@ export function GeneralSettingsSection() {
             <div className="rounded-[10px] border border-border p-4 space-y-2.5">
               {/* Branch status */}
               <div className="flex items-center justify-between">
-                <span className="text-sm text-text font-medium">Status</span>
+                <span className="text-sm text-text font-medium">{t("settings.general.status")}</span>
                 <span className="text-sm text-text-muted">
                   {status.currentBranch
-                    ? `On branch ${status.currentBranch}`
-                    : "Git enabled"}
+                    ? t("settings.general.onBranch", { branch: status.currentBranch })
+                    : t("settings.general.gitEnabled")}
                 </span>
               </div>
 
@@ -388,7 +387,7 @@ export function GeneralSettingsSection() {
                   {isEditingRemote ? (
                     <div className="space-y-2">
                       <span className="text-sm text-text font-medium">
-                        Remote
+                        {t("settings.general.remote")}
                       </span>
                       <Input
                         type="text"
@@ -398,7 +397,7 @@ export function GeneralSettingsSection() {
                           if (e.key === "Enter") handleSaveRemoteUrl();
                           if (e.key === "Escape") handleCancelEditRemote();
                         }}
-                        placeholder="https://github.com/user/repo.git"
+                        placeholder={t("settings.general.remotePlaceholder")}
                         autoFocus
                       />
                       <div className="flex gap-2">
@@ -414,10 +413,10 @@ export function GeneralSettingsSection() {
                           {isAddingRemote ? (
                             <>
                               <SpinnerIcon className="w-3 h-3 mr-2 animate-spin" />
-                              Saving...
+                              {t("settings.general.saving")}
                             </>
                           ) : (
-                            "Save"
+                            t("settings.general.save")
                           )}
                         </Button>
                         <Button
@@ -426,7 +425,7 @@ export function GeneralSettingsSection() {
                           onClick={handleCancelEditRemote}
                           disabled={isAddingRemote}
                         >
-                          Cancel
+                          {t("settings.general.cancel")}
                         </Button>
                         <Button
                           variant="ghost"
@@ -435,7 +434,7 @@ export function GeneralSettingsSection() {
                           disabled={isAddingRemote}
                           className="ml-auto text-red-500 hover:text-red-600 hover:bg-red-500/10"
                         >
-                          Remove
+                          {t("settings.general.remove")}
                         </Button>
                       </div>
                       <RemoteInstructions />
@@ -443,7 +442,7 @@ export function GeneralSettingsSection() {
                   ) : (
                     <div className="flex items-center justify-between gap-2">
                       <span className="text-sm text-text font-medium">
-                        Remote
+                        {t("settings.general.remote")}
                       </span>
                       <div className="flex items-center gap-2 min-w-0">
                         {getRemoteWebUrl(status.remoteUrl) ? (
@@ -455,7 +454,7 @@ export function GeneralSettingsSection() {
                             title={status.remoteUrl || undefined}
                           >
                             <span className="truncate">
-                              {formatRemoteUrl(status.remoteUrl)}
+                              {formatRemoteUrl(status.remoteUrl, t)}
                             </span>
                             <ExternalLinkIcon className="w-3.25 h-3.25 shrink-0" />
                           </button>
@@ -464,7 +463,7 @@ export function GeneralSettingsSection() {
                             className="text-sm text-text-muted truncate max-w-50"
                             title={status.remoteUrl || undefined}
                           >
-                            {formatRemoteUrl(status.remoteUrl)}
+                            {formatRemoteUrl(status.remoteUrl, t)}
                           </span>
                         )}
                         <button
@@ -472,7 +471,7 @@ export function GeneralSettingsSection() {
                           onClick={handleStartEditRemote}
                           className="text-sm text-text font-medium hover:text-text-muted transition-colors cursor-pointer"
                         >
-                          Change
+                          {t("settings.general.change")}
                         </button>
                       </div>
                     </div>
@@ -482,7 +481,7 @@ export function GeneralSettingsSection() {
                   {status.hasUpstream ? (
                     <div className="flex items-center justify-between">
                       <span className="text-sm text-text font-medium">
-                        Tracking
+                        {t("settings.general.tracking")}
                       </span>
                       <span className="text-sm text-text-muted">
                         origin/{status.currentBranch}
@@ -493,15 +492,14 @@ export function GeneralSettingsSection() {
                       <div className="pt-3 border-t border-border border-dashed space-y-0.5">
                         <div className="flex items-center justify-between">
                           <span className="text-sm text-text font-medium">
-                            Tracking
+                            {t("settings.general.tracking")}
                           </span>
                           <span className="text-sm font-medium text-amber-500">
-                            Not set up
+                            {t("settings.general.notSetUp")}
                           </span>
                         </div>
                         <p className="text-sm text-text-muted mb-2">
-                          Push your commits and set up tracking for the '
-                          {status.currentBranch}' branch.
+                          {t("settings.general.pushTrackingDescription", { branch: status.currentBranch })}
                         </p>
                         <Button
                           onClick={handlePushWithUpstream}
@@ -512,10 +510,10 @@ export function GeneralSettingsSection() {
                           {isPushing ? (
                             <>
                               <SpinnerIcon className="w-3.25 h-3.25 mr-2 animate-spin" />
-                              Pushing...
+                              {t("settings.general.pushing")}
                             </>
                           ) : (
-                            `Push & track '${status.currentBranch}'`
+                            t("settings.general.pushAndTrack", { branch: status.currentBranch })
                           )}
                         </Button>
                       </div>
@@ -526,10 +524,10 @@ export function GeneralSettingsSection() {
                 <div className="pt-3 border-t border-border border-dashed space-y-2.5">
                   <div className="flex items-center justify-between">
                     <span className="text-sm text-text font-medium">
-                      Remote
+                      {t("settings.general.remote")}
                     </span>
                     <span className="text-sm font-medium text-red-500">
-                      Not connected
+                      {t("settings.general.notConnected")}
                     </span>
                   </div>
 
@@ -543,7 +541,7 @@ export function GeneralSettingsSection() {
                           if (e.key === "Enter") handleAddRemote();
                           if (e.key === "Escape") handleCancelRemote();
                         }}
-                        placeholder="https://github.com/user/repo.git"
+                        placeholder={t("settings.general.remotePlaceholder")}
                         autoFocus
                       />
                       <div className="flex gap-2">
@@ -555,10 +553,10 @@ export function GeneralSettingsSection() {
                           {isAddingRemote ? (
                             <>
                               <SpinnerIcon className="w-3 h-3 mr-2 animate-spin" />
-                              Connecting...
+                              {t("settings.general.connecting")}
                             </>
                           ) : (
-                            "Connect"
+                            t("settings.general.connect")
                           )}
                         </Button>
                         <Button
@@ -566,7 +564,7 @@ export function GeneralSettingsSection() {
                           size="sm"
                           onClick={handleCancelRemote}
                         >
-                          Cancel
+                          {t("settings.general.cancel")}
                         </Button>
                       </div>
                       <RemoteInstructions />
@@ -579,7 +577,7 @@ export function GeneralSettingsSection() {
                         size="md"
                       >
                         <CloudPlusIcon className="w-4 h-4 stroke-[1.7] mr-1.5" />
-                        Add Remote
+                        {t("settings.general.addRemote")}
                       </Button>
                       <RemoteInstructions />
                     </>
@@ -590,9 +588,9 @@ export function GeneralSettingsSection() {
               {/* Stats — hidden whenever there's an error, since counts may be stale or misleading alongside it */}
               {lastError ? (
                 <div className="flex items-center justify-between pt-3 border-t border-border border-dashed">
-                  <span className="text-sm text-text font-medium">Status</span>
+                  <span className="text-sm text-text font-medium">{t("settings.general.status")}</span>
                   <span className="text-sm text-text-muted">
-                    An error occurred
+                    {t("settings.general.errorOccurred")}
                   </span>
                 </div>
               ) : (
@@ -600,11 +598,10 @@ export function GeneralSettingsSection() {
                   {status.changedCount > 0 && (
                     <div className="flex items-center justify-between pt-3 border-t border-border border-dashed">
                       <span className="text-sm text-text font-medium">
-                        Changes to commit
+                        {t("settings.general.changesToCommit")}
                       </span>
                       <span className="text-sm text-text-muted">
-                        {status.changedCount} file
-                        {status.changedCount === 1 ? "" : "s"} changed
+                        {t("settings.general.filesChanged", { count: status.changedCount })}
                       </span>
                     </div>
                   )}
@@ -612,11 +609,10 @@ export function GeneralSettingsSection() {
                   {status.aheadCount > 0 && status.hasUpstream && (
                     <div className="flex items-center justify-between">
                       <span className="text-sm text-text font-medium">
-                        Commits to push
+                        {t("settings.general.commitsToPush")}
                       </span>
                       <span className="text-sm text-text-muted">
-                        {status.aheadCount} commit
-                        {status.aheadCount === 1 ? "" : "s"}
+                        {t("settings.general.commitCount", { count: status.aheadCount })}
                       </span>
                     </div>
                   )}
@@ -624,11 +620,10 @@ export function GeneralSettingsSection() {
                   {status.behindCount > 0 && status.hasUpstream && (
                     <div className="flex items-center justify-between">
                       <span className="text-sm text-text font-medium">
-                        Commits to pull
+                        {t("settings.general.commitsToPull")}
                       </span>
                       <span className="text-sm text-text-muted">
-                        {status.behindCount} commit
-                        {status.behindCount === 1 ? "" : "s"}
+                        {t("settings.general.commitCount", { count: status.behindCount })}
                       </span>
                     </div>
                   )}
@@ -650,7 +645,7 @@ export function GeneralSettingsSection() {
                         rel="noopener noreferrer"
                         className="text-sm text-red-500 hover:text-red-600 underline font-medium mt-1 inline-block"
                       >
-                        Learn more about SSH authentication
+                        {t("settings.general.learnSSH")}
                       </a>
                     )}
                     <Button
@@ -658,7 +653,7 @@ export function GeneralSettingsSection() {
                       variant="link"
                       className="block text-sm h-auto p-0 mt-2 text-red-500 hover:text-red-600 font-medium"
                     >
-                      Dismiss
+                      {t("settings.general.dismiss")}
                     </Button>
                   </div>
                 </div>
@@ -673,9 +668,9 @@ export function GeneralSettingsSection() {
 
       {/* New Note Template */}
       <section className="pb-2">
-        <h2 className="text-xl font-medium mb-0.5">Default Note Name</h2>
+        <h2 className="text-xl font-medium mb-0.5">{t("settings.general.defaultNoteName")}</h2>
         <p className="text-sm text-text-muted mb-4">
-          Customize the default name when creating a new note
+          {t("settings.general.defaultNameDescription")}
         </p>
 
         <div className="space-y-2">
@@ -685,18 +680,18 @@ export function GeneralSettingsSection() {
               value={noteTemplate}
               onChange={(e) => setNoteTemplate(e.target.value)}
               onBlur={handleSaveTemplate}
-              placeholder="Untitled"
+              placeholder={t("settings.general.untitled")}
             />
           </div>
-          <div className="text-2xs text-text-muted font-mono p-2 rounded-md bg-bg-muted mb-4">
-            Preview: {previewNoteName}
+            <div className="text-2xs text-text-muted font-mono p-2 rounded-md bg-bg-muted mb-4">
+              {t("settings.general.preview", { name: previewNoteName })}
           </div>
 
           {/* Template Tags Reference */}
           <details className="text-sm">
             <summary className="cursor-pointer text-text-muted hover:text-text select-none flex items-center gap-1 font-medium">
               <ChevronRightIcon className="w-3.5 h-3.5 stroke-2 transition-transform [[open]>&]:rotate-90" />
-              Add template tags to your name
+              {t("settings.general.templateTags")}
             </summary>
             <div className="mt-2 space-y-1.5 pl-2 text-text-muted">
               <div className="grid grid-cols-2 gap-x-4 gap-y-1 font-mono text-xs">
@@ -726,7 +721,7 @@ export function GeneralSettingsSection() {
                 <span>1, 2, 3...</span>
               </div>
               <p className="text-xs mt-2 pt-2 border-t border-border">
-                Examples: <code>Note-{"{year}-{month}-{day}"}</code>
+                {t("settings.general.templateExamples")}
               </p>
             </div>
           </details>
@@ -738,10 +733,9 @@ export function GeneralSettingsSection() {
 
       {/* Ignored Folders */}
       <section className="pb-2">
-        <h2 className="text-xl font-medium mb-0.5">Ignored Folders</h2>
+        <h2 className="text-xl font-medium mb-0.5">{t("settings.general.ignoredFolders")}</h2>
         <p className="text-sm text-text-muted mb-4">
-          Folders matching these names are excluded from note discovery and
-          search indexing
+          {t("settings.general.ignoredFoldersDescription")}
         </p>
         <IgnoredFoldersEditor />
       </section>
@@ -750,6 +744,7 @@ export function GeneralSettingsSection() {
 }
 
 function FoldersToggle() {
+  const { t } = useTranslation();
   const [foldersEnabled, setFoldersEnabled] = useState<boolean | null>(null);
   const [isUpdating, setIsUpdating] = useState(false);
 
@@ -774,7 +769,7 @@ function FoldersToggle() {
       });
       setFoldersEnabled(enabled);
     } catch {
-      toast.error("Failed to update folder setting");
+      toast.error(t("settings.general.toast.failedToToggleFolders"));
     } finally {
       setIsUpdating(false);
     }
@@ -784,10 +779,10 @@ function FoldersToggle() {
     return (
       <div className="flex gap-1 p-1 rounded-[10px] border border-border shrink-0">
         <Button variant="ghost" size="xs" disabled>
-          Off
+          {t("settings.general.off")}
         </Button>
         <Button variant="ghost" size="xs" disabled>
-          On
+          {t("settings.general.on")}
         </Button>
       </div>
     );
@@ -801,7 +796,7 @@ function FoldersToggle() {
         size="xs"
         disabled={isUpdating}
       >
-        Off
+        {t("settings.general.off")}
       </Button>
       <Button
         onClick={() => handleToggle(true)}
@@ -809,13 +804,14 @@ function FoldersToggle() {
         size="xs"
         disabled={isUpdating}
       >
-        On
+        {t("settings.general.on")}
       </Button>
     </div>
   );
 }
 
 function IgnoredFoldersEditor() {
+  const { t } = useTranslation();
   const [patterns, setPatterns] = useState<string[] | null>(null);
   const [defaults, setDefaults] = useState<string[]>([]);
   const [newPattern, setNewPattern] = useState("");
@@ -854,11 +850,11 @@ function IgnoredFoldersEditor() {
         await invoke("rebuild_search_index");
       } catch {
         toast.error(
-          "Search index rebuild failed — search results may be stale",
+          t("settings.general.toast.searchIndexFailed"),
         );
       }
     } catch {
-      toast.error("Failed to save ignored folders");
+      toast.error(t("settings.general.toast.failedToSaveIgnoredFolders"));
     } finally {
       setIsSaving(false);
     }
@@ -868,11 +864,11 @@ function IgnoredFoldersEditor() {
     const trimmed = newPattern.trim();
     if (!trimmed || !patterns) return;
     if (/[/\\]/.test(trimmed)) {
-      toast.error("Ignore patterns must be single directory names (no paths)");
+      toast.error(t("settings.general.toast.invalidIgnorePattern"));
       return;
     }
     if (patterns.includes(trimmed)) {
-      toast.error("Already in the list");
+      toast.error(t("settings.general.toast.alreadyInList"));
       return;
     }
     setNewPattern("");
@@ -894,7 +890,7 @@ function IgnoredFoldersEditor() {
     patterns.every((p, i) => p === defaults[i]);
 
   if (patterns === null) {
-    return <div className="text-sm text-text-muted py-2">Loading...</div>;
+    return <div className="text-sm text-text-muted py-2">{t("settings.general.loading")}</div>;
   }
 
   return (
@@ -919,7 +915,7 @@ function IgnoredFoldersEditor() {
         ))}
         {patterns.length === 0 && (
           <span className="text-sm text-text-muted">
-            No folders ignored — all markdown files will be indexed
+            {t("settings.general.noFoldersIgnored")}
           </span>
         )}
       </div>
@@ -934,7 +930,7 @@ function IgnoredFoldersEditor() {
               handleAdd();
             }
           }}
-          placeholder="Add folder name..."
+          placeholder={t("settings.general.addFolderPlaceholder")}
           className="flex-1"
           disabled={isSaving}
         />
@@ -945,7 +941,7 @@ function IgnoredFoldersEditor() {
           className="h-10"
           disabled={isSaving || !newPattern.trim()}
         >
-          Add
+          {t("settings.general.add")}
         </Button>
       </div>
       {!isDefault && (
@@ -955,7 +951,7 @@ function IgnoredFoldersEditor() {
           disabled={isSaving}
           className="text-sm text-text-muted hover:text-text cursor-pointer font-medium"
         >
-          Reset to defaults
+          {t("settings.general.resetToDefaults")}
         </button>
       )}
     </div>
@@ -963,16 +959,17 @@ function IgnoredFoldersEditor() {
 }
 
 function RemoteInstructions() {
+  const { t } = useTranslation();
   return (
     <div className="text-sm text-text-muted space-y-1.5 pt-2 pb-1.5">
-      <p className="font-medium">To get your remote URL:</p>
+      <p className="font-medium">{t("settings.general.remoteInstructions")}</p>
       <ol className="list-decimal list-inside space-y-0.5 pl-1">
-        <li>Create a repository on GitHub, GitLab, etc.</li>
-        <li>Copy the repository URL (HTTPS or SSH)</li>
-        <li>Click "Add Remote" and paste the URL</li>
+        <li>{t("settings.general.remoteStep1")}</li>
+        <li>{t("settings.general.remoteStep2")}</li>
+        <li>{t("settings.general.remoteStep3")}</li>
       </ol>
       <p className="text-text-muted/70 pt-1">
-        Example: https://github.com/username/my-notes.git
+        {t("settings.general.remoteExample")}
       </p>
     </div>
   );

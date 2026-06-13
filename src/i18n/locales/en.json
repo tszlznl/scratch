@@ -144,6 +144,12 @@
     }
   },
   "settings": {
+    "back": "Back",
+    "tabGeneral": "Folder",
+    "tabTools": "Integrations",
+    "tabEditor": "Appearance",
+    "tabShortcuts": "Shortcuts",
+    "tabAbout": "About",
     "general": {
       "folderLocation": "Folder Location",
       "folderDescription": "Your notes are stored as markdown files in this folder",
@@ -251,6 +257,7 @@
       "dirLtr": "LTR",
       "dirRtl": "RTL",
       "pageWidth": "Page Width",
+      "previewLabel": "Preview",
       "widthNarrow": "Narrow",
       "widthNormal": "Normal",
       "widthWide": "Wide",

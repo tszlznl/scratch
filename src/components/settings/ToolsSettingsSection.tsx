@@ -15,6 +15,7 @@ import * as aiService from "../../services/ai";
 import { mod } from "../../lib/platform";
 import * as cliService from "../../services/cli";
 import type { CliStatus } from "../../services/cli";
+import { useTranslation } from "../../i18n/useTranslation";
 
 type CliState = {
   status: CliStatus | null;
@@ -53,13 +54,14 @@ function cliReducer(state: CliState, action: CliAction): CliState {
 }
 
 function CliUsageHint() {
+  const { t } = useTranslation();
   return (
     <p className="text-sm text-text-muted font-mono">
-      scratch file.md # open note
+      {t("settings.tools.usageHint")}
       <br />
-      scratch . # open folder
+      {t("settings.tools.usageHintFolder")}
       <br />
-      scratch # launch app
+      {t("settings.tools.usageHintApp")}
     </p>
   );
 }
@@ -67,34 +69,35 @@ function CliUsageHint() {
 const AI_PROVIDER_INFO: Record<
   AiProvider,
   {
-    name: string;
+    nameKey: string;
     icon: React.ComponentType<{ className?: string }>;
     installUrl: string;
   }
 > = {
   claude: {
-    name: "Claude Code",
+    nameKey: "settings.tools.providerClaude",
     icon: ClaudeIcon,
     installUrl: "https://code.claude.com/docs/en/quickstart",
   },
   codex: {
-    name: "OpenAI Codex",
+    nameKey: "settings.tools.providerCodex",
     icon: CodexIcon,
     installUrl: "https://github.com/openai/codex",
   },
   opencode: {
-    name: "OpenCode",
+    nameKey: "settings.tools.providerOpenCode",
     icon: OpenCodeIcon,
     installUrl: "https://opencode.ai",
   },
   ollama: {
-    name: "Ollama",
+    nameKey: "settings.tools.providerOllama",
     icon: OllamaIcon,
     installUrl: "https://ollama.com",
   },
 };
 
 export function ToolsSettingsSection() {
+  const { t } = useTranslation();
   const [cli, dispatchCli] = useReducer(cliReducer, cliInitialState);
   const [aiProviders, setAiProviders] = useState<AiProvider[]>([]);
   const [aiProvidersLoading, setAiProvidersLoading] = useState(true);
@@ -124,12 +127,12 @@ export function ToolsSettingsSection() {
       const status = await cliService.getCliStatus();
       dispatchCli({ type: "operated", status });
       toast.success(
-        "CLI tool installed. Open a new terminal to use `scratch`.",
+        t("settings.tools.toast.cliInstalled"),
       );
     } catch (err) {
       dispatchCli({ type: "operate_failed" });
       toast.error(
-        err instanceof Error ? err.message : "Failed to install CLI tool",
+        err instanceof Error ? err.message : t("settings.tools.toast.failedToInstallCli"),
       );
     }
   };
@@ -140,11 +143,11 @@ export function ToolsSettingsSection() {
       await cliService.uninstallCli();
       const status = await cliService.getCliStatus();
       dispatchCli({ type: "operated", status });
-      toast.success("CLI tool uninstalled.");
+      toast.success(t("settings.tools.toast.cliUninstalled"));
     } catch (err) {
       dispatchCli({ type: "operate_failed" });
       toast.error(
-        err instanceof Error ? err.message : "Failed to uninstall CLI tool",
+        err instanceof Error ? err.message : t("settings.tools.toast.failedToUninstallCli"),
       );
     }
   };
@@ -153,17 +156,16 @@ export function ToolsSettingsSection() {
     <div className="space-y-8 py-8">
       {/* AI Providers */}
       <section className="pb-2">
-        <h2 className="text-xl font-medium mb-0.5">AI Providers</h2>
+        <h2 className="text-xl font-medium mb-0.5">{t("settings.tools.aiProviders")}</h2>
         <p className="text-sm text-text-muted mb-4">
-          Edit notes with AI from the command palette ({mod}P while editing a
-          note)
+          {t("settings.tools.aiDescription", { mod })}
         </p>
 
         {aiProvidersLoading ? (
           <div className="flex items-center gap-2 p-3">
             <SpinnerIcon className="w-4 h-4 animate-spin text-text-muted" />
             <span className="text-sm text-text-muted">
-              Detecting installed providers...
+              {t("settings.tools.detectingProviders")}
             </span>
           </div>
         ) : (
@@ -178,11 +180,11 @@ export function ToolsSettingsSection() {
                 >
                   <div className="flex items-center gap-2.5">
                     <info.icon className="w-4.5 h-4.5 text-text-muted" />
-                    <span className="text-sm font-medium">{info.name}</span>
+                    <span className="text-sm font-medium">{t(info.nameKey)}</span>
                   </div>
                   {installed ? (
                     <span className="flex items-center gap-1.25 text-sm text-text-muted">
-                      Installed
+                      {t("settings.tools.installed")}
                       <span className="h-4.5 w-4.5 bg-bg-emphasis rounded-full flex items-center justify-center">
                         <CheckIcon className="w-3 h-3 stroke-[2.2]" />
                       </span>
@@ -194,7 +196,7 @@ export function ToolsSettingsSection() {
                       rel="noopener noreferrer"
                       className="text-sm text-text font-medium hover:text-text-muted transition-colors cursor-pointer"
                     >
-                      Install
+                      {t("settings.tools.install")}
                     </a>
                   )}
                 </div>
@@ -210,19 +212,15 @@ export function ToolsSettingsSection() {
           <div className="border-t border-border border-dashed" />
 
           <section className="pb-2">
-            <h2 className="text-xl font-medium mb-0.5">CLI Tool</h2>
+            <h2 className="text-xl font-medium mb-0.5">{t("settings.tools.cliTool")}</h2>
             <p className="text-sm text-text-muted mb-4">
-              Open notes from the terminal with the{" "}
-              <code className="font-mono text-xs bg-bg-muted px-1.5 py-0.5 rounded">
-                scratch
-              </code>{" "}
-              command
+              {t("settings.tools.cliDescription")}
             </p>
 
             {cli.error ? (
               <div className="bg-red-500/10 border border-red-500/20 rounded-md p-3">
                 <p className="text-sm text-red-500">
-                  Failed to check CLI status. Please restart the app.
+                  {t("settings.tools.cliStatusFailed")}
                 </p>
               </div>
             ) : cli.status === null ? (
@@ -234,25 +232,25 @@ export function ToolsSettingsSection() {
                 <div className="rounded-[10px] border border-border p-4 space-y-3 mb-2.5">
                   <div className="flex items-center justify-between">
                     <span className="text-sm text-text font-medium">
-                      Status
+                      {t("settings.tools.status")}
                     </span>
-                    <span className="text-sm text-text-muted">Installed</span>
+                    <span className="text-sm text-text-muted">{t("settings.tools.installed")}</span>
                   </div>
                   {cli.status.path && (
                     <div className="flex items-center justify-between">
                       <span className="text-sm text-text font-medium">
-                        Path
+                        {t("settings.tools.path")}
                       </span>
                       <button
                         type="button"
                         className="text-xs font-mono text-text-muted bg-bg-muted px-2 py-0.5 rounded max-w-48 truncate cursor-pointer hover:bg-bg-hover transition-colors"
-                        title="Click to copy path"
+                        title={t("settings.tools.clickToCopy")}
                         onClick={async () => {
                           try {
                             await invoke("copy_to_clipboard", { text: cli.status!.path! });
-                            toast.success("Path copied to clipboard");
+                            toast.success(t("settings.tools.toast.pathCopied"));
                           } catch {
-                            toast.error("Failed to copy path");
+                            toast.error(t("settings.tools.toast.failedToCopyPath"));
                           }
                         }}
                       >
@@ -273,10 +271,10 @@ export function ToolsSettingsSection() {
                   {cli.operating ? (
                     <>
                       <SpinnerIcon className="w-3.25 h-3.25 mr-2 animate-spin" />
-                      Uninstalling...
+                      {t("settings.tools.uninstalling")}
                     </>
                   ) : (
-                    "Uninstall CLI Tool"
+                    t("settings.tools.uninstallCli")
                   )}
                 </Button>
               </>
@@ -294,10 +292,10 @@ export function ToolsSettingsSection() {
                   {cli.operating ? (
                     <>
                       <SpinnerIcon className="w-3.25 h-3.25 mr-2 animate-spin" />
-                      Installing...
+                      {t("settings.tools.installing")}
                     </>
                   ) : (
-                    "Install CLI Tool"
+                    t("settings.tools.installCli")
                   )}
                 </Button>
               </>

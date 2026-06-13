@@ -9,54 +9,51 @@ import type {
 } from "../../types/note";
 import { ChevronRightIcon, EyeIcon, MinusIcon, PlusIcon } from "../icons";
 import { cn } from "../../lib/utils";
+import { useTranslation } from "../../i18n/useTranslation";
 
-// Human-readable labels for theme color keys, grouped logically
-const colorLabels: { key: ThemeColorKey; label: string; group: string }[] = [
-  // Surfaces
-  { key: "bg", label: "Background", group: "Surfaces" },
-  { key: "bg-secondary", label: "Sidebar", group: "Surfaces" },
-  { key: "bg-muted", label: "Hover & Subtle Fill", group: "Surfaces" },
-  { key: "bg-emphasis", label: "Strong Fill", group: "Surfaces" },
-  // Text & UI
-  { key: "text", label: "Text", group: "Text & UI" },
-  { key: "text-muted", label: "Secondary Text", group: "Text & UI" },
-  { key: "accent", label: "Primary & Buttons", group: "Text & UI" },
-  { key: "border", label: "Borders", group: "Text & UI" },
-  { key: "selection", label: "Selection Highlight", group: "Text & UI" },
+// Translation key mappings for theme color keys, grouped logically
+const colorLabels: { key: ThemeColorKey; labelKey: string; groupKey: string }[] = [
+  { key: "bg", labelKey: "settings.appearance.colorBackground", groupKey: "settings.appearance.groupSurfaces" },
+  { key: "bg-secondary", labelKey: "settings.appearance.colorSidebar", groupKey: "settings.appearance.groupSurfaces" },
+  { key: "bg-muted", labelKey: "settings.appearance.colorHoverFill", groupKey: "settings.appearance.groupSurfaces" },
+  { key: "bg-emphasis", labelKey: "settings.appearance.colorStrongFill", groupKey: "settings.appearance.groupSurfaces" },
+  { key: "text", labelKey: "settings.appearance.colorText", groupKey: "settings.appearance.groupTextUI" },
+  { key: "text-muted", labelKey: "settings.appearance.colorSecondaryText", groupKey: "settings.appearance.groupTextUI" },
+  { key: "accent", labelKey: "settings.appearance.colorAccent", groupKey: "settings.appearance.groupTextUI" },
+  { key: "border", labelKey: "settings.appearance.colorBorder", groupKey: "settings.appearance.groupTextUI" },
+  { key: "selection", labelKey: "settings.appearance.colorSelection", groupKey: "settings.appearance.groupTextUI" },
 ];
 
-// Text direction options
-const textDirectionOptions: { value: TextDirection; label: string }[] = [
-  { value: "auto", label: "Auto" },
-  { value: "ltr", label: "LTR" },
-  { value: "rtl", label: "RTL" },
+// Translation key mappings for select options
+const textDirectionOptions: { value: TextDirection; labelKey: string }[] = [
+  { value: "auto", labelKey: "settings.appearance.dirAuto" },
+  { value: "ltr", labelKey: "settings.appearance.dirLtr" },
+  { value: "rtl", labelKey: "settings.appearance.dirRtl" },
 ];
 
-// Page width options
-const editorWidthOptions: { value: EditorWidth; label: string }[] = [
-  { value: "narrow", label: "Narrow" },
-  { value: "normal", label: "Normal" },
-  { value: "wide", label: "Wide" },
-  { value: "full", label: "Full" },
-  { value: "custom", label: "Custom" },
+const editorWidthOptions: { value: EditorWidth; labelKey: string }[] = [
+  { value: "narrow", labelKey: "settings.appearance.widthNarrow" },
+  { value: "normal", labelKey: "settings.appearance.widthNormal" },
+  { value: "wide", labelKey: "settings.appearance.widthWide" },
+  { value: "full", labelKey: "settings.appearance.widthFull" },
+  { value: "custom", labelKey: "settings.appearance.widthCustom" },
 ];
 
-// Font family options
-const fontFamilyOptions: { value: FontFamily; label: string }[] = [
-  { value: "system-sans", label: "Sans" },
-  { value: "serif", label: "Serif" },
-  { value: "monospace", label: "Mono" },
+const fontFamilyOptions: { value: FontFamily; labelKey: string }[] = [
+  { value: "system-sans", labelKey: "settings.appearance.fontSans" },
+  { value: "serif", labelKey: "settings.appearance.fontSerif" },
+  { value: "monospace", labelKey: "settings.appearance.fontMono" },
 ];
 
-// Bold weight options (medium excluded for monospace)
 const boldWeightOptions = [
-  { value: 500, label: "Medium", excludeForMonospace: true },
-  { value: 600, label: "Semibold", excludeForMonospace: false },
-  { value: 700, label: "Bold", excludeForMonospace: false },
-  { value: 800, label: "Extra Bold", excludeForMonospace: false },
+  { value: 500, labelKey: "settings.appearance.weightMedium", excludeForMonospace: true },
+  { value: 600, labelKey: "settings.appearance.weightSemibold", excludeForMonospace: false },
+  { value: 700, labelKey: "settings.appearance.weightBold", excludeForMonospace: false },
+  { value: 800, labelKey: "settings.appearance.weightExtraBold", excludeForMonospace: false },
 ];
 
 export function AppearanceSettingsSection() {
+  const { t } = useTranslation();
   const {
     theme,
     resolvedTheme,
@@ -121,7 +118,7 @@ export function AppearanceSettingsSection() {
     <div className="space-y-8 py-8">
       {/* Theme Section */}
       <section className="pb-2">
-        <h2 className="text-xl font-medium mb-3">Theme</h2>
+        <h2 className="text-xl font-medium mb-3">{t("settings.appearance.theme")}</h2>
         <div className="flex gap-2 p-1 rounded-[10px] border border-border">
           {(["light", "dark", "system"] as const).map((mode) => (
             <Button
@@ -131,13 +128,13 @@ export function AppearanceSettingsSection() {
               size="md"
               className="flex-1"
             >
-              {mode.charAt(0).toUpperCase() + mode.slice(1)}
+              {t(`settings.appearance.${mode}`)}
             </Button>
           ))}
         </div>
         {theme === "system" && (
           <p className="mt-3 text-sm text-text-muted">
-            Currently using {resolvedTheme} mode based on system preference
+            {t("settings.appearance.systemModeDescription", { mode: t(`settings.appearance.${resolvedTheme}`) })}
           </p>
         )}
 
@@ -145,7 +142,7 @@ export function AppearanceSettingsSection() {
         {theme === "system" ? (
           <div className="mt-4 space-y-2">
             <ColorsExpandable
-              label="Customize light colors"
+              label={t("settings.appearance.customizeLightColors")}
               mode="light"
               customColors={customColorsLight}
               setCustomColor={setCustomColor}
@@ -153,7 +150,7 @@ export function AppearanceSettingsSection() {
               resetAllCustomColors={resetAllCustomColors}
             />
             <ColorsExpandable
-              label="Customize dark colors"
+              label={t("settings.appearance.customizeDarkColors")}
               mode="dark"
               customColors={customColorsDark}
               setCustomColor={setCustomColor}
@@ -163,7 +160,7 @@ export function AppearanceSettingsSection() {
           </div>
         ) : (
           <ColorsExpandable
-            label="Customize colors"
+            label={t("settings.appearance.customizeColors")}
             mode={resolvedTheme}
             customColors={
               resolvedTheme === "dark" ? customColorsDark : customColorsLight
@@ -182,10 +179,10 @@ export function AppearanceSettingsSection() {
       {/* Typography Section */}
       <section>
         <div className="flex items-baseline justify-between mb-3">
-          <h2 className="text-xl font-medium">Typography</h2>
+          <h2 className="text-xl font-medium">{t("settings.appearance.typography")}</h2>
           {hasCustomFonts && (
             <Button onClick={resetEditorFontSettings} variant="ghost" size="sm">
-              Reset to defaults
+              {t("settings.appearance.resetDefaults")}
             </Button>
           )}
         </div>
@@ -193,7 +190,7 @@ export function AppearanceSettingsSection() {
         <div className="rounded-[10px] border border-border pl-4 py-3 pr-3 space-y-2">
           {/* Font Family */}
           <div className="flex items-center justify-between">
-            <label className="text-sm text-text font-medium">Font</label>
+            <label className="text-sm text-text font-medium">{t("settings.appearance.font")}</label>
             <Select
               value={editorFontSettings.baseFontFamily}
               onChange={(e) =>
@@ -203,7 +200,7 @@ export function AppearanceSettingsSection() {
             >
               {fontFamilyOptions.map((opt) => (
                 <option key={opt.value} value={opt.value}>
-                  {opt.label}
+                  {t(opt.labelKey)}
                 </option>
               ))}
             </Select>
@@ -211,7 +208,7 @@ export function AppearanceSettingsSection() {
 
           {/* Base Font Size */}
           <div className="flex items-center justify-between">
-            <label className="text-sm text-text font-medium">Size</label>
+            <label className="text-sm text-text font-medium">{t("settings.appearance.size")}</label>
             <div className="relative w-40">
               <Input
                 type="number"
@@ -228,7 +225,7 @@ export function AppearanceSettingsSection() {
 
           {/* Bold Weight */}
           <div className="flex items-center justify-between">
-            <label className="text-sm text-text font-medium">Bold Weight</label>
+            <label className="text-sm text-text font-medium">{t("settings.appearance.boldWeight")}</label>
             <Select
               value={editorFontSettings.boldWeight}
               onChange={(e) =>
@@ -238,7 +235,7 @@ export function AppearanceSettingsSection() {
             >
               {availableWeightOptions.map((opt) => (
                 <option key={opt.value} value={opt.value}>
-                  {opt.label}
+                  {t(opt.labelKey)}
                 </option>
               ))}
             </Select>
@@ -246,7 +243,7 @@ export function AppearanceSettingsSection() {
 
           {/* Line Height */}
           <div className="flex items-center justify-between">
-            <label className="text-sm text-text font-medium">Line Height</label>
+            <label className="text-sm text-text font-medium">{t("settings.appearance.lineHeight")}</label>
             <div className="relative w-40">
               <Input
                 type="number"
@@ -265,7 +262,7 @@ export function AppearanceSettingsSection() {
           {/* Text Direction */}
           <div className="flex items-center justify-between">
             <label className="text-sm text-text font-medium">
-              Text Direction
+              {t("settings.appearance.textDirection")}
             </label>
             <Select
               value={textDirection}
@@ -276,7 +273,7 @@ export function AppearanceSettingsSection() {
             >
               {textDirectionOptions.map((opt) => (
                 <option key={opt.value} value={opt.value}>
-                  {opt.label}
+                  {t(opt.labelKey)}
                 </option>
               ))}
             </Select>
@@ -284,7 +281,7 @@ export function AppearanceSettingsSection() {
 
           {/* Page Width */}
           <div className="flex items-center justify-between">
-            <label className="text-sm text-text font-medium">Page Width</label>
+            <label className="text-sm text-text font-medium">{t("settings.appearance.pageWidth")}</label>
             <Select
               value={editorWidth}
               onChange={(e) => setEditorWidth(e.target.value as EditorWidth)}
@@ -292,7 +289,7 @@ export function AppearanceSettingsSection() {
             >
               {editorWidthOptions.map((opt) => (
                 <option key={opt.value} value={opt.value}>
-                  {opt.label}
+                  {t(opt.labelKey)}
                 </option>
               ))}
             </Select>
@@ -300,7 +297,7 @@ export function AppearanceSettingsSection() {
           {editorWidth === "custom" && (
             <div className="flex items-center justify-between">
               <label className="text-sm text-text font-medium">
-                Custom Width
+                {t("settings.appearance.customWidth")}
               </label>
               <div className="relative w-40 flex items-center gap-2">
                 <Input
@@ -319,7 +316,7 @@ export function AppearanceSettingsSection() {
                   }}
                   className="w-full h-9 text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                 />
-                <span className="text-sm text-text-muted">px</span>
+                <span className="text-sm text-text-muted">{t("settings.appearance.px")}</span>
               </div>
             </div>
           )}
@@ -327,7 +324,7 @@ export function AppearanceSettingsSection() {
           {/* Interface Zoom */}
           <div className="flex items-center justify-between">
             <label className="text-sm text-text font-medium">
-              Interface Zoom
+              {t("settings.appearance.interfaceZoom")}
             </label>
             <div className="flex items-center gap-1 w-40">
               <IconButton
@@ -335,7 +332,7 @@ export function AppearanceSettingsSection() {
                 size="md"
                 onClick={() => setInterfaceZoom((prev) => prev - 0.05)}
                 disabled={interfaceZoom <= 0.7}
-                title="Zoom out"
+                title={t("settings.appearance.zoomOut")}
               >
                 <MinusIcon className="w-4 h-4" />
               </IconButton>
@@ -347,7 +344,7 @@ export function AppearanceSettingsSection() {
                 size="md"
                 onClick={() => setInterfaceZoom((prev) => prev + 0.05)}
                 disabled={interfaceZoom >= 1.5}
-                title="Zoom in"
+                title={t("settings.appearance.zoomIn")}
               >
                 <PlusIcon className="w-4 h-4" />
               </IconButton>
@@ -359,7 +356,7 @@ export function AppearanceSettingsSection() {
         <div className="mt-3 relative">
           <div className="absolute top-3 left-4 flex items-center text-sm font-medium text-text-muted/70 gap-1">
             <EyeIcon className="w-4.5 h-4.5 stroke-[1.5]" />
-            <span>Preview</span>
+            <span>{t("settings.appearance.previewLabel")}</span>
           </div>
           <div className="border border-border rounded-[10px] bg-bg p-6 pt-20 max-h-160 overflow-hidden rounded-t-lg">
             <div
@@ -484,6 +481,7 @@ function ColorsExpandable({
   resetAllCustomColors: (mode: "light" | "dark") => void;
   className?: string;
 }) {
+  const { t } = useTranslation();
   const defaults = defaultThemeColors[mode];
   const hasAnyCustom = Object.keys(customColors).length > 0;
 
@@ -502,28 +500,28 @@ function ColorsExpandable({
             size="sm"
             className="ml-auto"
           >
-            Reset all
+            {t("settings.appearance.resetAll")}
           </Button>
         )}
       </summary>
       <div className="mt-2 rounded-[10px] border border-border pl-4 py-3 pr-3 space-y-1.5">
         {(() => {
           let lastGroup = "";
-          return colorLabels.map(({ key, label: colorLabel, group }) => {
-            const showGroup = group !== lastGroup;
-            lastGroup = group;
+          return colorLabels.map(({ key, labelKey, groupKey }) => {
+            const showGroup = groupKey !== lastGroup;
+            lastGroup = groupKey;
             return (
               <div key={key}>
                 {showGroup && (
                   <div
                     className={`text-base text-text-muted font-medium ${key !== colorLabels[0].key ? "mt-6" : ""} mb-2.5`}
                   >
-                    {group}
+                    {t(groupKey)}
                   </div>
                 )}
                 <div className="flex items-center justify-between">
                   <label className="text-sm text-text font-medium">
-                    {colorLabel}
+                    {t(labelKey)}
                   </label>
                   <ColorPicker
                     color={customColors[key] ?? defaults[key]}

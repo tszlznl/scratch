@@ -144,6 +144,12 @@
     }
   },
   "settings": {
+    "back": "返回",
+    "tabGeneral": "文件夹",
+    "tabTools": "集成",
+    "tabEditor": "外观",
+    "tabShortcuts": "快捷键",
+    "tabAbout": "关于",
     "general": {
       "folderLocation": "文件夹位置",
       "folderDescription": "您的笔记以 Markdown 文件形式存储在此文件夹中",
@@ -251,6 +257,7 @@
       "dirLtr": "从左到右",
       "dirRtl": "从右到左",
       "pageWidth": "页面宽度",
+      "previewLabel": "预览",
       "widthNarrow": "窄",
       "widthNormal": "正常",
       "widthWide": "宽",

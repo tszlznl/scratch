@@ -5,8 +5,10 @@ import { toast } from "sonner";
 import { showUpdateToast } from "../../App";
 import { Button } from "../ui";
 import { RefreshCwIcon, SpinnerIcon, GithubIcon } from "../icons";
+import { useTranslation } from "../../i18n/useTranslation";
 
 export function AboutSettingsSection() {
+  const { t } = useTranslation();
   const [appVersion, setAppVersion] = useState<string>("");
   const [checkingUpdate, setCheckingUpdate] = useState(false);
 
@@ -21,9 +23,9 @@ export function AboutSettingsSection() {
     const result = await showUpdateToast();
     setCheckingUpdate(false);
     if (result === "no-update") {
-      toast.success("You're on the latest version!");
+      toast.success(t("settings.about.toast.latestVersion"));
     } else if (result === "error") {
-      toast.error("Could not check for updates. Try again later.");
+      toast.error(t("settings.about.toast.checkFailed"));
     }
   };
 
@@ -32,7 +34,7 @@ export function AboutSettingsSection() {
       await invoke("open_url_safe", { url });
     } catch (err) {
       console.error("Failed to open URL:", err);
-      toast.error(err instanceof Error ? err.message : "Failed to open URL");
+      toast.error(err instanceof Error ? err.message : t("settings.about.toast.failedToOpenUrl"));
     }
   };
 
@@ -40,9 +42,9 @@ export function AboutSettingsSection() {
     <div className="space-y-8 py-8">
       {/* Version */}
       <section className="pb-2">
-        <h2 className="text-xl font-medium mb-0.5">Version</h2>
+        <h2 className="text-xl font-medium mb-0.5">{t("settings.about.version")}</h2>
         <p className="text-sm text-text-muted mb-4">
-          You are currently using Scratch v{appVersion || "..."}
+          {t("settings.about.versionDescription", { version: appVersion || "..." })}
         </p>
         <Button
           onClick={handleCheckForUpdates}
@@ -54,12 +56,12 @@ export function AboutSettingsSection() {
           {checkingUpdate ? (
             <>
               <SpinnerIcon className="w-4.5 h-4.5 stroke-[1.5] animate-spin" />
-              Checking...
+              {t("settings.about.checking")}
             </>
           ) : (
             <>
               <RefreshCwIcon className="w-4.5 h-4.5 stroke-[1.5]" />
-              Check for Updates
+              {t("settings.about.checkForUpdates")}
             </>
           )}
         </Button>
@@ -70,30 +72,26 @@ export function AboutSettingsSection() {
 
       {/* About Section */}
       <section className="pb-2">
-        <h2 className="text-xl font-medium mb-1">About Scratch</h2>
+        <h2 className="text-xl font-medium mb-1">{t("settings.about.aboutScratch")}</h2>
         <p className="text-sm text-text-muted mb-4">
-          Scratch is a minimalist markdown scratchpad for capturing quick
-          thoughts, todos, and ideas. We're offline-first, keyboard-optimized,
-          AI-compatible, and open source with no cloud, no accounts, and no
-          subscriptions. Learn more on{" "}
+          {t("settings.about.description")}{" "}
           <button
             onClick={() => handleOpenUrl("https://www.ericli.io/scratch")}
             className="text-text-muted border-b border-text-muted/50 hover:text-text hover:border-text cursor-pointer transition-colors"
           >
-            our website
+            {t("settings.about.ourWebsite")}
           </button>
           .
         </p>
         <p className="text-sm text-text-muted mb-4">
-          Created and maintained by{" "}
+          {t("settings.about.createdBy")}{" "}
           <button
             onClick={() => handleOpenUrl("https://ericli.io")}
             className="text-text-muted border-b border-text-muted/50 hover:text-text hover:border-text cursor-pointer transition-colors"
           >
-            Eric Li
+            {t("settings.about.author")}
           </button>{" "}
-          with moral support from his cat, Mochi, and actual support from many
-          contributors on GitHub.
+          {t("settings.about.contributors")}
         </p>
         <div className="flex items-center gap-1">
           <Button
@@ -103,7 +101,7 @@ export function AboutSettingsSection() {
             className="gap-1.25"
           >
             <GithubIcon className="w-4.5 h-4.5 stroke-[1.5]" />
-            View on GitHub
+            {t("settings.about.viewOnGitHub")}
           </Button>
           <Button
             onClick={() =>
@@ -113,7 +111,7 @@ export function AboutSettingsSection() {
             size="md"
             className="gap-1.25 text-text"
           >
-            Submit Feedback
+            {t("settings.about.submitFeedback")}
           </Button>
         </div>
       </section>

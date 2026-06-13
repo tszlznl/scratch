@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import {
   ArrowLeftIcon,
   FolderIcon,
@@ -14,6 +14,7 @@ import { ShortcutsSettingsSection } from "./ShortcutsSettingsSection";
 import { AboutSettingsSection } from "./AboutSettingsSection";
 import { ToolsSettingsSection } from "./ToolsSettingsSection";
 import { mod, isMac } from "../../lib/platform";
+import { useTranslation } from "../../i18n/useTranslation";
 
 interface SettingsPageProps {
   onBack: () => void;
@@ -21,22 +22,26 @@ interface SettingsPageProps {
 
 type SettingsTab = "general" | "tools" | "editor" | "shortcuts" | "about";
 
-const tabs: {
-  id: SettingsTab;
-  label: string;
-  icon: typeof FolderIcon;
-  shortcut: string;
-}[] = [
-  { id: "general", label: "Folder", icon: FolderIcon, shortcut: "1" },
-  { id: "tools", label: "Integrations", icon: IntegrationsIcon, shortcut: "2" },
-  { id: "editor", label: "Appearance", icon: SwatchIcon, shortcut: "3" },
-  { id: "shortcuts", label: "Shortcuts", icon: KeyboardIcon, shortcut: "4" },
-  { id: "about", label: "About", icon: InfoIcon, shortcut: "5" },
-];
-
 export function SettingsPage({ onBack }: SettingsPageProps) {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<SettingsTab>("general");
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  const tabs: {
+    id: SettingsTab;
+    label: string;
+    icon: typeof FolderIcon;
+    shortcut: string;
+  }[] = useMemo(
+    () => [
+      { id: "general", label: t("settings.tabGeneral"), icon: FolderIcon, shortcut: "1" },
+      { id: "tools", label: t("settings.tabTools"), icon: IntegrationsIcon, shortcut: "2" },
+      { id: "editor", label: t("settings.tabEditor"), icon: SwatchIcon, shortcut: "3" },
+      { id: "shortcuts", label: t("settings.tabShortcuts"), icon: KeyboardIcon, shortcut: "4" },
+      { id: "about", label: t("settings.tabAbout"), icon: InfoIcon, shortcut: "5" },
+    ],
+    [t],
+  );
 
   // Reset scroll position when tab changes
   useEffect(() => {
@@ -84,11 +89,11 @@ export function SettingsPage({ onBack }: SettingsPageProps) {
           <div className="flex items-center gap-1">
             <IconButton
               onClick={onBack}
-              title={`Back (${mod}${isMac ? "" : "+"},)`}
+              title={`${t("settings.back")} (${mod}${isMac ? "" : "+"},)`}
             >
               <ArrowLeftIcon className="w-4.5 h-4.5 stroke-[1.5]" />
             </IconButton>
-            <div className="font-medium text-base">Settings</div>
+            <div className="font-medium text-base">{t("commandPalette.settings")}</div>
           </div>
         </div>
 
