@@ -24,6 +24,7 @@ import {
   WorkflowIcon,
 } from "../icons";
 import { SlashCommandList, type SlashCommandListRef } from "./SlashCommandList";
+import i18n from "../../i18n";
 
 export interface SlashCommandItem {
   title: string;
@@ -35,8 +36,8 @@ export interface SlashCommandItem {
 
 const SLASH_COMMANDS: SlashCommandItem[] = [
   {
-    title: "Text",
-    description: "Plain body text",
+    title: i18n.t("slashCommand.text.title"),
+    description: i18n.t("slashCommand.text.description"),
     icon: <PilcrowIcon />,
     aliases: ["paragraph", "body", "plain", "normal"],
     command: (editor) => {
@@ -44,8 +45,8 @@ const SLASH_COMMANDS: SlashCommandItem[] = [
     },
   },
   {
-    title: "Heading 1",
-    description: "Large section heading",
+    title: i18n.t("slashCommand.h1.title"),
+    description: i18n.t("slashCommand.h1.description"),
     icon: <Heading1Icon />,
     aliases: ["h1", "heading", "title"],
     command: (editor) => {
@@ -53,8 +54,8 @@ const SLASH_COMMANDS: SlashCommandItem[] = [
     },
   },
   {
-    title: "Heading 2",
-    description: "Medium section heading",
+    title: i18n.t("slashCommand.h2.title"),
+    description: i18n.t("slashCommand.h2.description"),
     icon: <Heading2Icon />,
     aliases: ["h2", "heading", "subtitle"],
     command: (editor) => {
@@ -62,8 +63,8 @@ const SLASH_COMMANDS: SlashCommandItem[] = [
     },
   },
   {
-    title: "Heading 3",
-    description: "Small section heading",
+    title: i18n.t("slashCommand.h3.title"),
+    description: i18n.t("slashCommand.h3.description"),
     icon: <Heading3Icon />,
     aliases: ["h3", "heading"],
     command: (editor) => {
@@ -71,8 +72,8 @@ const SLASH_COMMANDS: SlashCommandItem[] = [
     },
   },
   {
-    title: "Heading 4",
-    description: "Smallest section heading",
+    title: i18n.t("slashCommand.h4.title"),
+    description: i18n.t("slashCommand.h4.description"),
     icon: <Heading4Icon />,
     aliases: ["h4", "heading"],
     command: (editor) => {
@@ -80,8 +81,8 @@ const SLASH_COMMANDS: SlashCommandItem[] = [
     },
   },
   {
-    title: "Bullet List",
-    description: "Unordered list",
+    title: i18n.t("slashCommand.bulletList.title"),
+    description: i18n.t("slashCommand.bulletList.description"),
     icon: <ListIcon />,
     aliases: ["ul", "unordered", "list"],
     command: (editor) => {
@@ -89,8 +90,8 @@ const SLASH_COMMANDS: SlashCommandItem[] = [
     },
   },
   {
-    title: "Numbered List",
-    description: "Ordered list",
+    title: i18n.t("slashCommand.numberedList.title"),
+    description: i18n.t("slashCommand.numberedList.description"),
     icon: <ListOrderedIcon />,
     aliases: ["ol", "ordered", "list", "numbered"],
     command: (editor) => {
@@ -98,8 +99,8 @@ const SLASH_COMMANDS: SlashCommandItem[] = [
     },
   },
   {
-    title: "Task List",
-    description: "List with checkboxes",
+    title: i18n.t("slashCommand.taskList.title"),
+    description: i18n.t("slashCommand.taskList.description"),
     icon: <CheckSquareIcon />,
     aliases: ["todo", "checklist", "checkbox"],
     command: (editor) => {
@@ -107,8 +108,8 @@ const SLASH_COMMANDS: SlashCommandItem[] = [
     },
   },
   {
-    title: "Blockquote",
-    description: "Block quotation",
+    title: i18n.t("slashCommand.blockquote.title"),
+    description: i18n.t("slashCommand.blockquote.description"),
     icon: <QuoteIcon />,
     aliases: ["quote"],
     command: (editor) => {
@@ -116,8 +117,8 @@ const SLASH_COMMANDS: SlashCommandItem[] = [
     },
   },
   {
-    title: "Code Block",
-    description: "Fenced code block",
+    title: i18n.t("slashCommand.codeBlock.title"),
+    description: i18n.t("slashCommand.codeBlock.description"),
     icon: <CodeIcon />,
     aliases: ["code", "fenced", "pre"],
     command: (editor) => {
@@ -125,8 +126,8 @@ const SLASH_COMMANDS: SlashCommandItem[] = [
     },
   },
   {
-    title: "Mermaid Diagram",
-    description: "Mermaid diagram block",
+    title: i18n.t("slashCommand.mermaid.title"),
+    description: i18n.t("slashCommand.mermaid.description"),
     icon: <WorkflowIcon />,
     aliases: ["mermaid", "diagram", "flowchart", "chart"],
     command: (editor) => {
@@ -134,8 +135,8 @@ const SLASH_COMMANDS: SlashCommandItem[] = [
     },
   },
   {
-    title: "Block Math",
-    description: "Display math block",
+    title: i18n.t("slashCommand.blockMath.title"),
+    description: i18n.t("slashCommand.blockMath.description"),
     icon: <BlockMathIcon />,
     aliases: ["math", "equation"],
     command: (editor) => {
@@ -144,8 +145,8 @@ const SLASH_COMMANDS: SlashCommandItem[] = [
     },
   },
   {
-    title: "Horizontal Rule",
-    description: "Visual divider",
+    title: i18n.t("slashCommand.horizontalRule.title"),
+    description: i18n.t("slashCommand.horizontalRule.description"),
     icon: <SeparatorIcon />,
     aliases: ["divider", "separator", "hr", "line"],
     command: (editor) => {
@@ -153,8 +154,8 @@ const SLASH_COMMANDS: SlashCommandItem[] = [
     },
   },
   {
-    title: "Image",
-    description: "Insert from file",
+    title: i18n.t("slashCommand.image.title"),
+    description: i18n.t("slashCommand.image.description"),
     icon: <ImageIcon />,
     aliases: ["picture", "photo", "img"],
     command: (editor) => {
@@ -163,8 +164,8 @@ const SLASH_COMMANDS: SlashCommandItem[] = [
     },
   },
   {
-    title: "Table",
-    description: "Insert a 3×3 table",
+    title: i18n.t("slashCommand.table.title"),
+    description: i18n.t("slashCommand.table.description"),
     icon: <TableIcon />,
     aliases: ["grid"],
     command: (editor) => {
@@ -176,8 +177,8 @@ const SLASH_COMMANDS: SlashCommandItem[] = [
     },
   },
   {
-    title: "Wikilink",
-    description: "Link to another note",
+    title: i18n.t("slashCommand.wikilink.title"),
+    description: i18n.t("slashCommand.wikilink.description"),
     icon: <BracketsIcon />,
     aliases: ["link", "note", "wikilink", "[["],
     command: (editor) => {

@@ -480,6 +480,8 @@
       "editing": "{{providerName}} is editing your note...",
       "notFound": "{{cliName}} Not Found",
       "needToInstall": "You'll need {{cliName}} to use this feature. Visit {{providerName}} to install it, then restart Scratch.",
+      "needToInstallBefore": "You'll need {{cliName}} to use this feature. Visit",
+      "needToInstallAfter": "to install it, then restart Scratch.",
       "goBack": "to go back",
       "toSubmit": "to submit",
       "checking": "Checking for {{cliName}}...",

@@ -1,6 +1,7 @@
 import { useEffect, useCallback, useRef } from "react";
 import { XIcon } from "../icons";
 import { shortcutCategories } from "../../lib/shortcuts";
+import { useTranslation } from "../../i18n/useTranslation";
 
 const modalCategories = shortcutCategories.filter(
   (c) => c.title !== "Settings",
@@ -44,6 +45,7 @@ export function KeyboardShortcutsModal({
   open,
   onClose,
 }: KeyboardShortcutsModalProps) {
+  const { t } = useTranslation();
   const dialogRef = useRef<HTMLDivElement>(null);
   const previousFocusRef = useRef<HTMLElement | null>(null);
 
@@ -112,11 +114,11 @@ export function KeyboardShortcutsModal({
             id="keyboard-shortcuts-title"
             className="text-lg font-medium text-text"
           >
-            Shortcuts
+            {t("shortcuts.title")}
           </h2>
           <button
             onClick={onClose}
-            aria-label="Close"
+            aria-label={t("shortcuts.close")}
             className="p-1 rounded-md text-text-muted hover:text-text hover:bg-bg-muted transition-colors"
           >
             <XIcon className="w-4.5 h-4.5" />

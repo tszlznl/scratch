@@ -480,6 +480,8 @@
       "editing": "{{providerName}} 正在编辑您的笔记...",
       "notFound": "未找到 {{cliName}}",
       "needToInstall": "您需要 {{cliName}} 才能使用此功能。请访问 {{providerName}} 安装它，然后重启 Scratch。",
+      "needToInstallBefore": "您需要 {{cliName}} 才能使用此功能。请访问",
+      "needToInstallAfter": "安装它，然后重启 Scratch。",
       "goBack": "返回",
       "toSubmit": "提交",
       "checking": "正在检查 {{cliName}}...",

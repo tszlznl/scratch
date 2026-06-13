@@ -10,6 +10,7 @@ import {
 import * as aiService from "../../services/ai";
 import type { AiProvider } from "../../services/ai";
 import type { Settings } from "../../types/note";
+import { useTranslation } from "../../i18n/useTranslation";
 
 interface AiEditModalProps {
   open: boolean;
@@ -26,6 +27,7 @@ export function AiEditModal({
   onExecute,
   isExecuting,
 }: AiEditModalProps) {
+  const { t } = useTranslation();
   const [prompt, setPrompt] = useState("");
   const [cliInstalled, setCliInstalled] = useState<boolean | null>(null);
   const [ollamaModel, setOllamaModel] = useState<string>(
@@ -178,8 +180,8 @@ export function AiEditModal({
               onKeyDown={handleKeyDown}
               placeholder={
                 cliInstalled === false
-                  ? `${cliName} not installed`
-                  : "Describe how to edit the current note..."
+                  ? t("ai.editModal.notInstalled", { cliName })
+                  : t("ai.editModal.placeholder")
               }
               disabled={isExecuting || cliInstalled === false}
               autoComplete="off"
@@ -199,16 +201,16 @@ export function AiEditModal({
           {isExecuting ? (
             <div className="flex items-center gap-2 text-sm text-text-muted">
               <SpinnerIcon className="w-4 h-4 animate-spin" />
-              <span>{providerName} is editing your note...</span>
+              <span>{t("ai.editModal.editing", { providerName })}</span>
             </div>
           ) : cliInstalled === false ? (
             <>
               <div className="text-sm space-y-0.5 p-3 bg-orange-500/10 rounded-md ">
                 <div className="font-medium text-orange-700 dark:text-orange-400">
-                  {cliName} Not Found
+                  {t("ai.editModal.notFound", { cliName })}
                 </div>
                 <div className="text-orange-700/80 dark:text-orange-400/80">
-                  You'll need {cliName} to use this feature. Visit{" "}
+                  {t("ai.editModal.needToInstallBefore", { cliName })}{" "}
                   <a
                     href={installUrl}
                     target="_blank"
@@ -217,7 +219,7 @@ export function AiEditModal({
                   >
                     {providerName}
                   </a>{" "}
-                  to install it, then restart Scratch.
+                  {t("ai.editModal.needToInstallAfter")}
                 </div>
               </div>
               <div className="w-full flex justify-between">
@@ -225,14 +227,14 @@ export function AiEditModal({
                   <kbd className="text-xs px-1.5 py-0.5 rounded-md bg-bg-muted text-text-muted">
                     Esc
                   </kbd>
-                  <span>to go back</span>
+                  <span>{t("ai.editModal.goBack")}</span>
                 </div>
               </div>
             </>
           ) : cliInstalled === null ? (
             <div className="flex items-center gap-2 text-sm text-text-muted">
               <SpinnerIcon className="w-4 h-4 animate-spin" />
-              <span>Checking for {cliName}...</span>
+              <span>{t("ai.editModal.checking", { cliName })}</span>
             </div>
           ) : (
             <>
@@ -240,7 +242,7 @@ export function AiEditModal({
                 <div className="space-y-1.5">
                   <div className="flex items-center gap-2 text-sm">
                     <span className="text-text-muted shrink-0">
-                      Ollama model:
+                      {t("ai.editModal.ollamaModel")}
                     </span>
                     <input
                       ref={modelInputRef}
@@ -259,10 +261,9 @@ export function AiEditModal({
                 </div>
               )}
               <div className="text-sm space-y-1 p-3 bg-bg-muted rounded-md">
-                <span className="font-medium text-text">How does it work?</span>{" "}
+                <span className="font-medium text-text">{t("ai.editModal.howItWorks")}</span>{" "}
                 <span className="text-text-muted">
-                  {providerName} will edit the current note directly using your
-                  local {cliName}. You'll be able to undo changes.
+                  {t("ai.editModal.howItWorksDescription", { providerName, cliName })}
                 </span>
               </div>
 
@@ -271,13 +272,13 @@ export function AiEditModal({
                   <kbd className="text-xs px-1.5 py-0.5 rounded-md bg-bg-muted text-text-muted">
                     Esc
                   </kbd>
-                  <span>to go back</span>
+                  <span>{t("ai.editModal.goBack")}</span>
                 </div>
                 <div className="flex items-center gap-1.5 text-sm text-text-muted">
                   <kbd className="text-xs px-1.5 py-0.5 rounded-md bg-bg-muted text-text-muted">
                     Enter
                   </kbd>
-                  <span>to submit</span>
+                  <span>{t("ai.editModal.toSubmit")}</span>
                 </div>
               </div>
             </>

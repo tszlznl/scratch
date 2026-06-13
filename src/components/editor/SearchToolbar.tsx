@@ -2,6 +2,7 @@ import { useEffect, type RefObject } from "react";
 import { Input, IconButton } from "../ui";
 import { ArrowUpIcon, ArrowDownIcon, XIcon } from "../icons";
 import { shift } from "../../lib/platform";
+import { useTranslation } from "../../i18n/useTranslation";
 
 interface SearchToolbarProps {
   query: string;
@@ -24,6 +25,7 @@ export function SearchToolbar({
   totalMatches,
   inputRef,
 }: SearchToolbarProps) {
+  const { t } = useTranslation();
   // Auto-focus input on mount
   useEffect(() => {
     const frame = requestAnimationFrame(() => inputRef.current?.focus());
@@ -56,20 +58,20 @@ export function SearchToolbar({
         type="text"
         value={query}
         onChange={(e) => onChange(e.target.value)}
-        placeholder="Find in note..."
+        placeholder={t("search.placeholder")}
         className="w-55 h-8 text-sm"
         onKeyDown={handleKeyDown}
       />
 
       <span className="text-xs text-text-muted whitespace-nowrap px-1 min-w-17">
-        {totalMatches > 0 ? `${currentMatch}/${totalMatches}` : "Not found"}
+        {totalMatches > 0 ? `${currentMatch}/${totalMatches}` : t("search.notFound")}
       </span>
 
       <div className="flex items-center gap-px ml-1">
         <IconButton
           onClick={onPrevious}
           disabled={totalMatches === 0}
-          title={`Previous match (${shift}↵)`}
+          title={t("search.previousMatch", { shift })}
         >
           <ArrowUpIcon className="w-4.5 h-4.5 stroke-[1.5]" />
         </IconButton>
@@ -77,12 +79,12 @@ export function SearchToolbar({
         <IconButton
           onClick={onNext}
           disabled={totalMatches === 0}
-          title="Next match (↵)"
+          title={t("search.nextMatch")}
         >
           <ArrowDownIcon className="w-4.5 h-4.5 stroke-[1.5]" />
         </IconButton>
 
-        <IconButton onClick={onClose} title="Close (Esc)">
+        <IconButton onClick={onClose} title={t("search.close")}>
           <XIcon className="w-4.5 h-4.5 stroke-[1.5]" />
         </IconButton>
       </div>

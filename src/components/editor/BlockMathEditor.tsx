@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { CheckIcon, XIcon } from "../icons";
 import { IconButton } from "../ui";
+import { useTranslation } from "../../i18n/useTranslation";
 
 export interface BlockMathEditorProps {
   initialLatex: string;
@@ -13,6 +14,7 @@ export const BlockMathEditor = ({
   onSubmit,
   onCancel,
 }: BlockMathEditorProps) => {
+  const { t } = useTranslation();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [latex, setLatex] = useState(initialLatex);
 
@@ -46,14 +48,14 @@ export const BlockMathEditor = ({
         value={latex}
         onChange={(e) => setLatex(e.target.value)}
         onKeyDown={handleKeyDown}
-        placeholder="Enter KaTeX expression..."
+        placeholder={t("editor.blockMath.placeholder")}
         className="w-full h-30 resize-y rounded-md border border-border bg-bg px-2.5 py-2 text-sm text-text focus:outline-none focus:ring-2 focus:ring-accent/40"
       />
       <div className="flex items-center justify-end gap-1 mr-0.5 mb-0.5">
         <IconButton
           type="button"
           onClick={handleSubmit}
-          title="Apply (Cmd/Ctrl+Enter)"
+          title={t("editor.blockMath.apply")}
           size="xs"
           variant="ghost"
         >
@@ -62,7 +64,7 @@ export const BlockMathEditor = ({
         <IconButton
           type="button"
           onClick={onCancel}
-          title="Cancel"
+          title={t("editor.blockMath.cancel")}
           size="xs"
           variant="ghost"
         >

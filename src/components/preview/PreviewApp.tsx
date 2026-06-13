@@ -4,12 +4,14 @@ import { getCurrentWindow } from "@tauri-apps/api/window";
 import { toast } from "sonner";
 import { Editor, type PreviewModeData } from "../editor/Editor";
 import * as filesService from "../../services/files";
+import { useTranslation } from "../../i18n/useTranslation";
 
 interface PreviewAppProps {
   filePath: string;
 }
 
 export function PreviewApp({ filePath }: PreviewAppProps) {
+  const { t } = useTranslation();
   const [content, setContent] = useState<string | null>(null);
   const [title, setTitle] = useState("");
   const [modified, setModified] = useState(0);
@@ -29,7 +31,7 @@ export function PreviewApp({ filePath }: PreviewAppProps) {
       })
       .catch((error) => {
         console.error("Failed to load file:", error);
-        toast.error(`Failed to load file: ${error}`);
+        toast.error(t("preview.toast.failedToLoad", { error }));
       });
   }, [filePath]);
 
@@ -64,7 +66,7 @@ export function PreviewApp({ filePath }: PreviewAppProps) {
         setHasExternalChanges(false);
       } catch (error) {
         console.error("Failed to save file:", error);
-        toast.error(`Failed to save: ${error}`);
+        toast.error(t("preview.toast.failedToSave", { error }));
       }
     },
     [filePath],
@@ -80,7 +82,7 @@ export function PreviewApp({ filePath }: PreviewAppProps) {
       setReloadVersion((v) => v + 1);
     } catch (error) {
       console.error("Failed to reload file:", error);
-      toast.error(`Failed to reload: ${error}`);
+      toast.error(t("preview.toast.failedToReload", { error }));
     }
   }, [filePath]);
 
@@ -167,7 +169,7 @@ export function PreviewApp({ filePath }: PreviewAppProps) {
       await getCurrentWindow().close();
     } catch (error) {
       console.error("Failed to save to folder:", error);
-      toast.error(`Failed to save to folder: ${error}`);
+      toast.error(t("preview.toast.failedToSaveToFolder", { error }));
     } finally {
       savingRef.current = false;
       setIsSaving(false);
