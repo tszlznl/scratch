@@ -1,11 +1,7 @@
 import { useEffect, useCallback, useRef } from "react";
 import { XIcon } from "../icons";
-import { shortcutCategories } from "../../lib/shortcuts";
+import { getShortcutCategories } from "../../lib/shortcuts";
 import { useTranslation } from "../../i18n/useTranslation";
-
-const modalCategories = shortcutCategories.filter(
-  (c) => c.title !== "Settings",
-);
 
 function KeyboardKey({ keyLabel }: { keyLabel: string }) {
   return (
@@ -48,6 +44,9 @@ export function KeyboardShortcutsModal({
   const { t } = useTranslation();
   const dialogRef = useRef<HTMLDivElement>(null);
   const previousFocusRef = useRef<HTMLElement | null>(null);
+  const modalCategories = getShortcutCategories().filter(
+    (c) => c.id !== "settings",
+  );
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {

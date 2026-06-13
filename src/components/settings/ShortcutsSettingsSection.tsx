@@ -1,6 +1,5 @@
-import { shortcutCategories } from "../../lib/shortcuts";
+import { getShortcutCategories } from "../../lib/shortcuts";
 
-// Render individual key as keyboard button
 function KeyboardKey({ keyLabel }: { keyLabel: string }) {
   return (
     <kbd className="text-xs px-1.5 py-0.5 rounded-md bg-bg-muted text-text min-w-6.5 inline-flex items-center justify-center">
@@ -9,7 +8,6 @@ function KeyboardKey({ keyLabel }: { keyLabel: string }) {
   );
 }
 
-// Render shortcut keys
 function ShortcutKeys({ keys }: { keys: string[] }) {
   return (
     <div className="flex items-center gap-1.5">
@@ -20,26 +18,25 @@ function ShortcutKeys({ keys }: { keys: string[] }) {
   );
 }
 
-// Categories to show in settings (exclude Markdown Syntax)
-const settingsCategories = ["Navigation", "Notes", "Editor", "Settings"];
+const settingsCategoryIds = ["navigation", "notes", "editor", "settings"];
 
 export function ShortcutsSettingsSection() {
+  const shortcutCategories = getShortcutCategories();
+
   return (
     <div className="space-y-8 pb-8">
-      {settingsCategories.map((categoryName, idx) => {
-        const category = shortcutCategories.find(
-          (c) => c.title === categoryName,
-        );
+      {settingsCategoryIds.map((categoryId, idx) => {
+        const category = shortcutCategories.find((c) => c.id === categoryId);
         if (!category) return null;
 
         return (
-          <div key={categoryName}>
+          <div key={categoryId}>
             {idx > 0 && (
               <div className="border-t border-border border-dashed" />
             )}
             <section>
               <h2 className="text-xl font-medium pt-8 mb-4">
-                {categoryName}
+                {category.title}
               </h2>
               <div className="space-y-3">
                 {category.shortcuts.map((shortcut) => (

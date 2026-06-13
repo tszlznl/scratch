@@ -78,11 +78,22 @@
     },
     "codeBlock": {
       "preview": "Preview",
-      "edit": "Edit"
+      "edit": "Edit",
+      "copy": "Copy",
+      "copied": "Copied",
+      "copyCode": "Copy code"
     },
     "wikilink": {
       "noMatchingNotes": "No matching notes"
     },
+    "mermaid": {
+      "syntaxError": "Mermaid syntax error",
+      "emptyDiagram": "Empty mermaid diagram",
+      "invalidSyntax": "Invalid mermaid syntax"
+    },
+    "resizeLeft": "Resize editor width (left)",
+    "resizeRight": "Resize editor width (right)",
+    "noResults": "No results",
     "toast": {
       "copiedMarkdown": "Copied as Markdown",
       "copiedPlainText": "Copied as plain text",
@@ -575,6 +586,7 @@
       "navigation": "Navigation",
       "notes": "Notes",
       "editor": "Editor",
+      "settings": "Settings",
       "markdownSyntax": "Markdown Syntax"
     },
     "cmd": {

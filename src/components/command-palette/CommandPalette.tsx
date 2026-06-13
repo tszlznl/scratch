@@ -381,7 +381,7 @@ export function CommandPalette({
           label: t('commandPalette.gitCommit'),
           icon: <GitCommitIcon className="w-4.5 h-4.5 stroke-[1.5]" />,
           action: async () => {
-            const success = await commit("Quick commit from Scratch");
+            const success = await commit(t("footer.commitMessage"));
             if (success) {
               toast.success(t('commandPalette.toast.changesCommitted'));
             } else {

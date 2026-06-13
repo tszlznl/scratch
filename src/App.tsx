@@ -29,6 +29,7 @@ import {
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import * as aiService from "./services/ai";
 import type { AiProvider } from "./services/ai";
+import { useTranslation } from "./i18n/useTranslation";
 
 // Detect preview mode from URL search params
 function getWindowMode(): {
@@ -47,6 +48,7 @@ function getWindowMode(): {
 type ViewState = "notes" | "settings";
 
 function AppContent() {
+  const { t } = useTranslation();
   const {
     notesFolder,
     isLoading,
@@ -128,7 +130,7 @@ function AppContent() {
   const handleAiEdit = useCallback(
     async (prompt: string, ollamaModel?: string) => {
       if (!currentNote) {
-        toast.error("No note selected");
+        toast.error(t("app.toast.noNoteSelected"));
         return;
       }
 
@@ -170,8 +172,8 @@ function AppContent() {
         } else {
           toast.error(
             <div className="space-y-1">
-              <div className="font-medium">AI Edit Failed</div>
-              <div className="text-xs">{result.error || "Unknown error"}</div>
+              <div className="font-medium">{t("app.toast.aiEditFailed")}</div>
+              <div className="text-xs">{result.error || t("app.unknownError")}</div>
             </div>,
             { duration: Infinity, closeButton: true },
           );
@@ -179,7 +181,7 @@ function AppContent() {
       } catch (error) {
         console.error("[AI] Error:", error);
         toast.error(
-          `Error: ${error instanceof Error ? error.message : "Unknown error"}`,
+          `${t("app.unknownError")}: ${error instanceof Error ? error.message : t("app.unknownError")}`,
         );
       } finally {
         setAiEditing(false);
@@ -215,7 +217,7 @@ function AppContent() {
         e.preventDefault();
         setInterfaceZoom((prev) => prev + 0.05);
         const newZoom = Math.round(Math.min(interfaceZoomRef.current + 0.05, 1.5) * 20) / 20;
-        toast(`Zoom ${Math.round(newZoom * 100)}%`, { id: "zoom", duration: 1500 });
+        toast(t("app.toast.zoom", { percent: Math.round(newZoom * 100) }), { id: "zoom", duration: 1500 });
         return;
       }
 
@@ -224,7 +226,7 @@ function AppContent() {
         e.preventDefault();
         setInterfaceZoom((prev) => prev - 0.05);
         const newZoom = Math.round(Math.max(interfaceZoomRef.current - 0.05, 0.7) * 20) / 20;
-        toast(`Zoom ${Math.round(newZoom * 100)}%`, { id: "zoom", duration: 1500 });
+        toast(t("app.toast.zoom", { percent: Math.round(newZoom * 100) }), { id: "zoom", duration: 1500 });
         return;
       }
 
@@ -232,7 +234,7 @@ function AppContent() {
       if ((e.metaKey || e.ctrlKey) && e.key === "0") {
         e.preventDefault();
         setInterfaceZoom(1.0);
-        toast("Zoom 100%", { id: "zoom", duration: 1500 });
+        toast(t("app.toast.zoom", { percent: 100 }), { id: "zoom", duration: 1500 });
         return;
       }
 
@@ -453,7 +455,7 @@ function AppContent() {
       <div className="h-full min-h-0 flex items-center justify-center bg-bg-secondary">
         <div className="text-text-muted/70 text-sm flex items-center gap-1.5 font-medium">
           <SpinnerIcon className="w-4.5 h-4.5 stroke-[1.5] animate-spin" />
-          Initializing Scratch...
+          {t("app.initializing")}
         </div>
       </div>
     );
@@ -540,12 +542,12 @@ function AppContent() {
             )}
             <div className="text-sm font-medium text-text">
               {aiProvider === "codex"
-                ? "Codex is editing your note..."
+                ? t("app.aiOverlay.codex")
                 : aiProvider === "opencode"
-                  ? "OpenCode is editing your note..."
+                  ? t("app.aiOverlay.openCode")
                 : aiProvider === "ollama"
-                  ? "Ollama is editing your note..."
-                  : "Claude is editing your note..."}
+                  ? t("app.aiOverlay.ollama")
+                  : t("app.aiOverlay.claude")}
             </div>
           </div>
         </div>
@@ -591,6 +593,7 @@ function UpdateToast({
   update: Update;
   toastId: string | number;
 }) {
+  const { t } = useTranslation();
   const [installing, setInstalling] = useState(false);
 
   const handleUpdate = async () => {
@@ -598,13 +601,13 @@ function UpdateToast({
     try {
       await update.downloadAndInstall();
       toast.dismiss(toastId);
-      toast.success("Update installed! Restart Scratch to apply.", {
+      toast.success(t("app.update.installed"), {
         duration: Infinity,
         closeButton: true,
       });
     } catch (err) {
       console.error("Update failed:", err);
-      toast.error("Update failed. Please try again later.");
+      toast.error(t("app.update.failed"));
       setInstalling(false);
     }
   };
@@ -612,7 +615,7 @@ function UpdateToast({
   return (
     <div className="flex flex-col gap-1">
       <div className="font-medium text-sm">
-        Update Available: v{update.version}
+        {t("app.update.title", { version: update.version })}
       </div>
       {update.body && (
         <div className="text-xs text-text-muted line-clamp-3">
@@ -624,7 +627,7 @@ function UpdateToast({
         disabled={installing}
         className="self-start mt-1 text-xs font-medium px-3 py-1.5 rounded-md bg-text text-bg hover:opacity-90 disabled:opacity-50 transition-opacity"
       >
-        {installing ? "Installing..." : "Update Now"}
+        {installing ? t("app.update.installing") : t("app.update.updateNow")}
       </button>
     </div>
   );

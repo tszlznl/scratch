@@ -1,11 +1,13 @@
 import { useMemo } from "react";
 import { renderMermaidSVG } from "beautiful-mermaid";
+import { useTranslation } from "../../i18n/useTranslation";
 
 interface MermaidRendererProps {
   code: string;
 }
 
 export function MermaidRenderer({ code }: MermaidRendererProps) {
+  const { t } = useTranslation();
   const { svg, error } = useMemo(() => {
     if (!code.trim()) return { svg: null, error: null };
     try {
@@ -22,15 +24,15 @@ export function MermaidRenderer({ code }: MermaidRendererProps) {
     } catch (err) {
       return {
         svg: null,
-        error: err instanceof Error ? err.message : "Invalid mermaid syntax",
+        error: err instanceof Error ? err.message : t("editor.mermaid.invalidSyntax"),
       };
     }
-  }, [code]);
+  }, [code, t]);
 
   if (error) {
     return (
       <div className="text-xs text-text-muted italic px-2 pt-6 pb-3 text-center">
-        Mermaid syntax error
+        {t("editor.mermaid.syntaxError")}
       </div>
     );
   }
@@ -38,7 +40,7 @@ export function MermaidRenderer({ code }: MermaidRendererProps) {
   if (!svg) {
     return (
       <div className="text-xs text-text-muted italic px-2 pt-6 pb-3 text-center">
-        Empty mermaid diagram
+        {t("editor.mermaid.emptyDiagram")}
       </div>
     );
   }

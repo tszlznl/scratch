@@ -36,7 +36,7 @@ export function FolderPicker() {
         <div className="text-center p-8 max-w-lg select-none">
           <div
             role="img"
-            aria-label="Folders"
+            aria-label={t("folderPicker.ariaLabel")}
             className="w-48 aspect-square mx-auto mb-2 opacity-40 animate-fade-in-up"
             style={{
               animationDelay: "0ms",

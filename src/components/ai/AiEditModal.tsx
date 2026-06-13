@@ -45,20 +45,20 @@ export function AiEditModal({
         : ClaudeIcon;
   const providerName =
     provider === "codex"
-      ? "Codex"
+      ? t("ai.providerNameCodex")
       : provider === "opencode"
-        ? "OpenCode"
+        ? t("ai.providerNameOpenCode")
       : provider === "ollama"
-        ? "Ollama"
-        : "Claude";
+        ? t("ai.providerNameOllama")
+        : t("ai.providerNameClaude");
   const cliName =
     provider === "codex"
-      ? "OpenAI Codex CLI"
+      ? t("ai.cliNameCodex")
       : provider === "opencode"
-        ? "OpenCode CLI"
+        ? t("ai.cliNameOpenCode")
       : provider === "ollama"
-        ? "Ollama CLI"
-        : "Claude Code CLI";
+        ? t("ai.cliNameOllama")
+        : t("ai.cliNameClaude");
   const installUrl =
     provider === "codex"
       ? "https://github.com/openai/codex"

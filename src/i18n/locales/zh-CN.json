@@ -78,11 +78,22 @@
     },
     "codeBlock": {
       "preview": "预览",
-      "edit": "编辑"
+      "edit": "编辑",
+      "copy": "复制",
+      "copied": "已复制",
+      "copyCode": "复制代码"
     },
     "wikilink": {
       "noMatchingNotes": "没有匹配的笔记"
     },
+    "mermaid": {
+      "syntaxError": "Mermaid 语法错误",
+      "emptyDiagram": "空 Mermaid 图表",
+      "invalidSyntax": "无效的 Mermaid 语法"
+    },
+    "resizeLeft": "调整编辑器宽度（左侧）",
+    "resizeRight": "调整编辑器宽度（右侧）",
+    "noResults": "无结果",
     "toast": {
       "copiedMarkdown": "已复制为 Markdown",
       "copiedPlainText": "已复制为纯文本",
@@ -575,6 +586,7 @@
       "navigation": "导航",
       "notes": "笔记",
       "editor": "编辑器",
+      "settings": "设置",
       "markdownSyntax": "Markdown 语法"
     },
     "cmd": {

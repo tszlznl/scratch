@@ -12,6 +12,7 @@ import { listen } from "@tauri-apps/api/event";
 import type { Note, NoteMetadata } from "../types/note";
 import * as notesService from "../services/notes";
 import type { SearchResult } from "../services/notes";
+import i18n from "../i18n";
 
 // Separate contexts to prevent unnecessary re-renders
 // Data context: changes frequently, only subscribed by components that need the data
@@ -93,7 +94,7 @@ export function NotesProvider({ children }: { children: ReactNode }) {
       const notesList = await notesService.listNotes();
       setNotes(notesList);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to load notes");
+      setError(err instanceof Error ? err.message : i18n.t("context.error.loadNotes"));
     }
   }, [notesFolder]);
 
@@ -131,7 +132,7 @@ export function NotesProvider({ children }: { children: ReactNode }) {
       setCurrentNote(note);
     } catch (err) {
       if (requestId !== selectRequestIdRef.current) return;
-      setError(err instanceof Error ? err.message : "Failed to load note");
+      setError(err instanceof Error ? err.message : i18n.t("context.error.loadNote"));
     }
   }, []);
 
@@ -143,7 +144,7 @@ export function NotesProvider({ children }: { children: ReactNode }) {
       setHasExternalChanges(false);
       setReloadVersion((v) => v + 1);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to reload note");
+      setError(err instanceof Error ? err.message : i18n.t("context.error.reloadNote"));
     }
   }, []);
 
@@ -172,7 +173,7 @@ export function NotesProvider({ children }: { children: ReactNode }) {
         recentlySavedRef.current.delete(note.id);
       }, 1000);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to create note");
+      setError(err instanceof Error ? err.message : i18n.t("context.error.createNote"));
     }
   }, [refreshNotes]);
 
@@ -242,7 +243,7 @@ export function NotesProvider({ children }: { children: ReactNode }) {
           if (updatedId) recentlySavedRef.current.delete(updatedId);
         }, 1000);
       } catch (err) {
-        setError(err instanceof Error ? err.message : "Failed to save note");
+        setError(err instanceof Error ? err.message : i18n.t("context.error.saveNote"));
         // Clean up immediately on error to avoid leaving stale entries
         recentlySavedRef.current.delete(savingNoteId);
         if (updatedId) recentlySavedRef.current.delete(updatedId);
@@ -277,7 +278,7 @@ export function NotesProvider({ children }: { children: ReactNode }) {
         });
         await refreshNotes();
       } catch (err) {
-        setError(err instanceof Error ? err.message : "Failed to delete note");
+        setError(err instanceof Error ? err.message : i18n.t("context.error.deleteNote"));
       }
     },
     [refreshNotes]
@@ -297,7 +298,7 @@ export function NotesProvider({ children }: { children: ReactNode }) {
           recentlySavedRef.current.delete(newNote.id);
         }, 1000);
       } catch (err) {
-        setError(err instanceof Error ? err.message : "Failed to duplicate note");
+        setError(err instanceof Error ? err.message : i18n.t("context.error.duplicateNote"));
       }
     },
     [refreshNotes]
@@ -318,7 +319,7 @@ export function NotesProvider({ children }: { children: ReactNode }) {
           await refreshNotes();
         }
       } catch (err) {
-        setError(err instanceof Error ? err.message : "Failed to pin note");
+        setError(err instanceof Error ? err.message : i18n.t("context.error.pinNote"));
       }
     },
     [refreshNotes]
@@ -337,7 +338,7 @@ export function NotesProvider({ children }: { children: ReactNode }) {
         await notesService.updateSettings(updatedSettings);
         await refreshNotes();
       } catch (err) {
-        setError(err instanceof Error ? err.message : "Failed to unpin note");
+        setError(err instanceof Error ? err.message : i18n.t("context.error.unpinNote"));
       }
     },
     [refreshNotes]
@@ -360,7 +361,7 @@ export function NotesProvider({ children }: { children: ReactNode }) {
         }, 1000);
       } catch (err) {
         setError(
-          err instanceof Error ? err.message : "Failed to create note"
+          err instanceof Error ? err.message : i18n.t("context.error.createNote")
         );
       }
     },
@@ -375,7 +376,7 @@ export function NotesProvider({ children }: { children: ReactNode }) {
         await refreshNotes();
       } catch (err) {
         setError(
-          err instanceof Error ? err.message : "Failed to create folder"
+          err instanceof Error ? err.message : i18n.t("context.error.createFolder")
         );
       }
     },
@@ -397,7 +398,7 @@ export function NotesProvider({ children }: { children: ReactNode }) {
         await refreshNotes();
       } catch (err) {
         setError(
-          err instanceof Error ? err.message : "Failed to delete folder"
+          err instanceof Error ? err.message : i18n.t("context.error.deleteFolder")
         );
       }
     },
@@ -425,7 +426,7 @@ export function NotesProvider({ children }: { children: ReactNode }) {
             notesService.readNote(newId).then((note) => {
               setCurrentNote(note);
             }).catch((err) => {
-              setError(err instanceof Error ? err.message : "Failed to read renamed note");
+              setError(err instanceof Error ? err.message : i18n.t("context.error.readRenamedNote"));
             });
             return newId;
           }
@@ -435,7 +436,7 @@ export function NotesProvider({ children }: { children: ReactNode }) {
         await refreshNotes();
       } catch (err) {
         setError(
-          err instanceof Error ? err.message : "Failed to rename folder"
+          err instanceof Error ? err.message : i18n.t("context.error.renameFolder")
         );
       }
     },
@@ -452,7 +453,7 @@ export function NotesProvider({ children }: { children: ReactNode }) {
             notesService.readNote(newId).then((note) => {
               setCurrentNote(note);
             }).catch((err) => {
-              setError(err instanceof Error ? err.message : "Failed to read moved note");
+              setError(err instanceof Error ? err.message : i18n.t("context.error.readMovedNote"));
             });
             return newId;
           }
@@ -460,7 +461,7 @@ export function NotesProvider({ children }: { children: ReactNode }) {
         });
         await refreshNotes();
       } catch (err) {
-        setError(err instanceof Error ? err.message : "Failed to move note");
+        setError(err instanceof Error ? err.message : i18n.t("context.error.moveNote"));
       }
     },
     [refreshNotes]
@@ -488,7 +489,7 @@ export function NotesProvider({ children }: { children: ReactNode }) {
             notesService.readNote(newId).then((note) => {
               setCurrentNote(note);
             }).catch((err) => {
-              setError(err instanceof Error ? err.message : "Failed to read moved note");
+              setError(err instanceof Error ? err.message : i18n.t("context.error.readMovedNote"));
             });
             return newId;
           }
@@ -497,7 +498,7 @@ export function NotesProvider({ children }: { children: ReactNode }) {
 
         await refreshNotes();
       } catch (err) {
-        setError(err instanceof Error ? err.message : "Failed to move folder");
+        setError(err instanceof Error ? err.message : i18n.t("context.error.moveFolder"));
       }
     },
     [refreshNotes]
@@ -511,7 +512,7 @@ export function NotesProvider({ children }: { children: ReactNode }) {
       await notesService.startFileWatcher();
     } catch (err) {
       setError(
-        err instanceof Error ? err.message : "Failed to set notes folder"
+        err instanceof Error ? err.message : i18n.t("context.error.setNotesFolder")
       );
     }
   }, []);
@@ -528,7 +529,7 @@ export function NotesProvider({ children }: { children: ReactNode }) {
       await notesService.startFileWatcher();
     } catch (err) {
       setError(
-        err instanceof Error ? err.message : "Failed to sync notes folder"
+        err instanceof Error ? err.message : i18n.t("context.error.syncNotesFolder")
       );
     }
   }, []);
@@ -610,7 +611,7 @@ export function NotesProvider({ children }: { children: ReactNode }) {
           await notesService.startFileWatcher();
         }
       } catch (err) {
-        setError(err instanceof Error ? err.message : "Failed to initialize");
+        setError(err instanceof Error ? err.message : i18n.t("context.error.initialize"));
       } finally {
         setIsLoading(false);
       }

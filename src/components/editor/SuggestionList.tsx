@@ -7,6 +7,7 @@ import {
   type ReactNode,
 } from "react";
 import { cn } from "../../lib/utils";
+import { useTranslation } from "../../i18n/useTranslation";
 
 export interface SuggestionListRef {
   onKeyDown: (props: { event: KeyboardEvent }) => boolean;
@@ -27,13 +28,15 @@ function SuggestionListInner<T>(
     command,
     itemKey,
     renderItem,
-    emptyText = "No results",
+    emptyText,
     width = "w-64",
   }: SuggestionListProps<T>,
   ref: React.ForwardedRef<SuggestionListRef>,
 ) {
+  const { t } = useTranslation();
   const [selectedIndex, setSelectedIndex] = useState(0);
   const listRef = useRef<HTMLDivElement>(null);
+  const effectiveEmptyText = emptyText ?? t("editor.noResults");
 
   useEffect(() => {
     setSelectedIndex(0);
@@ -74,7 +77,7 @@ function SuggestionListInner<T>(
           width,
         )}
       >
-        <div className="text-sm text-text-muted px-3 py-2">{emptyText}</div>
+        <div className="text-sm text-text-muted px-3 py-2">{effectiveEmptyText}</div>
       </div>
     );
   }

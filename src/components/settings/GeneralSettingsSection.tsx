@@ -70,14 +70,14 @@ export function GeneralSettingsSection() {
   const [remoteUrl, setRemoteUrl] = useState("");
   const [showRemoteInput, setShowRemoteInput] = useState(false);
   const [isEditingRemote, setIsEditingRemote] = useState(false);
-  const [noteTemplate, setNoteTemplate] = useState<string>("Untitled");
-  const [previewNoteName, setPreviewNoteName] = useState<string>("Untitled");
+  const [noteTemplate, setNoteTemplate] = useState<string>(t("settings.general.untitled"));
+  const [previewNoteName, setPreviewNoteName] = useState<string>(t("settings.general.untitled"));
   // Load template from settings on mount
   useEffect(() => {
     const loadTemplate = async () => {
       try {
         const settings = await invoke<Settings>("get_settings");
-        const template = settings.defaultNoteName || "Untitled";
+        const template = settings.defaultNoteName || t("settings.general.untitled");
         setNoteTemplate(template);
 
         // Update preview
@@ -99,7 +99,7 @@ export function GeneralSettingsSection() {
         });
         setPreviewNoteName(preview);
       } catch (error) {
-        setPreviewNoteName("Invalid template");
+        setPreviewNoteName(t("settings.general.invalidTemplate"));
       }
     };
 
@@ -904,7 +904,7 @@ function IgnoredFoldersEditor() {
             {pattern}
             <button
               type="button"
-              aria-label={`Remove ${pattern}`}
+              aria-label={t("settings.general.removePattern", { pattern })}
               onClick={() => handleRemove(pattern)}
               disabled={isSaving}
               className="p-0.5 rounded hover:bg-bg-hover text-text-muted hover:text-text cursor-pointer"

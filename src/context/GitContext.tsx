@@ -13,6 +13,7 @@ import * as gitService from "../services/git";
 import * as notesService from "../services/notes";
 import type { GitStatus } from "../services/git";
 import { useNotesData } from "./NotesContext";
+import i18n from "../i18n";
 
 interface GitContextValue {
   // State
@@ -102,7 +103,7 @@ export function GitProvider({ children }: { children: ReactNode }) {
     } catch (err) {
       if (isStale()) return;
 
-      setLastError(err instanceof Error ? err.message : "Failed to get git status");
+      setLastError(err instanceof Error ? err.message : i18n.t("git.error.getStatus"));
     } finally {
       refreshInFlightRef.current = false;
       if (isInitialLoad) {
@@ -139,7 +140,7 @@ export function GitProvider({ children }: { children: ReactNode }) {
 
         setGitEnabledState(previous);
         setLastError(
-          err instanceof Error ? err.message : "Failed to update git setting",
+          err instanceof Error ? err.message : i18n.t("git.error.updateSetting"),
         );
         return false;
       } finally {
@@ -157,7 +158,7 @@ export function GitProvider({ children }: { children: ReactNode }) {
       await refreshStatus();
       return true;
     } catch (err) {
-      setLastError(err instanceof Error ? err.message : "Failed to initialize git");
+      setLastError(err instanceof Error ? err.message : i18n.t("git.error.init"));
       return false;
     }
   }, [refreshStatus]);
@@ -173,7 +174,7 @@ export function GitProvider({ children }: { children: ReactNode }) {
       await refreshStatus();
       return true;
     } catch (err) {
-      setLastError(err instanceof Error ? err.message : "Failed to commit");
+      setLastError(err instanceof Error ? err.message : i18n.t("git.error.commit"));
       return false;
     } finally {
       setIsCommitting(false);
@@ -191,7 +192,7 @@ export function GitProvider({ children }: { children: ReactNode }) {
       await refreshStatus();
       return true;
     } catch (err) {
-      setLastError(err instanceof Error ? err.message : "Failed to push");
+      setLastError(err instanceof Error ? err.message : i18n.t("git.error.push"));
       return false;
     } finally {
       setIsPushing(false);
@@ -207,9 +208,9 @@ export function GitProvider({ children }: { children: ReactNode }) {
         return false;
       }
       await refreshStatus();
-      return result.message || "Pulled latest changes";
+      return result.message || i18n.t("git.message.pulled");
     } catch (err) {
-      setLastError(err instanceof Error ? err.message : "Failed to pull");
+      setLastError(err instanceof Error ? err.message : i18n.t("git.error.pull"));
       return false;
     } finally {
       setIsPulling(false);
@@ -236,7 +237,7 @@ export function GitProvider({ children }: { children: ReactNode }) {
         if (pushResult.error) {
           setLastError(pushResult.error);
           await refreshStatus();
-          if (didPull) return { ok: false, error: `Pulled changes, but push failed: ${pushResult.error}` };
+          if (didPull) return { ok: false, error: i18n.t("git.message.pulledButPushFailed", { error: pushResult.error }) };
           return { ok: false, error: pushResult.error };
         }
         didPush = true;
@@ -244,12 +245,12 @@ export function GitProvider({ children }: { children: ReactNode }) {
 
       await refreshStatus();
 
-      if (didPull && didPush) return { ok: true, message: "Synced — pulled and pushed" };
-      if (didPull) return { ok: true, message: "Pulled latest changes" };
-      if (didPush) return { ok: true, message: "Pushed to remote" };
-      return { ok: true, message: "Already up to date" };
+      if (didPull && didPush) return { ok: true, message: i18n.t("git.message.syncedBoth") };
+      if (didPull) return { ok: true, message: i18n.t("git.message.pulled") };
+      if (didPush) return { ok: true, message: i18n.t("git.message.pushed") };
+      return { ok: true, message: i18n.t("git.message.upToDate") };
     } catch (err) {
-      const error = err instanceof Error ? err.message : "Failed to sync";
+      const error = err instanceof Error ? err.message : i18n.t("git.error.sync");
       setLastError(error);
       return { ok: false, error };
     } finally {
@@ -268,7 +269,7 @@ export function GitProvider({ children }: { children: ReactNode }) {
       await refreshStatus();
       return true;
     } catch (err) {
-      setLastError(err instanceof Error ? err.message : "Failed to add remote");
+      setLastError(err instanceof Error ? err.message : i18n.t("git.error.addRemote"));
       return false;
     } finally {
       setIsAddingRemote(false);
@@ -286,7 +287,7 @@ export function GitProvider({ children }: { children: ReactNode }) {
       await refreshStatus();
       return true;
     } catch (err) {
-      setLastError(err instanceof Error ? err.message : "Failed to update remote");
+      setLastError(err instanceof Error ? err.message : i18n.t("git.error.updateRemote"));
       return false;
     } finally {
       setIsAddingRemote(false);
@@ -304,7 +305,7 @@ export function GitProvider({ children }: { children: ReactNode }) {
       await refreshStatus();
       return true;
     } catch (err) {
-      setLastError(err instanceof Error ? err.message : "Failed to remove remote");
+      setLastError(err instanceof Error ? err.message : i18n.t("git.error.removeRemote"));
       return false;
     } finally {
       setIsAddingRemote(false);
@@ -322,7 +323,7 @@ export function GitProvider({ children }: { children: ReactNode }) {
       await refreshStatus();
       return true;
     } catch (err) {
-      setLastError(err instanceof Error ? err.message : "Failed to push");
+      setLastError(err instanceof Error ? err.message : i18n.t("git.error.push"));
       return false;
     } finally {
       setIsPushing(false);

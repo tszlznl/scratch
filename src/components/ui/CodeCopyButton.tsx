@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { invoke } from "@tauri-apps/api/core";
 import { CheckIcon, CopyIcon } from "../icons";
 import { cn } from "../../lib/utils";
+import { useTranslation } from "../../i18n/useTranslation";
 
 interface CodeCopyButtonProps {
   text: string;
@@ -15,14 +16,17 @@ export function CodeCopyButton({
   text,
   className,
   iconClassName = "w-3.5 h-3.5 stroke-[1.7]",
-  copyLabel = "Copy",
-  copiedLabel = "Copied",
+  copyLabel,
+  copiedLabel,
 }: CodeCopyButtonProps) {
+  const { t } = useTranslation();
   const [copied, setCopied] = useState(false);
   const copyResetTimerRef = useRef<number | null>(null);
   const isDisabled = !text.trim();
-  const copyA11yLabel = copyLabel.trim() || "Copy code";
-  const copiedA11yLabel = copiedLabel.trim() || "Copied";
+  const effectiveCopyLabel = copyLabel ?? t("editor.codeBlock.copy");
+  const effectiveCopiedLabel = copiedLabel ?? t("editor.codeBlock.copied");
+  const copyA11yLabel = effectiveCopyLabel.trim() || t("editor.codeBlock.copyCode");
+  const copiedA11yLabel = effectiveCopiedLabel.trim() || t("editor.codeBlock.copied");
 
   useEffect(() => {
     return () => {
@@ -61,17 +65,18 @@ export function CodeCopyButton({
       type="button"
       title={copied ? copiedA11yLabel : copyA11yLabel}
       aria-label={copied ? copiedA11yLabel : copyA11yLabel}
+
       disabled={isDisabled}
     >
       {copied ? (
         <>
           <CheckIcon className={iconClassName} />
-          {copiedLabel && copiedLabel}
+          {effectiveCopiedLabel}
         </>
       ) : (
         <>
           <CopyIcon className={iconClassName} />
-          {copyLabel && copyLabel}
+          {effectiveCopyLabel}
         </>
       )}
     </button>
