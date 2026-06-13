@@ -28,6 +28,7 @@ A minimalist, offline-first markdown note-taking app for macOS, Windows, and Lin
 - **Customizable** - Theme, typography, page width, and RTL text direction
 - **Git integration** - Optional version control with push/pull for multi-device sync
 - **Lightweight** - 5-10x smaller than Obsidian or Notion
+- **i18n** - English and Chinese (中文) interface, auto-detects system language
 
 ## Screenshot
 
