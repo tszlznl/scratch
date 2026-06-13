@@ -52,6 +52,7 @@ import {
   KeyboardIcon,
 } from "../icons";
 import { mod, shift } from "../../lib/platform";
+import { useTranslation } from "../../i18n/useTranslation";
 import type { AiProvider } from "../../services/ai";
 
 interface Command {
@@ -83,6 +84,7 @@ export function CommandPalette({
   onToggleFocusMode,
   editorRef,
 }: CommandPaletteProps) {
+  const { t } = useTranslation();
   const {
     notes,
     selectNote,
@@ -148,7 +150,7 @@ export function CommandPalette({
     const baseCommands: Command[] = [
       {
         id: "new-note",
-        label: "New Note",
+        label: t('commandPalette.newNote'),
         shortcut: `${mod} N`,
         icon: <AddNoteIcon className="w-4.5 h-4.5 stroke-[1.5]" />,
         action: () => {
@@ -158,7 +160,7 @@ export function CommandPalette({
       },
       {
         id: "new-folder",
-        label: "New Folder",
+        label: t('commandPalette.newFolder'),
         shortcut: undefined,
         icon: <FolderPlusIcon className="w-4.5 h-4.5 stroke-[1.5]" />,
         action: () => {
@@ -182,7 +184,7 @@ export function CommandPalette({
             if (provider === "codex") {
               return {
                 id: "ai-edit-codex",
-                label: "Edit with OpenAI Codex",
+                label: t('commandPalette.aiEditCodex'),
                 icon: <CodexIcon className="w-4.5 h-4.5 fill-text-muted" />,
                 action,
               };
@@ -191,7 +193,7 @@ export function CommandPalette({
             if (provider === "opencode") {
               return {
                 id: "ai-edit-opencode",
-                label: "Edit with OpenCode",
+                label: t('commandPalette.aiEditOpenCode'),
                 icon: (
                   <OpenCodeIcon className="w-4.5 h-4.5 fill-text-muted" />
                 ),
@@ -202,7 +204,7 @@ export function CommandPalette({
             if (provider === "ollama") {
               return {
                 id: "ai-edit-ollama",
-                label: "Edit with Ollama",
+                label: t('commandPalette.aiEditOllama'),
                 icon: <OllamaIcon className="w-4.5 h-4.5 fill-text-muted" />,
                 action,
               };
@@ -210,7 +212,7 @@ export function CommandPalette({
 
             return {
               id: "ai-edit-claude",
-              label: "Edit with Claude Code",
+              label: t('commandPalette.aiEditClaude'),
               icon: <ClaudeIcon className="w-4.5 h-4.5 fill-text-muted" />,
               action,
             };
@@ -220,7 +222,7 @@ export function CommandPalette({
       baseCommands.push(
         {
           id: isPinned ? "unpin-note" : "pin-note",
-          label: isPinned ? "Unpin Current Note" : "Pin Current Note",
+          label: isPinned ? t('commandPalette.unpinNote') : t('commandPalette.pinNote'),
           icon: <PinIcon className="w-5 h-5 stroke-[1.3]" />,
           action: async () => {
             try {
@@ -232,14 +234,14 @@ export function CommandPalette({
               onClose();
             } catch (error) {
               console.error("Failed to pin/unpin note:", error);
-              toast.error(`Failed to ${isPinned ? "unpin" : "pin"} note`);
+              toast.error(t('commandPalette.toast.failedToPin'));
             }
           },
         },
         ...aiCommands,
         {
           id: "duplicate-note",
-          label: "Duplicate Current Note",
+          label: t('commandPalette.duplicateNote'),
           icon: <CopyIcon className="w-4.5 h-4.5 stroke-[1.5]" />,
           action: async () => {
             try {
@@ -254,7 +256,7 @@ export function CommandPalette({
         },
         {
           id: "delete-note",
-          label: "Delete Current Note",
+          label: t('commandPalette.deleteNote'),
           icon: <TrashIcon className="w-4.5 h-4.5 stroke-[1.5]" />,
           action: () => {
             setNoteToDelete(currentNote.id);
@@ -263,63 +265,63 @@ export function CommandPalette({
         },
         {
           id: "copy-markdown",
-          label: "Copy Markdown",
+          label: t('commandPalette.copyMarkdown'),
           icon: <CopyIcon className="w-4.5 h-4.5 stroke-[1.5]" />,
           action: async () => {
             try {
               await invoke("copy_to_clipboard", { text: currentNote.content });
-              toast.success("Copied as Markdown");
+              toast.success(t('commandPalette.toast.copiedMarkdown'));
               onClose();
             } catch (error) {
               console.error("Failed to copy markdown:", error);
-              toast.error("Failed to copy");
+              toast.error(t('commandPalette.toast.failedToCopy'));
             }
           },
         },
         {
           id: "copy-plain",
-          label: "Copy Plain Text",
+          label: t('commandPalette.copyPlainText'),
           icon: <CopyIcon className="w-4.5 h-4.5 stroke-[1.5]" />,
           action: async () => {
             try {
               const plainText = plainTextFromMarkdown(currentNote.content);
               await invoke("copy_to_clipboard", { text: plainText });
-              toast.success("Copied as plain text");
+              toast.success(t('commandPalette.toast.copiedPlainText'));
               onClose();
             } catch (error) {
               console.error("Failed to copy plain text:", error);
-              toast.error("Failed to copy");
+              toast.error(t('commandPalette.toast.failedToCopy'));
             }
           },
         },
         {
           id: "copy-html",
-          label: "Copy HTML",
+          label: t('commandPalette.copyHtml'),
           icon: <CopyIcon className="w-4.5 h-4.5 stroke-[1.5]" />,
           action: async () => {
             try {
               if (!editorRef?.current) {
-                toast.error("Editor not available");
+                toast.error(t('commandPalette.toast.editorUnavailable'));
                 return;
               }
               const html = editorRef.current.getHTML();
               await invoke("copy_to_clipboard", { text: html });
-              toast.success("Copied as HTML");
+              toast.success(t('commandPalette.toast.copiedHtml'));
               onClose();
             } catch (error) {
               console.error("Failed to copy HTML:", error);
-              toast.error("Failed to copy");
+              toast.error(t('commandPalette.toast.failedToCopy'));
             }
           },
         },
         {
           id: "download-pdf",
-          label: "Print as PDF",
+          label: t('commandPalette.printPdf'),
           icon: <DownloadIcon className="w-4.5 h-4.5 stroke-[1.5]" />,
           action: async () => {
             try {
               if (!editorRef?.current || !currentNote) {
-                toast.error("Editor not available");
+                toast.error(t('commandPalette.toast.editorUnavailable'));
                 return;
               }
               await downloadPdf(editorRef.current, currentNote.title);
@@ -328,18 +330,18 @@ export function CommandPalette({
               onClose();
             } catch (error) {
               console.error("Failed to open print dialog:", error);
-              toast.error("Failed to open print dialog");
+              toast.error(t('commandPalette.toast.failedToOpenPrint'));
             }
           },
         },
         {
           id: "download-markdown",
-          label: "Export Markdown",
+          label: t('commandPalette.exportMarkdown'),
           icon: <DownloadIcon className="w-4.5 h-4.5 stroke-[1.5]" />,
           action: async () => {
             try {
               if (!currentNote) {
-                toast.error("No note selected");
+                toast.error(t('commandPalette.toast.noNoteSelected'));
                 return;
               }
               // Use live editor content with nbsp cleanup, fall back to saved content
@@ -356,12 +358,12 @@ export function CommandPalette({
               }
               const saved = await downloadMarkdown(markdown, currentNote.title);
               if (saved) {
-                toast.success("Markdown saved successfully");
+                toast.success(t('commandPalette.toast.markdownSaved'));
                 onClose();
               }
             } catch (error) {
               console.error("Failed to download markdown:", error);
-              toast.error("Failed to save markdown");
+              toast.error(t('commandPalette.toast.failedToSaveMarkdown'));
             }
           },
         },
@@ -376,14 +378,14 @@ export function CommandPalette({
       if (hasChanges) {
         baseCommands.push({
           id: "git-commit",
-          label: "Git: Quick Commit",
+          label: t('commandPalette.gitCommit'),
           icon: <GitCommitIcon className="w-4.5 h-4.5 stroke-[1.5]" />,
           action: async () => {
             const success = await commit("Quick commit from Scratch");
             if (success) {
-              toast.success("Changes committed");
+              toast.success(t('commandPalette.toast.changesCommitted'));
             } else {
-              toast.error("Failed to commit");
+              toast.error(t('commandPalette.toast.failedToCommit'));
             }
             onClose();
           },
@@ -393,7 +395,7 @@ export function CommandPalette({
       if (canSync) {
         baseCommands.push({
           id: "git-sync",
-          label: "Git: Sync (Pull and Push)",
+          label: t('commandPalette.gitSync'),
           icon: <RefreshCwIcon className="w-4.5 h-4.5 stroke-[1.5]" />,
           action: async () => {
             const result = await sync();
@@ -412,7 +414,7 @@ export function CommandPalette({
     baseCommands.push(
       {
         id: "focus-mode",
-        label: focusMode ? "Exit Focus Mode" : "Enter Focus Mode",
+        label: focusMode ? t('commandPalette.exitFocusMode') : t('commandPalette.enterFocusMode'),
         shortcut: `${mod} ${shift} Enter`,
         icon: <ZenIcon className="w-4.5 h-4.5 stroke-[1.5]" />,
         action: () => {
@@ -422,7 +424,7 @@ export function CommandPalette({
       },
       {
         id: "toggle-source",
-        label: "Toggle Markdown Source",
+        label: t('commandPalette.toggleSource'),
         shortcut: `${mod} ${shift} M`,
         icon: <MarkdownIcon className="w-4.5 h-4.5 stroke-[1.5]" />,
         action: () => {
@@ -436,7 +438,7 @@ export function CommandPalette({
     if (notesFolder) {
       baseCommands.push({
         id: "open-folder",
-        label: "Open Notes Folder",
+        label: t('commandPalette.openFolder'),
         icon: <FolderIcon className="w-4.5 h-4.5 stroke-[1.5]" />,
         action: async () => {
           try {
@@ -444,7 +446,7 @@ export function CommandPalette({
             onClose();
           } catch (error) {
             console.error("Failed to open folder:", error);
-            toast.error("Failed to open folder");
+            toast.error(t('commandPalette.toast.failedToOpenFolder'));
           }
         },
       });
@@ -454,7 +456,7 @@ export function CommandPalette({
     baseCommands.push(
       {
         id: "keyboard-shortcuts",
-        label: "Keyboard Shortcuts",
+        label: t('commandPalette.keyboardShortcuts'),
         shortcut: `${mod} /`,
         icon: <KeyboardIcon className="w-4.5 h-4.5 stroke-[1.5]" />,
         action: () => {
@@ -464,7 +466,7 @@ export function CommandPalette({
       },
       {
         id: "settings",
-        label: "Settings",
+        label: t('commandPalette.settings'),
         shortcut: `${mod} ,`,
         icon: <SettingsIcon className="w-4.5 h-4.5 stroke-[1.5]" />,
         action: () => {
@@ -474,7 +476,7 @@ export function CommandPalette({
       },
       {
         id: "theme-light",
-        label: `Switch Theme to Light Mode`,
+        label: t('commandPalette.themeLight'),
         icon: <SwatchIcon className="w-4.5 h-4.5 stroke-[1.5]" />,
         action: () => {
           setTheme("light");
@@ -483,7 +485,7 @@ export function CommandPalette({
       },
       {
         id: "theme-dark",
-        label: `Switch Theme to Dark Mode`,
+        label: t('commandPalette.themeDark'),
         icon: <SwatchIcon className="w-4.5 h-4.5 stroke-[1.5]" />,
         action: () => {
           setTheme("dark");
@@ -492,7 +494,7 @@ export function CommandPalette({
       },
       {
         id: "theme-system",
-        label: `Switch Theme to System Mode`,
+        label: t('commandPalette.themeSystem'),
         icon: <SwatchIcon className="w-4.5 h-4.5 stroke-[1.5]" />,
         action: () => {
           setTheme("system");
@@ -639,7 +641,7 @@ export function CommandPalette({
         onClose();
       } catch (error) {
         console.error("Failed to delete note:", error);
-        toast.error("Failed to delete note");
+        toast.error(t('commandPalette.toast.failedToDelete'));
       }
     }
   }, [noteToDelete, deleteNote, onClose]);
@@ -690,7 +692,7 @@ export function CommandPalette({
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Search notes or type a command..."
+            placeholder={t('commandPalette.placeholder')}
             autoComplete="off"
             autoCorrect="off"
             autoCapitalize="off"
@@ -703,7 +705,7 @@ export function CommandPalette({
         <div ref={listRef} className="overflow-y-auto h-full p-2.5 flex-1">
           {allItems.length === 0 ? (
             <div className="text-sm font-medium opacity-50 text-text-muted p-2">
-              No results found
+              {t('commandPalette.noResults')}
             </div>
           ) : (
             <>
@@ -711,7 +713,7 @@ export function CommandPalette({
               {filteredCommands.length > 0 && (
                 <div className="space-y-0.5 mb-5">
                   <div className="text-sm font-medium text-text-muted px-2.5 py-1.5">
-                    Commands
+                    {t('commandPalette.commands')}
                   </div>
                   {filteredCommands.map((cmd, i) => {
                     return (
@@ -733,7 +735,7 @@ export function CommandPalette({
               {filteredNotes.length > 0 && (
                 <div className="space-y-0.5">
                   <div className="text-sm font-medium text-text-muted px-2.5 py-1.5">
-                    Notes
+                    {t('commandPalette.notes')}
                   </div>
                   {filteredNotes.slice(0, 10).map((note, i) => {
                     const title = cleanTitle(note.title);
@@ -768,16 +770,15 @@ export function CommandPalette({
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete note?</AlertDialogTitle>
+            <AlertDialogTitle>{t('commandPalette.deleteDialog.title')}</AlertDialogTitle>
             <AlertDialogDescription>
-              This will permanently delete the note and all its content. This
-              action cannot be undone.
+              {t('commandPalette.deleteDialog.description')}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>{t('commandPalette.deleteDialog.cancel')}</AlertDialogCancel>
             <AlertDialogAction onClick={handleDeleteConfirm}>
-              Delete
+              {t('commandPalette.deleteDialog.delete')}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

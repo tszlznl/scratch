@@ -14,6 +14,7 @@ import {
   AlertDialogTitle,
 } from "../ui";
 import { cleanTitle } from "../../lib/utils";
+import { useTranslation } from "../../i18n/useTranslation";
 import * as notesService from "../../services/notes";
 import { FolderTreeView } from "./FolderTreeView";
 import {
@@ -28,7 +29,7 @@ const menuItemClass =
 
 const menuSeparatorClass = "h-px bg-border my-1";
 
-function formatDate(timestamp: number): string {
+function formatDate(timestamp: number, t: (key: string, options?: Record<string, unknown>) => string): string {
   const date = new Date(timestamp * 1000);
   const now = new Date();
 
@@ -43,13 +44,13 @@ function formatDate(timestamp: number): string {
     return date.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
   }
   if (date >= startOfYesterday) {
-    return "Yesterday";
+    return t('notes.date.yesterday');
   }
 
   const daysAgo =
     Math.floor((startOfToday.getTime() - date.getTime()) / 86400000) + 1;
   if (daysAgo <= 6) {
-    return `${daysAgo} days ago`;
+    return t('notes.date.daysAgo', { count: daysAgo });
   }
 
   if (date.getFullYear() === now.getFullYear()) {
@@ -87,6 +88,7 @@ export const NoteItem = memo(function NoteItem({
   depth,
   showFolderPrefix = true,
 }: NoteItemProps) {
+  const { t } = useTranslation();
   const ref = useRef<HTMLDivElement>(null);
   const handleClick = useCallback(() => onSelect(id), [onSelect, id]);
 
@@ -114,7 +116,7 @@ export const NoteItem = memo(function NoteItem({
       <ListItem
         title={cleanTitle(title)}
         subtitle={displayPreview}
-        meta={formatDate(modified)}
+        meta={formatDate(modified, t)}
         isSelected={isSelected}
         isPinned={isPinned}
         onClick={handleClick}
@@ -153,6 +155,7 @@ const NoteItemWithMenu = memo(function NoteItemWithMenu({
   onDelete,
   onRefreshSettings,
 }: NoteItemWithMenuProps) {
+  const { t } = useTranslation();
   const handlePin = useCallback(async () => {
     try {
       await (isPinned ? onUnpin(id) : onPin(id));
@@ -193,21 +196,21 @@ const NoteItemWithMenu = memo(function NoteItemWithMenu({
         <ContextMenu.Content className="min-w-44 bg-bg border border-border rounded-md shadow-lg py-1 z-50">
           <ContextMenu.Item className={menuItemClass} onSelect={handlePin}>
             <PinIcon className="w-4 h-4 stroke-[1.6]" />
-            {isPinned ? "Unpin" : "Pin"}
+            {isPinned ? t('notes.contextMenu.unpin') : t('notes.contextMenu.pin')}
           </ContextMenu.Item>
           <ContextMenu.Item
             className={menuItemClass}
             onSelect={() => onDuplicate(id)}
           >
             <CopyIcon className="w-4 h-4 stroke-[1.6]" />
-            Duplicate
+            {t('notes.contextMenu.duplicate')}
           </ContextMenu.Item>
           <ContextMenu.Item
             className={menuItemClass}
             onSelect={handleCopyFilepath}
           >
             <CopyIcon className="w-4 h-4 stroke-[1.6]" />
-            Copy Filepath
+            {t('notes.contextMenu.copyFilepath')}
           </ContextMenu.Item>
           <ContextMenu.Separator className={menuSeparatorClass} />
           <ContextMenu.Item
@@ -218,7 +221,7 @@ const NoteItemWithMenu = memo(function NoteItemWithMenu({
             onSelect={() => onDelete(id)}
           >
             <TrashIcon className="w-4 h-4 stroke-[1.6]" />
-            Delete
+            {t('notes.contextMenu.delete')}
           </ContextMenu.Item>
         </ContextMenu.Content>
       </ContextMenu.Portal>
@@ -239,6 +242,7 @@ export function NoteList({
   lastClickedNoteId,
   setLastClickedNoteId,
 }: NoteListProps) {
+  const { t } = useTranslation();
   const {
     notes,
     selectedNoteId,
@@ -336,7 +340,7 @@ export function NoteList({
   if (isLoading && notes.length === 0) {
     return (
       <div className="p-4 text-center text-text-muted select-none">
-        Loading...
+        {t('notes.loading')}
       </div>
     );
   }
@@ -344,7 +348,7 @@ export function NoteList({
   if (isSearching && displayItems.length === 0) {
     return (
       <div className="p-4 text-center text-sm text-text-muted select-none">
-        No results found
+        {t('notes.noResults')}
       </div>
     );
   }
@@ -352,7 +356,7 @@ export function NoteList({
   if (displayItems.length === 0) {
     return (
       <div className="p-4 text-center text-sm text-text-muted select-none">
-        No notes yet
+        {t('notes.noNotes')}
       </div>
     );
   }
@@ -377,16 +381,15 @@ export function NoteList({
         >
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>Delete note?</AlertDialogTitle>
+              <AlertDialogTitle>{t('notes.deleteDialog.title')}</AlertDialogTitle>
               <AlertDialogDescription>
-                This will permanently delete the note and all its content. This
-                action cannot be undone.
+                {t('notes.deleteDialog.description')}
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogCancel>{t('notes.deleteDialog.cancel')}</AlertDialogCancel>
               <AlertDialogAction onClick={handleDeleteConfirm}>
-                Delete
+                {t('notes.deleteDialog.delete')}
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
@@ -426,16 +429,15 @@ export function NoteList({
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete note?</AlertDialogTitle>
+            <AlertDialogTitle>{t('notes.deleteDialog.title')}</AlertDialogTitle>
             <AlertDialogDescription>
-              This will permanently delete the note and all its content. This
-              action cannot be undone.
+              {t('notes.deleteDialog.description')}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>{t('notes.deleteDialog.cancel')}</AlertDialogCancel>
             <AlertDialogAction onClick={handleDeleteConfirm}>
-              Delete
+              {t('notes.deleteDialog.delete')}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

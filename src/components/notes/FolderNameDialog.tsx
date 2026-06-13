@@ -10,6 +10,7 @@ import {
   AlertDialogTitle,
 } from "../ui";
 import { Input } from "../ui";
+import { useTranslation } from "../../i18n/useTranslation";
 
 interface FolderNameDialogProps {
   open: boolean;
@@ -25,11 +26,15 @@ export function FolderNameDialog({
   open,
   onOpenChange,
   onConfirm,
-  title = "Create New Folder",
-  description = "Enter a name for your new folder",
-  confirmLabel = "Create",
+  title,
+  description,
+  confirmLabel,
   defaultValue = "",
 }: FolderNameDialogProps) {
+  const { t } = useTranslation();
+  const resolvedTitle = title ?? t('dialog.folderName.defaultTitle');
+  const resolvedDescription = description ?? t('dialog.folderName.defaultDescription');
+  const resolvedConfirmLabel = confirmLabel ?? t('dialog.folderName.defaultConfirm');
   const [name, setName] = useState(defaultValue);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -62,9 +67,9 @@ export function FolderNameDialog({
     <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>{title}</AlertDialogTitle>
+          <AlertDialogTitle>{resolvedTitle}</AlertDialogTitle>
           <AlertDialogDescription className="-mt-1">
-            {description}
+            {resolvedDescription}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <Input
@@ -73,13 +78,13 @@ export function FolderNameDialog({
           value={name}
           onChange={(e) => setName(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="Folder name"
+          placeholder={t('dialog.folderName.placeholder')}
           className="mt-1"
         />
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogCancel>{t('dialog.folderName.cancel')}</AlertDialogCancel>
           <AlertDialogAction onClick={handleConfirm} disabled={!name.trim()}>
-            {confirmLabel}
+            {resolvedConfirmLabel}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
